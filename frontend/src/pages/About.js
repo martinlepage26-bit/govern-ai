@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+
 const About = () => {
   const practiceSteps = [
     {
@@ -46,12 +49,12 @@ const About = () => {
           {/* Practice Steps */}
           <div className="grid md:grid-cols-3 gap-6">
             {practiceSteps.map((step) => (
-              <div key={step.number} className="bg-[#f8f9fc] rounded-lg p-5" data-testid={`practice-step-${step.number}`}>
+              <div key={step.number} className="bg-[#f8f9fc] rounded-lg p-5 border-t-3 border-[#6366f1]" data-testid={`practice-step-${step.number}`}>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#1a2744] font-semibold text-sm border border-gray-200">
+                  <span className="w-8 h-8 rounded-full bg-[#6366f1] text-white flex items-center justify-center font-semibold text-sm">
                     {step.number}
                   </span>
-                  <h3 className="font-serif font-semibold text-[#1a2744] underline">
+                  <h3 className="font-serif font-semibold text-[#1a2744] underline decoration-[#6366f1]">
                     {step.title}
                   </h3>
                 </div>
@@ -64,13 +67,41 @@ const About = () => {
         </div>
 
         {/* About me */}
-        <div className="card">
+        <div className="card mb-8">
           <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-4">
             About me
           </h2>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-gray-600 leading-relaxed mb-6">
             Martin Lepage (PhD) is a Montreal-based AI systems and risk mapping consultant who helps organizations make AI use legible, governable, and defensible. He builds minimum-viable governance that survives real constraints: use-case inventories, risk maps, decision traceability, evaluation criteria, and executive-ready documentation.
           </p>
+          
+          {/* Portfolio Link */}
+          <Link 
+            to="/portfolio" 
+            className="inline-flex items-center gap-2 text-[#6366f1] font-medium hover:gap-3 transition-all group"
+            data-testid="portfolio-link"
+          >
+            View Portfolio & Publications
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
+        {/* Research Highlight */}
+        <div className="card border-l-4 border-[#6366f1]">
+          <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">Featured Research</p>
+          <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-2">
+            The Sealed Card Protocol
+          </h3>
+          <p className="text-gray-600 text-sm mb-4">
+            A framework for analyzing how legitimacy is established in the context of generative AI—examining mediation, authenticity, and accountability at the seam where evaluation shifts from artifact to pathway.
+          </p>
+          <Link 
+            to="/sealed-card" 
+            className="inline-flex items-center gap-2 text-[#6366f1] font-medium text-sm hover:gap-3 transition-all"
+          >
+            Read the Protocol
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </div>
