@@ -43,6 +43,15 @@ User lost their AI Governance consulting website and needed it recreated from sc
 - Research papers have purple left border
 - Tool uses purple for active selections and progress dots
 
+### Research Papers (from LEGIBLE.txt)
+- When Hiring AI Quietly Rewrites Your Talent Pipeline
+- When Data Collection Becomes Regulatory Exposure
+- When a Forecasting Model Moves Real Money
+- When Risk Scores Replace Due Process
+- When Vendors Hold the Model and You Hold the Liability
+- When Employees Turn GenAI Into a Leak Vector
+- When a Customer Chatbot Turns Into Institutional Speech
+
 ### Tool Functionality
 - Step 1: Sector selection (6 sectors)
 - Step 2: 8 readiness questions, one at a time
