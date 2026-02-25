@@ -16,6 +16,8 @@ import About from "./pages/About";
 import Connect from "./pages/Connect";
 import SealedCard from "./pages/SealedCard";
 import Portfolio from "./pages/Portfolio";
+import Library from "./pages/Library";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
             <Route path="/connect" element={<Connect />} />
             <Route path="/sealed-card" element={<SealedCard />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/library" element={<Library />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />
