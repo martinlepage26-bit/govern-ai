@@ -1,12 +1,23 @@
+import { Link } from 'react-router-dom';
+
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/98548zap_logo.png";
 
 const Footer = () => {
   return (
     <footer className="py-6 px-6 md:px-12 bg-[#f8f9fc] border-t border-gray-200" data-testid="footer">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <p className="text-sm text-gray-500">
-          &copy; 2026 Martin Lepage, PhD. AI Governance Practice & Research
-        </p>
+        <div className="flex items-center gap-4">
+          <p className="text-sm text-gray-500">
+            &copy; 2026 Martin Lepage, PhD. AI Governance Practice & Research
+          </p>
+          {/* Hidden admin link - appears as a subtle dot */}
+          <Link 
+            to="/admin" 
+            className="w-2 h-2 rounded-full bg-gray-300 hover:bg-[#6366f1] transition-colors opacity-50 hover:opacity-100"
+            title=""
+            data-testid="admin-link"
+          />
+        </div>
         <img 
           src={LOGO_URL} 
           alt="AI Governance" 
