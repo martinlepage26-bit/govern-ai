@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, FileText, Presentation, BookOpen, Award } from 'lucide-react';
+import { ExternalLink, FileText, Presentation, BookOpen, Award, Shield, Scale, Cpu } from 'lucide-react';
 
 const Portfolio = () => {
   const publications = [
@@ -9,29 +9,87 @@ const Portfolio = () => {
       venue: 'Research Protocol',
       year: '2024',
       description: 'A framework for analyzing how legitimacy is established in the context of generative AI and mediation.',
-      link: '/sealed-card'
+      link: '/sealed-card',
+      internal: true
+    },
+    {
+      type: 'Briefing Series',
+      title: 'AI Governance Incident Analysis',
+      venue: 'Research Briefings',
+      year: '2024',
+      description: 'Seven case studies translating real AI incidents into operational controls: Amazon hiring bias, Clearview data provenance, Zillow forecasting, Dutch welfare scandal, COMPAS, Samsung leaks, Air Canada chatbot.',
+      link: '/research',
+      internal: true
+    },
+    {
+      type: 'Framework',
+      title: 'AI Governance Readiness Snapshot',
+      venue: 'Assessment Tool',
+      year: '2024',
+      description: 'Interactive assessment tool measuring governance maturity across eight dimensions: inventory, risk tiering, decision rights, controls, evidence, vendor review, cadence, and documentation.',
+      link: '/tool',
+      internal: true
+    }
+  ];
+
+  const workingPapers = [
+    {
+      title: 'Risk Tiering for AI Systems: A Practical Framework',
+      status: 'In development',
+      abstract: 'Structured criteria for classifying AI use cases by impact, sensitivity, autonomy, and exposure. Includes worked examples across sectors.'
+    },
+    {
+      title: 'Evidence Architecture for AI Governance',
+      status: 'In development',
+      abstract: 'How to design documentation systems that survive audit scrutiny: versioning, ownership, change logs, and reconstruction capability.'
+    },
+    {
+      title: 'Vendor AI Due Diligence: A Procurement Framework',
+      status: 'In development',
+      abstract: 'Questionnaire design, evaluation criteria, and contractual requirements for third-party AI systems.'
     }
   ];
 
   const engagements = [
     {
-      type: 'Advisory',
-      client: 'Enterprise clients',
+      type: 'Governance Foundation',
+      icon: Shield,
+      clients: 'Enterprise organizations',
       scope: 'AI Governance Framework Design',
-      description: 'Establishing minimum viable governance systems for organizations deploying AI at scale.'
+      description: 'Establishing minimum viable governance: use case inventory, risk tiering, decision rights, approval flows, and operating cadence.',
+      outcomes: ['Use case maps', 'Risk tier criteria', 'RACI matrices', 'Governance cadence']
     },
     {
-      type: 'Audit Support',
-      client: 'Financial institutions',
-      scope: 'Model Risk Management',
-      description: 'Supporting internal audit and compliance teams with AI system review and evidence requirements.'
+      type: 'Controls & Evidence',
+      icon: FileText,
+      clients: 'Financial services, healthcare',
+      scope: 'Audit & Procurement Readiness',
+      description: 'Building control registers, evidence expectations, and documentation structures that satisfy internal audit, regulators, and procurement.',
+      outcomes: ['Control registers', 'Evidence checklists', 'Vendor questionnaires', 'Decision logs']
     },
     {
-      type: 'Procurement',
-      client: 'Public sector organizations',
-      scope: 'Vendor AI Assessment',
-      description: 'Developing questionnaires, evaluation criteria, and diligence protocols for AI procurement.'
+      type: 'Vendor Assessment',
+      icon: Scale,
+      clients: 'Public sector, enterprise',
+      scope: 'Third-Party AI Due Diligence',
+      description: 'Developing evaluation frameworks, questionnaires, and contractual requirements for AI procurement and vendor management.',
+      outcomes: ['Evaluation criteria', 'Diligence protocols', 'Contract language', 'Reassessment triggers']
+    },
+    {
+      type: 'Oversight Retainer',
+      icon: Cpu,
+      clients: 'Organizations with active AI delivery',
+      scope: 'Ongoing Governance Support',
+      description: 'Recurring advisory to keep governance current as models, vendors, data flows, and use cases evolve.',
+      outcomes: ['Monthly oversight', 'Decision log stewardship', 'Control updates', 'Audit support']
     }
+  ];
+
+  const expertise = [
+    { category: 'Governance', skills: ['AI Risk Classification', 'Decision Rights Design', 'Governance Operating Models', 'Lifecycle Gates'] },
+    { category: 'Evidence', skills: ['Audit Documentation', 'Evidence Architecture', 'Traceability Systems', 'Reconstruction Capability'] },
+    { category: 'Controls', skills: ['Control Register Design', 'Testing Expectations', 'Monitoring Frameworks', 'Threshold Management'] },
+    { category: 'Procurement', skills: ['Vendor Due Diligence', 'Questionnaire Design', 'Contract Requirements', 'Reassessment Protocols'] }
   ];
 
   return (
@@ -46,10 +104,10 @@ const Portfolio = () => {
             Portfolio
           </h1>
           <p className="text-gray-600 max-w-2xl">
-            Selected publications, research protocols, and engagement areas. This portfolio reflects ongoing work in AI governance, risk classification, and institutional accountability.
+            Publications, frameworks, and engagement areas in AI governance. This work focuses on making governance operational: controls people can execute, evidence auditors can verify, and documentation that survives scrutiny.
           </p>
           <p className="text-xs tracking-widest text-gray-400 uppercase mt-4">
-            PUBLICATIONS · RESEARCH · ENGAGEMENTS
+            PUBLICATIONS · FRAMEWORKS · ENGAGEMENTS
           </p>
         </div>
 
@@ -57,42 +115,88 @@ const Portfolio = () => {
         <section className="mb-12">
           <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-6 flex items-center gap-3">
             <BookOpen className="w-6 h-6 text-[#6366f1]" />
-            Publications & Research
+            Publications & Frameworks
           </h2>
           
           <div className="space-y-4">
             {publications.map((pub, i) => (
-              <Link 
-                key={i}
-                to={pub.link}
-                className="block card paper-card hover:shadow-md transition-all group"
-                data-testid={`publication-${i}`}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
-                        {pub.type}
-                      </span>
-                      <span className="text-gray-300">·</span>
-                      <span className="text-xs text-gray-500">{pub.year}</span>
+              pub.internal ? (
+                <Link 
+                  key={i}
+                  to={pub.link}
+                  className="block card paper-card hover:shadow-md transition-all group"
+                  data-testid={`publication-${i}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
+                          {pub.type}
+                        </span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-500">{pub.year}</span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-500">{pub.venue}</span>
+                      </div>
+                      <h3 className="font-serif text-lg font-semibold text-[#1a2744] mb-2 group-hover:text-[#6366f1] transition-colors">
+                        {pub.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm">{pub.description}</p>
                     </div>
-                    <h3 className="font-serif text-lg font-semibold text-[#1a2744] mb-2 group-hover:text-[#6366f1] transition-colors">
-                      {pub.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm mb-2">{pub.venue}</p>
-                    <p className="text-gray-600 text-sm">{pub.description}</p>
+                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#6366f1] flex-shrink-0" />
                   </div>
-                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#6366f1] flex-shrink-0" />
-                </div>
-              </Link>
+                </Link>
+              ) : (
+                <a 
+                  key={i}
+                  href={pub.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block card paper-card hover:shadow-md transition-all group"
+                  data-testid={`publication-${i}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
+                          {pub.type}
+                        </span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-500">{pub.year}</span>
+                      </div>
+                      <h3 className="font-serif text-lg font-semibold text-[#1a2744] mb-2 group-hover:text-[#6366f1] transition-colors">
+                        {pub.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm mb-1">{pub.venue}</p>
+                      <p className="text-gray-600 text-sm">{pub.description}</p>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#6366f1] flex-shrink-0" />
+                  </div>
+                </a>
+              )
             ))}
+          </div>
+        </section>
 
-            {/* Placeholder for future additions */}
-            <div className="p-6 border-2 border-dashed border-gray-200 rounded-xl text-center">
-              <FileText className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-              <p className="text-gray-400 text-sm">Additional publications will be added here</p>
-            </div>
+        {/* Working Papers */}
+        <section className="mb-12">
+          <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-6 flex items-center gap-3">
+            <FileText className="w-6 h-6 text-[#6366f1]" />
+            Working Papers
+          </h2>
+          
+          <div className="space-y-4">
+            {workingPapers.map((paper, i) => (
+              <div key={i} className="card bg-[#f8f9fc]" data-testid={`working-paper-${i}`}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
+                    {paper.status}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-[#1a2744] mb-2">{paper.title}</h3>
+                <p className="text-gray-600 text-sm">{paper.abstract}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -103,23 +207,30 @@ const Portfolio = () => {
             Engagement Areas
           </h2>
           
-          <div className="grid md:grid-cols-1 gap-4">
+          <div className="space-y-4">
             {engagements.map((eng, i) => (
               <div key={i} className="card" data-testid={`engagement-${i}`}>
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center flex-shrink-0">
-                    <Award className="w-5 h-5 text-[#6366f1]" />
+                  <div className="w-12 h-12 rounded-xl bg-[#6366f1]/10 flex items-center justify-center flex-shrink-0">
+                    <eng.icon className="w-6 h-6 text-[#6366f1]" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">
                         {eng.type}
                       </span>
                       <span className="text-gray-300">·</span>
-                      <span className="text-xs text-gray-500">{eng.client}</span>
+                      <span className="text-xs text-gray-500">{eng.clients}</span>
                     </div>
                     <h3 className="font-semibold text-[#1a2744] mb-1">{eng.scope}</h3>
-                    <p className="text-gray-600 text-sm">{eng.description}</p>
+                    <p className="text-gray-600 text-sm mb-3">{eng.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {eng.outcomes.map((outcome, j) => (
+                        <span key={j} className="text-xs px-2 py-1 bg-[#f8f9fc] rounded-full text-gray-600">
+                          {outcome}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -132,39 +243,33 @@ const Portfolio = () => {
           <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-6">
             Areas of Expertise
           </h2>
-          <div className="flex flex-wrap gap-2">
-            {[
-              'AI Governance',
-              'Risk Classification',
-              'Model Risk Management',
-              'Evidence Architecture',
-              'Procurement Readiness',
-              'Audit Documentation',
-              'Vendor Assessment',
-              'Decision Rights',
-              'Lifecycle Gates',
-              'Control Design',
-              'Legitimacy Studies',
-              'Mediation Theory'
-            ].map((skill, i) => (
-              <span 
-                key={i}
-                className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600 hover:border-[#6366f1] hover:text-[#6366f1] transition-colors"
-              >
-                {skill}
-              </span>
+          <div className="grid md:grid-cols-2 gap-4">
+            {expertise.map((area, i) => (
+              <div key={i} className="card">
+                <h3 className="font-medium text-[#6366f1] text-sm uppercase tracking-wide mb-3">{area.category}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {area.skills.map((skill, j) => (
+                    <span 
+                      key={j}
+                      className="px-3 py-1.5 bg-[#f8f9fc] border border-gray-200 rounded-full text-sm text-gray-700"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
 
         {/* CTA */}
         <div className="card bg-gradient-to-r from-[#1a2744] to-[#6366f1] text-white">
-          <h3 className="font-serif text-xl font-semibold mb-2">Interested in collaboration?</h3>
+          <h3 className="font-serif text-xl font-semibold mb-2">Discuss your governance needs</h3>
           <p className="text-white/80 mb-4">
-            For research collaborations, speaking engagements, or consulting inquiries.
+            Whether you're establishing governance foundations, preparing for audit, or managing vendor AI risk.
           </p>
           <Link to="/connect" className="inline-block bg-white text-[#1a2744] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-            Get in Touch
+            Book a Debrief
           </Link>
         </div>
       </div>
