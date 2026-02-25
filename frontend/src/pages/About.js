@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
+const HEADSHOT_URL = process.env.REACT_APP_HEADSHOT_URL || "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/x8mls9m1_realistic_male_headshot_with_hair_1.jpg";
+
 const About = () => {
   const practiceSteps = [
     {
@@ -66,24 +68,38 @@ const About = () => {
           </div>
         </div>
 
-        {/* About me */}
+        {/* About me with photo */}
         <div className="card mb-8">
-          <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-4">
+          <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-6">
             About me
           </h2>
-          <p className="text-gray-600 leading-relaxed mb-6">
-            Martin Lepage (PhD) is a Montreal-based AI systems and risk mapping consultant who helps organizations make AI use legible, governable, and defensible. He builds minimum-viable governance that survives real constraints: use-case inventories, risk maps, decision traceability, evaluation criteria, and executive-ready documentation.
-          </p>
-          
-          {/* Portfolio Link */}
-          <Link 
-            to="/portfolio" 
-            className="inline-flex items-center gap-2 text-[#6366f1] font-medium hover:gap-3 transition-all group"
-            data-testid="portfolio-link"
-          >
-            View Portfolio & Publications
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            {/* Photo */}
+            <div className="flex-shrink-0">
+              <img 
+                src={HEADSHOT_URL}
+                alt="Martin Lepage"
+                className="w-48 h-48 object-cover rounded-2xl shadow-lg"
+                data-testid="headshot"
+              />
+            </div>
+            {/* Bio */}
+            <div className="flex-1">
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Martin Lepage (PhD) is a Montreal-based AI systems and risk mapping consultant who helps organizations make AI use legible, governable, and defensible. He builds minimum-viable governance that survives real constraints: use-case inventories, risk maps, decision traceability, evaluation criteria, and executive-ready documentation.
+              </p>
+              
+              {/* Portfolio Link */}
+              <Link 
+                to="/portfolio" 
+                className="inline-flex items-center gap-2 text-[#6366f1] font-medium hover:gap-3 transition-all group"
+                data-testid="portfolio-link"
+              >
+                View Portfolio & Publications
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Research Highlight */}
