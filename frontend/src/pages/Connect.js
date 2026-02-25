@@ -1,17 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Send, FileText, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { Mail, Send, FileText, Calendar as CalendarIcon, CheckCircle, Clock } from 'lucide-react';
+import { Calendar } from '../components/ui/calendar';
 import { useLanguage } from '../context/LanguageContext';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+const ALL_SLOTS = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'];
+
 const Connect = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState('message');
   const [formData, setFormData] = useState({ name: '', email: '', organization: '', lookingFor: '', context: '' });
-  const [bookingData, setBookingData] = useState({ name: '', email: '', organization: '', preferredDate: '', preferredTime: '', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, topic: '', currentState: '' });
   const [submitted, setSubmitted] = useState(false);
 
+  // Calendar booking state
+  const [selectedDate, setSelectedDate] = useState(undefined);
+  const [selectedTime, setSelectedTime] = useState('');
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [bookingForm, setBookingForm] = useState({ name: '', email: '', organization: '', topic: '', currentState: '' });
+  const [bookingSubmitted, setBookingSubmitted] = useState(false);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/bookings/booked-slots`)
+      .then(res => res.json())
+      .then(data => setBookedSlots(data))
+      .catch(() => {});
+  }, [bookingSubmitted]);
+
   const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  const handleBookingChange = (e) => setBookingData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleBookingFormChange = (e) => setBookingForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,20 +41,53 @@ const Connect = () => {
     setTimeout(() => setSubmitted(false), 3000);
   };
 
-  const handleBookingSubmit = (e) => {
+  const handleBookingSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Governance Debrief Request: ${bookingData.topic}`);
-    const body = encodeURIComponent(
-      `BOOKING REQUEST - 30 Minute Governance Debrief\n\n${t.connect.form.name}: ${bookingData.name}\n${t.connect.form.email}: ${bookingData.email}\n${t.connect.form.organization}: ${bookingData.organization}\n\nPREFERRED TIME\nDate: ${bookingData.preferredDate}\nTime: ${bookingData.preferredTime}\nTimezone: ${bookingData.timezone}\n\nDISCUSSION TOPIC\n${bookingData.topic}\n\nCURRENT STATE\n${bookingData.currentState}`
-    );
-    window.location.href = `mailto:martin@martinlepage.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    if (!selectedDate || !selectedTime) return;
+    setBookingSubmitting(true);
+    try {
+      const dateStr = selectedDate.toISOString().split('T')[0];
+      const res = await fetch(`${API_URL}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: bookingForm.name,
+          email: bookingForm.email,
+          organization: bookingForm.organization,
+          date: dateStr,
+          time: selectedTime,
+          topic: bookingForm.topic,
+          current_state: bookingForm.currentState
+        })
+      });
+      if (res.ok) {
+        setBookingSubmitted(true);
+        setBookingForm({ name: '', email: '', organization: '', topic: '', currentState: '' });
+        setSelectedDate(undefined);
+        setSelectedTime('');
+      }
+    } catch (err) {
+      // silent
+    }
+    setBookingSubmitting(false);
   };
 
-  const topicKeys = ['foundation', 'riskClassification', 'auditReadiness', 'vendorAssessment', 'controlsDesign', 'readinessReview', 'other'];
+  const getAvailableSlots = () => {
+    if (!selectedDate) return ALL_SLOTS;
+    const dateStr = selectedDate.toISOString().split('T')[0];
+    const bookedTimes = bookedSlots.filter(s => s.date === dateStr).map(s => s.time);
+    return ALL_SLOTS.map(slot => ({ time: slot, booked: bookedTimes.includes(slot) }));
+  };
+
+  const isWeekend = (date) => date.getDay() === 0 || date.getDay() === 6;
+  const isPast = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
   const formTopicKeys = ['foundation', 'riskClassification', 'auditReadiness', 'vendorAssessment', 'controlsDesign', 'oversightRetainer', 'other'];
-  const timeSlots = ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM'];
+  const topicKeys = ['foundation', 'riskClassification', 'auditReadiness', 'vendorAssessment', 'controlsDesign', 'readinessReview', 'other'];
 
   const resources = [
     { title: t.connect.resources.auditChecklist, description: t.connect.resources.auditChecklistDesc, icon: FileText },
@@ -49,7 +101,7 @@ const Connect = () => {
     window.location.href = `mailto:martin@martinlepage.com?subject=${subject}&body=${body}`;
   };
 
-  const getMinDate = () => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split('T')[0]; };
+  const availableSlots = getAvailableSlots();
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="connect-page">
@@ -59,11 +111,11 @@ const Connect = () => {
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-8">{t.connect.keywords}</p>
 
         <div className="flex gap-2 mb-8">
-          <button onClick={() => setActiveTab('message')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'message' ? 'bg-[#6366f1] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'}`} data-testid="tab-message">
+          <button onClick={() => { setActiveTab('message'); setBookingSubmitted(false); }} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'message' ? 'bg-[#6366f1] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'}`} data-testid="tab-message">
             <Mail className="w-4 h-4 inline mr-2" />{t.connect.tabs.message}
           </button>
           <button onClick={() => setActiveTab('booking')} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'booking' ? 'bg-[#6366f1] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'}`} data-testid="tab-booking">
-            <Calendar className="w-4 h-4 inline mr-2" />{t.connect.tabs.booking}
+            <CalendarIcon className="w-4 h-4 inline mr-2" />{t.connect.tabs.booking}
           </button>
         </div>
 
@@ -111,63 +163,133 @@ const Connect = () => {
                 </form>
               </div>
             ) : (
-              <div className="card">
+              <div className="card" data-testid="booking-calendar-card">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center"><Calendar className="w-5 h-5 text-[#6366f1]" /></div>
+                  <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center"><CalendarIcon className="w-5 h-5 text-[#6366f1]" /></div>
                   <div>
-                    <h2 className="font-serif text-xl font-semibold text-[#1a2744]">{t.connect.booking.title}</h2>
-                    <p className="text-sm text-gray-500">{t.connect.booking.subtitle}</p>
+                    <h2 className="font-serif text-xl font-semibold text-[#1a2744]">{t.bookingCalendar.title}</h2>
+                    <p className="text-sm text-gray-500">{t.bookingCalendar.subtitle}</p>
                   </div>
                 </div>
-                <form onSubmit={handleBookingSubmit} data-testid="booking-form">
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.name} *</label>
-                      <input type="text" name="name" value={bookingData.name} onChange={handleBookingChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" />
+
+                {bookingSubmitted ? (
+                  <div className="text-center py-8" data-testid="booking-confirmation">
+                    <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.email} *</label>
-                      <input type="email" name="email" value={bookingData.email} onChange={handleBookingChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" />
+                    <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-2">{t.bookingCalendar.confirmation}</h3>
+                    <button onClick={() => setBookingSubmitted(false)} className="mt-4 text-[#6366f1] font-medium hover:underline text-sm">
+                      {language === 'fr' ? 'Nouvelle r\u00e9servation' : 'Book another'}
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleBookingSubmit}>
+                    <div className="grid md:grid-cols-2 gap-6 mb-6">
+                      {/* Calendar */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">{t.bookingCalendar.selectDate}</label>
+                        <div className="border border-gray-200 rounded-xl p-1 inline-block" data-testid="booking-calendar">
+                          <Calendar
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={(date) => { setSelectedDate(date); setSelectedTime(''); }}
+                            disabled={(date) => isPast(date) || isWeekend(date)}
+                            className="rounded-md"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Time slots */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t.bookingCalendar.selectTime}
+                          {selectedDate && (
+                            <span className="text-gray-400 font-normal ml-2">
+                              {selectedDate.toLocaleDateString(language === 'fr' ? 'fr-CA' : 'en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                            </span>
+                          )}
+                        </label>
+                        {selectedDate ? (
+                          <div className="grid grid-cols-2 gap-2" data-testid="time-slots">
+                            {availableSlots.map((slot) => {
+                              const time = typeof slot === 'string' ? slot : slot.time;
+                              const isBooked = typeof slot === 'object' && slot.booked;
+                              return (
+                                <button
+                                  key={time}
+                                  type="button"
+                                  disabled={isBooked}
+                                  onClick={() => setSelectedTime(time)}
+                                  data-testid={`time-slot-${time.replace(/[: ]/g, '-')}`}
+                                  className={`py-2 px-3 rounded-lg text-sm font-medium transition-all border ${
+                                    isBooked
+                                      ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed line-through'
+                                      : selectedTime === time
+                                        ? 'bg-[#6366f1] text-white border-[#6366f1]'
+                                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#6366f1] hover:text-[#6366f1]'
+                                  }`}
+                                >
+                                  {time}
+                                  {isBooked && <span className="block text-xs">{t.bookingCalendar.booked}</span>}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-gray-400 text-sm py-8">
+                            <CalendarIcon className="w-5 h-5 mr-2" />
+                            {t.bookingCalendar.selectDate}
+                          </div>
+                        )}
+                        <p className="text-xs text-gray-400 mt-2"><Clock className="w-3 h-3 inline mr-1" />{t.bookingCalendar.eastern}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.form.organization} *</label>
-                    <input type="text" name="organization" value={bookingData.organization} onChange={handleBookingChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1"><Clock className="w-4 h-4 inline mr-1" />{t.connect.booking.preferredDate} *</label>
-                      <input type="date" name="preferredDate" value={bookingData.preferredDate} onChange={handleBookingChange} min={getMinDate()} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" />
+
+                    {/* Contact details */}
+                    <div className="border-t border-gray-100 pt-6">
+                      <h3 className="font-medium text-[#1a2744] mb-4">{t.bookingCalendar.yourDetails}</h3>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.name} *</label>
+                          <input type="text" name="name" value={bookingForm.name} onChange={handleBookingFormChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" data-testid="booking-name" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.email} *</label>
+                          <input type="email" name="email" value={bookingForm.email} onChange={handleBookingFormChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" data-testid="booking-email" />
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.organization}</label>
+                        <input type="text" name="organization" value={bookingForm.organization} onChange={handleBookingFormChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" data-testid="booking-org" />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.topic}</label>
+                        <select name="topic" value={bookingForm.topic} onChange={handleBookingFormChange} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none" data-testid="booking-topic">
+                          <option value="">{t.bookingCalendar.selectTopic}</option>
+                          {topicKeys.map(key => <option key={key} value={t.connect.topics[key]}>{t.connect.topics[key]}</option>)}
+                        </select>
+                      </div>
+                      <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.bookingCalendar.currentState}</label>
+                        <textarea name="currentState" value={bookingForm.currentState} onChange={handleBookingFormChange} placeholder={t.bookingCalendar.currentStatePlaceholder} rows={3} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none resize-none" data-testid="booking-state" />
+                      </div>
+                      <button
+                        type="submit"
+                        disabled={!selectedDate || !selectedTime || !bookingForm.name || !bookingForm.email || bookingSubmitting}
+                        className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        data-testid="booking-submit-btn"
+                      >
+                        <CalendarIcon className="w-4 h-4" />
+                        {bookingSubmitting ? t.bookingCalendar.submitting : t.bookingCalendar.submit}
+                      </button>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.booking.preferredTime} *</label>
-                      <select name="preferredTime" value={bookingData.preferredTime} onChange={handleBookingChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none">
-                        <option value="">{t.connect.booking.selectTime}</option>
-                        {timeSlots.map(slot => <option key={slot} value={slot}>{slot} (Eastern)</option>)}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.booking.topic} *</label>
-                    <select name="topic" value={bookingData.topic} onChange={handleBookingChange} required className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none">
-                      <option value="">{t.connect.booking.selectTopic}</option>
-                      {topicKeys.map(key => <option key={key} value={t.connect.topics[key]}>{t.connect.topics[key]}</option>)}
-                    </select>
-                  </div>
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.connect.booking.currentState}</label>
-                    <textarea name="currentState" value={bookingData.currentState} onChange={handleBookingChange} placeholder={t.connect.booking.currentStatePlaceholder} rows={3} className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none resize-none" />
-                  </div>
-                  <button type="submit" className="btn-primary flex items-center gap-2" data-testid="booking-submit-btn">
-                    {submitted ? <CheckCircle className="w-4 h-4" /> : <Calendar className="w-4 h-4" />}
-                    {submitted ? t.connect.form.opening : t.connect.booking.requestSlot}
-                  </button>
-                  <p className="text-gray-500 text-xs mt-3">{t.connect.booking.confirmation}</p>
-                </form>
+                  </form>
+                )}
               </div>
             )}
           </div>
 
+          {/* Sidebar */}
           <div className="space-y-4">
             <h3 className="font-serif text-lg font-semibold text-[#1a2744]">{t.connect.resources.title}</h3>
             {resources.map((resource, index) => (
