@@ -53,6 +53,19 @@ User lost their AI Governance consulting website and needed it recreated from sc
 ### Admin Passphrase
 - Updated to: `AIG-ctrl-2026!`
 
+### Lead Magnet
+- AI Governance Starter Kit CTA on home page
+- Email capture via mailto (Risk Tiering Template, Governance Checklist, Control Mapping Guide)
+
+### Case Studies (Mock Portfolio)
+- 5 detailed case studies across sectors:
+  1. Financial Services: Governance Foundation for AI-Powered Lending (8 weeks)
+  2. Healthcare: Vendor AI Assessment for Clinical Decision Support (6 weeks)
+  3. Enterprise Technology: Controls & Evidence Pack for AI Platform (12 weeks)
+  4. Public Sector: Embedding Review for Benefits Navigation AI (10 weeks)
+  5. Enterprise SaaS: Oversight Retainer for AI-Native Platform (18 months ongoing)
+- Each case includes: Challenge, Approach, Outcomes, Quote, Deliverables
+
 ### Research Papers (from LEGIBLE.txt)
 - When Hiring AI Quietly Rewrites Your Talent Pipeline
 - When Data Collection Becomes Regulatory Exposure
