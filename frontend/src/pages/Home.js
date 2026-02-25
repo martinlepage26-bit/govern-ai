@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Shield, FileText, Scale } from 'lucide-react';
 import StarterKitCTA from '../components/StarterKitCTA';
 
-const LOGO_URL = "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/98548zap_logo.png";
+const LOGO_URL = process.env.REACT_APP_LOGO_URL || "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/98548zap_logo.png";
 
 const Home = () => {
   const capabilities = [
