@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Shield, FileText, Scale } from 'lucide-react';
+import StarterKitCTA from '../components/StarterKitCTA';
 
 const LOGO_URL = "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/98548zap_logo.png";
 
@@ -91,16 +92,30 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Starter Kit CTA */}
+        <div className="mt-16">
+          <StarterKitCTA />
+        </div>
+
         {/* Bottom Section */}
         <div className="mt-16 pt-12 border-t border-gray-200">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-8">
             <Link to="/tool" className="group">
               <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">Assessment</p>
               <h3 className="font-serif text-lg font-semibold text-[#1a2744] group-hover:text-[#6366f1] transition-colors mb-1">
                 Readiness Snapshot
               </h3>
               <p className="text-gray-600 text-sm">
-                Assess your governance maturity across eight dimensions →
+                Assess governance maturity →
+              </p>
+            </Link>
+            <Link to="/cases" className="group">
+              <p className="text-xs tracking-widest text-[#6366f1] uppercase mb-2">Portfolio</p>
+              <h3 className="font-serif text-lg font-semibold text-[#1a2744] group-hover:text-[#6366f1] transition-colors mb-1">
+                Case Studies
+              </h3>
+              <p className="text-gray-600 text-sm">
+                See engagement examples →
               </p>
             </Link>
             <Link to="/research" className="group">
@@ -109,7 +124,7 @@ const Home = () => {
                 Governance Briefings
               </h3>
               <p className="text-gray-600 text-sm">
-                Case studies translating incidents into controls →
+                Incidents into controls →
               </p>
             </Link>
             <Link to="/library" className="group">
@@ -118,7 +133,7 @@ const Home = () => {
                 Governance Library
               </h3>
               <p className="text-gray-600 text-sm">
-                Frameworks, regulations, and standards →
+                Frameworks & standards →
               </p>
             </Link>
           </div>
