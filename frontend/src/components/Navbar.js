@@ -9,6 +9,7 @@ const Navbar = () => {
     { path: '/tool', label: 'TOOL' },
     { path: '/faq', label: 'FAQ' },
     { path: '/research', label: 'RESEARCH' },
+    { path: '/library', label: 'LIBRARY' },
     { path: '/about', label: 'ABOUT' },
     { path: '/connect', label: 'CONNECT' },
   ];
