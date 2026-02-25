@@ -180,6 +180,67 @@ async def delete_publication(pub_id: str):
         raise HTTPException(status_code=404, detail="Publication not found")
     return {"status": "deleted"}
 
+# ─── Email Functions ───
+
+async def send_email(to: list, subject: str, html: str):
+    if not resend.api_key:
+        logger.warning("No RESEND_API_KEY configured, skipping email")
+        return
+    try:
+        params = {"from": SENDER_EMAIL, "to": to, "subject": subject, "html": html}
+        await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Email sent to {to}")
+    except Exception as e:
+        logger.error(f"Failed to send email: {e}")
+
+def booking_confirmation_html(booking):
+    return f"""
+    <div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px;color:#1a2744">
+      <h2 style="margin:0 0 8px;font-size:22px">Booking Confirmed</h2>
+      <p style="color:#666;margin:0 0 24px;font-size:14px">Your governance debrief has been confirmed.</p>
+      <div style="background:#f8f9fc;border-radius:12px;padding:20px;margin-bottom:24px">
+        <p style="margin:0 0 8px"><strong>Date:</strong> {booking['date']}</p>
+        <p style="margin:0 0 8px"><strong>Time:</strong> {booking['time']} (Eastern)</p>
+        {f"<p style='margin:0 0 8px'><strong>Topic:</strong> {booking['topic']}</p>" if booking.get('topic') else ""}
+      </div>
+      <p style="color:#666;font-size:14px;margin:0 0 8px">A calendar invite or additional details will follow shortly.</p>
+      <p style="color:#666;font-size:14px;margin:0">— Martin Lepage, PhD</p>
+      <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0"/>
+      <p style="color:#999;font-size:12px;margin:0">AI Governance Practice &amp; Research</p>
+    </div>"""
+
+def booking_cancellation_html(booking):
+    return f"""
+    <div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px;color:#1a2744">
+      <h2 style="margin:0 0 8px;font-size:22px">Booking Update</h2>
+      <p style="color:#666;margin:0 0 24px;font-size:14px">Unfortunately, the requested time slot is no longer available.</p>
+      <div style="background:#f8f9fc;border-radius:12px;padding:20px;margin-bottom:24px">
+        <p style="margin:0 0 8px"><strong>Requested date:</strong> {booking['date']}</p>
+        <p style="margin:0 0 8px"><strong>Requested time:</strong> {booking['time']} (Eastern)</p>
+      </div>
+      <p style="color:#666;font-size:14px;margin:0 0 8px">Please visit the booking page to select a new time, or reply to this email to coordinate directly.</p>
+      <p style="color:#666;font-size:14px;margin:0">— Martin Lepage, PhD</p>
+      <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0"/>
+      <p style="color:#999;font-size:12px;margin:0">AI Governance Practice &amp; Research</p>
+    </div>"""
+
+def new_booking_notification_html(booking):
+    return f"""
+    <div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px;color:#1a2744">
+      <h2 style="margin:0 0 8px;font-size:22px">New Booking Request</h2>
+      <p style="color:#666;margin:0 0 24px;font-size:14px">A new debrief has been requested.</p>
+      <div style="background:#f8f9fc;border-radius:12px;padding:20px;margin-bottom:24px">
+        <p style="margin:0 0 8px"><strong>Name:</strong> {booking['name']}</p>
+        <p style="margin:0 0 8px"><strong>Email:</strong> {booking['email']}</p>
+        {f"<p style='margin:0 0 8px'><strong>Organization:</strong> {booking['organization']}</p>" if booking.get('organization') else ""}
+        <p style="margin:0 0 8px"><strong>Date:</strong> {booking['date']}</p>
+        <p style="margin:0 0 8px"><strong>Time:</strong> {booking['time']} (Eastern)</p>
+        {f"<p style='margin:0 0 8px'><strong>Topic:</strong> {booking['topic']}</p>" if booking.get('topic') else ""}
+        {f"<p style='margin:0 0 8px'><strong>Current state:</strong> {booking['current_state']}</p>" if booking.get('current_state') else ""}
+      </div>
+      <p style="color:#666;font-size:14px;margin:0">Log in to the admin panel to confirm or reschedule.</p>
+    </div>"""
+
 # ─── Bookings ───
 
 @api_router.get("/bookings", response_model=List[Booking])
@@ -194,6 +255,13 @@ async def create_booking(input: BookingCreate):
     booking = Booking(**input.model_dump())
     doc = booking.model_dump()
     await database.bookings.insert_one(doc)
+    # Notify admin of new booking
+    if ADMIN_EMAILS:
+        asyncio.create_task(send_email(
+            ADMIN_EMAILS,
+            f"New Booking: {booking.name} — {booking.date} {booking.time}",
+            new_booking_notification_html(doc)
+        ))
     return booking
 
 @api_router.put("/bookings/{booking_id}/status")
@@ -206,6 +274,21 @@ async def update_booking_status(booking_id: str, input: BookingStatusUpdate):
     )
     if not result:
         raise HTTPException(status_code=404, detail="Booking not found")
+    # Send email to client
+    client_email = result.get('email')
+    if client_email:
+        if input.status == 'confirmed':
+            asyncio.create_task(send_email(
+                [client_email],
+                "Governance Debrief Confirmed",
+                booking_confirmation_html(result)
+            ))
+        elif input.status == 'cancelled':
+            asyncio.create_task(send_email(
+                [client_email],
+                "Booking Update — New Time Needed",
+                booking_cancellation_html(result)
+            ))
     return result
 
 @api_router.delete("/bookings/{booking_id}")
