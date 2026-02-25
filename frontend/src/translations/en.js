@@ -1,5 +1,4 @@
 export const en = {
-  // Navigation
   nav: {
     home: 'HOME',
     services: 'SERVICES',
@@ -11,7 +10,6 @@ export const en = {
     connect: 'CONNECT'
   },
 
-  // Home page
   home: {
     title: 'AI Governance',
     subtitle: 'Strategy & Oversight',
@@ -27,42 +25,50 @@ export const en = {
       controlDesign: 'Control Design',
       controlDesignDesc: 'Operational controls teams can actually execute'
     },
-    starterKit: {
-      title: 'AI Governance Starter Kit',
-      description: 'Free templates to begin classifying risk and building controls today.',
-      included: "What's included:",
-      riskTemplate: 'Risk Tiering Template (Excel)',
-      checklist: 'AI Governance Checklist (PDF)',
-      controlGuide: 'Control Mapping Guide',
-      emailPlaceholder: 'Enter your email',
-      getKit: 'Get the Kit',
-      sent: 'Sent!',
-      noSpam: 'Opens your email client. No spam, just governance resources.'
-    },
     sections: {
       assessment: 'Assessment',
       readinessSnapshot: 'Readiness Snapshot',
-      assessMaturity: 'Assess governance maturity →',
+      assessMaturity: 'Assess governance maturity \u2192',
       portfolio: 'Portfolio',
       caseStudies: 'Case Studies',
-      seeExamples: 'See engagement examples →',
+      seeExamples: 'See engagement examples \u2192',
       research: 'Research',
       briefings: 'Governance Briefings',
-      incidentsToControls: 'Incidents into controls →',
+      incidentsToControls: 'Incidents into controls \u2192',
       resources: 'Resources',
       library: 'Governance Library',
-      frameworksStandards: 'Frameworks & standards →'
+      frameworksStandards: 'Frameworks & standards \u2192'
     }
   },
 
-  // Services page
+  starterKit: {
+    title: 'AI Governance Starter Kit',
+    description: 'Free templates to begin classifying risk and building controls today.',
+    included: "What's included:",
+    riskTemplate: 'Risk Tiering Template (Excel)',
+    checklist: 'AI Governance Checklist (PDF)',
+    controlGuide: 'Control Mapping Guide',
+    emailPlaceholder: 'Enter your email',
+    getKit: 'Get the Kit',
+    sent: 'Sent!',
+    noSpam: 'Opens your email client. No spam, just governance resources.',
+    emailSubject: 'Governance Starter Kit Request',
+    emailBody: 'Please send me the AI Governance Starter Kit.'
+  },
+
   services: {
     title: 'Services',
     description: 'AI governance systems that remain usable day to day and remain defensible under audit and procurement review.',
-    keywords: 'STRATEGY · CONTROLS · EVIDENCE · OVERSIGHT',
+    keywords: 'STRATEGY \u00B7 CONTROLS \u00B7 EVIDENCE \u00B7 OVERSIGHT',
     whatIDeliver: 'What I deliver',
-    deliverDescription: 'I help organizations operationalize AI governance: risk classification that people can apply, controls that teams can execute, and documentation that supports review by procurement, internal audit, compliance, and customers.',
-    deliverDescription2: 'Engagements are designed to fit your constraints. You leave with a working model, clear decision rights, and an evidence trail that is practical to maintain.',
+    deliverP1: 'I help organizations operationalize AI governance:',
+    riskClassification: 'risk classification',
+    deliverP1b: 'that people can apply,',
+    controls: 'controls',
+    deliverP1c: 'that teams can execute, and',
+    documentation: 'documentation',
+    deliverP1d: 'that supports review by procurement, internal audit, compliance, and customers.',
+    deliverP2: 'Engagements are designed to fit your constraints. You leave with a working model, clear decision rights, and an evidence trail that is practical to maintain.',
     viewServiceMenu: 'View the Service Menu',
     bookConsultation: 'Book a debrief',
     coreOffers: 'Core offers',
@@ -109,15 +115,86 @@ export const en = {
     }
   },
 
-  // Tool page
+  serviceMenu: {
+    title: 'Service Menu',
+    description: 'Packages designed for review readiness: clear scope, concrete outputs, and documentation that remains maintainable.',
+    keywords: 'PACKAGES \u00B7 DELIVERABLES \u00B7 ADD ONS',
+    bestFor: 'Best for',
+    deliverables: 'Deliverables',
+    whatItProduces: 'What it produces',
+    discussPackage: 'Discuss this package',
+    nextPackage: 'Next package',
+    book30Min: 'Book a 30 minute debrief',
+    assessReadiness: 'Assess readiness',
+    engagementDrivers: 'Engagement drivers',
+    engagementDriversDesc: 'Engagement design adapts to your environment. These drivers shape scope and effort.',
+    packages: {
+      p1: {
+        title: 'Package 1: Governance Foundation',
+        bestFor: 'organizations establishing governance for the first time or consolidating governance across teams.',
+        deliverables: [
+          'AI use case and vendor inventory starter',
+          'Risk tiering criteria with examples',
+          'Decision rights and approval flow',
+          'Governance cadence: meeting model, owners, and upkeep tasks'
+        ],
+        produces: [
+          'A working governance model teams can use immediately',
+          'Role clarity for procurement and audit conversations',
+          'A defensible baseline for review and escalation'
+        ]
+      },
+      p2: {
+        title: 'Package 2: Controls and Evidence Pack',
+        bestFor: 'organizations preparing for procurement scrutiny, customer questionnaires, internal audit review, or regulator engagement.',
+        deliverables: [
+          'Control register mapped to your risk tiers',
+          'Evaluation expectations: testing, monitoring, and thresholds',
+          'Vendor review questions and evidence checklist',
+          'Decision log template and documentation packet outline'
+        ],
+        produces: [
+          'Procurement ready documentation structure',
+          'Audit ready evidence expectations',
+          'Clear control ownership and upkeep responsibilities'
+        ]
+      },
+      p3: {
+        title: 'Package 3: Oversight Retainer',
+        bestFor: 'organizations with active AI delivery who want stable oversight, clear decisions, and current documentation.',
+        deliverables: [
+          'Recurring governance and risk review support',
+          'Decision log stewardship and evidence upkeep cadence',
+          'Control roadmap updates aligned to delivery realities',
+          'Procurement and audit support for specific reviews'
+        ],
+        produces: [
+          'Stable oversight without slowing delivery',
+          'Clear documentation as systems change',
+          'Executive ready summaries and next steps'
+        ]
+      }
+    },
+    drivers: {
+      useCase: {
+        title: 'Use case portfolio',
+        description: 'How many systems, vendors, and data pathways are in scope, and how quickly they change.'
+      },
+      review: {
+        title: 'Review expectations',
+        description: 'Procurement questionnaires, audit protocols, and customer requirements that shape evidence structure.'
+      },
+      decision: {
+        title: 'Decision authority',
+        description: 'The level of autonomy, sensitivity, and impact assigned to AI supported decisions.'
+      }
+    }
+  },
+
   tool: {
     title: 'AI Governance Readiness Snapshot',
     description: 'Choose your sector of operation to assess your readiness to audits, regulators, and risk assessment.',
-    steps: {
-      sector: 'SECTOR',
-      readiness: 'READINESS',
-      results: 'RESULTS'
-    },
+    steps: { sector: 'SECTOR', readiness: 'READINESS', results: 'RESULTS' },
     step1: {
       title: 'Choose your sector',
       description: 'This tailors language and the expected evidence burden.'
@@ -145,25 +222,15 @@ export const en = {
       documentation: 'Is governance documentation current and accessible?'
     },
     answers: {
-      no: 'No',
-      partial: 'Partial',
-      yes: 'Yes',
-      informal: 'Informal',
-      formal: 'Formal',
-      some: 'Some',
-      adhoc: 'Ad-hoc',
-      systematic: 'Systematic',
-      basic: 'Basic',
-      structured: 'Structured',
-      occasional: 'Occasional',
-      established: 'Established',
-      outdated: 'Outdated',
-      current: 'Current'
+      no: 'No', partial: 'Partial', yes: 'Yes',
+      informal: 'Informal', formal: 'Formal',
+      some: 'Some', adhoc: 'Ad-hoc', systematic: 'Systematic',
+      basic: 'Basic', structured: 'Structured',
+      occasional: 'Occasional', established: 'Established',
+      outdated: 'Outdated', current: 'Current'
     },
     buttons: {
-      back: 'Back',
-      reset: 'Reset',
-      next: 'Next',
+      back: 'Back', reset: 'Reset', next: 'Next',
       seeResults: 'See Results',
       selectSector: 'Select a sector to continue'
     },
@@ -175,20 +242,26 @@ export const en = {
       bookDebrief: 'Book a 30 min debrief',
       viewServices: 'View services',
       retake: 'Retake',
-      risks: {
-        low: 'Low Risk',
-        moderate: 'Moderate Risk',
-        elevated: 'Elevated Risk',
-        high: 'High Risk'
+      risks: { low: 'Low Risk', moderate: 'Moderate Risk', elevated: 'Elevated Risk', high: 'High Risk' },
+      levels: { strong: 'Strong', developing: 'Developing', early: 'Early', beginning: 'Beginning' },
+      recommendations: {
+        high: 'Your governance foundation is solid. Consider the Oversight Retainer to maintain momentum and optimize evidence collection.',
+        moderate: 'Good progress. The Controls and Evidence Pack can fill critical gaps and prepare you for audit.',
+        elevated: 'Start with the Governance Foundation package to establish basics and define risk tiering.',
+        low: 'Begin with basic inventory. The Governance Foundation package provides a complete starting point.'
+      },
+      nextSteps: {
+        low: ['Start with the Governance Foundation package', 'Create a use case inventory', 'Define risk tiering criteria'],
+        moderate: ['Consider the Controls and Evidence Pack', 'Document decision rights and approvals', 'Establish recurring governance cadence'],
+        high: ['Explore the Oversight Retainer', 'Optimize evidence collection', 'Prepare for advanced audit scenarios']
       }
     }
   },
 
-  // About page
   about: {
     title: 'About Me',
     description: 'Governance that is usable under real constraints: decision rights, controls, and documentation that holds under review.',
-    keywords: 'PRACTICE · APPROACH · BACKGROUND',
+    keywords: 'PRACTICE \u00B7 APPROACH \u00B7 BACKGROUND',
     practiceTitle: 'What AI Governance Practice means',
     practiceP1: "AI governance isn't a policy PDF.",
     practiceP1b: 'It is a system people can actually use: a way to classify risk, apply the right controls, define who owns decisions, and keep a record of what was decided, why, and by whom.',
@@ -204,28 +277,36 @@ export const en = {
     viewPortfolio: 'View Portfolio & Publications',
     featuredResearch: 'Featured Research',
     sealedCard: 'The Sealed Card Protocol',
-    sealedCardDesc: 'A framework for analyzing how legitimacy is established in the context of generative AI—examining mediation, authenticity, and accountability at the seam where evaluation shifts from artifact to pathway.',
+    sealedCardDesc: 'A framework for analyzing how legitimacy is established in the context of generative AI\u2014examining mediation, authenticity, and accountability at the seam where evaluation shifts from artifact to pathway.',
     readProtocol: 'Read the Protocol'
   },
 
-  // Connect page
   connect: {
     title: 'Connect',
     description: 'AI governance advisory, audit and procurement readiness assessment, or a focused debrief on your governance posture.',
-    keywords: 'ADVISORY · ASSESSMENT · DEBRIEF',
-    tabs: {
-      message: 'Send Message',
-      booking: 'Book Debrief'
-    },
+    keywords: 'ADVISORY \u00B7 ASSESSMENT \u00B7 DEBRIEF',
+    tabs: { message: 'Send Message', booking: 'Book Debrief' },
+    messageTitle: 'Send a message',
+    messageSubtitle: 'General inquiries about AI governance services',
     form: {
       name: 'Name',
       email: 'Email',
       organization: 'Organization',
       lookingFor: 'What are you looking for?',
+      selectTopic: 'Select a topic...',
       context: 'Context',
       contextPlaceholder: 'AI use cases in scope, governance maturity, audit timelines, specific concerns...',
       submit: 'Open email draft',
       opening: 'Opening email...'
+    },
+    formTopics: {
+      foundation: 'Governance Foundation Setup',
+      riskClassification: 'Risk Classification & Tiering',
+      auditReadiness: 'Audit/Procurement Readiness',
+      vendorAssessment: 'Vendor AI Assessment',
+      controlsDesign: 'Controls & Evidence Design',
+      oversightRetainer: 'Ongoing Oversight Retainer',
+      other: 'Other'
     },
     booking: {
       title: 'Book a 30-Minute Debrief',
@@ -257,18 +338,17 @@ export const en = {
       riskFrameworkDesc: 'Classification criteria for AI use cases by impact and sensitivity.',
       vendorQuestions: 'Vendor AI Review Questions',
       vendorQuestionsDesc: 'Due diligence questionnaire for third-party AI procurement.',
-      request: 'Request →',
+      request: 'Request \u2192',
       directContact: 'Direct contact',
       notSure: 'Not sure where to start?',
-      takeSnapshot: 'Take the Readiness Snapshot →'
+      takeSnapshot: 'Take the Readiness Snapshot \u2192'
     }
   },
 
-  // Cases page
   cases: {
     title: 'Case Studies',
     description: 'Selected engagements illustrating governance challenges and solutions across sectors. Details anonymized to protect client confidentiality.',
-    keywords: 'FINANCIAL SERVICES · HEALTHCARE · ENTERPRISE · PUBLIC SECTOR',
+    keywords: 'FINANCIAL SERVICES \u00B7 HEALTHCARE \u00B7 ENTERPRISE \u00B7 PUBLIC SECTOR',
     challenge: 'Challenge',
     approach: 'Approach',
     outcomes: 'Outcomes',
@@ -279,12 +359,146 @@ export const en = {
     bookDebrief: 'Book a Debrief'
   },
 
-  // Footer
-  footer: {
-    copyright: '© 2026 Martin Lepage, PhD. AI Governance Practice & Research'
+  research: {
+    title: 'Research',
+    description: 'This research translates AI governance pressure into operational clarity: controls, lifecycle gates, procurement artifacts, and audit-ready evidence. Each briefing focuses on the practical decisions institutions must make when deploying, buying, or overseeing AI systems.',
+    howItWorks: 'How this research works',
+    signal: 'Signal',
+    pressure: 'Pressure',
+    control: 'Control',
+    artifact: 'Artifact',
+    evidence: 'Evidence',
+    howP1: 'Governance pressure rarely appears as theory. It appears as audit requests, procurement questionnaires, regulatory expectations, and board oversight.',
+    howP2: 'Each briefing identifies the operational pressure, clarifies the control required, and specifies the documentation necessary to make that control inspectable. The result is governance you can show, not just describe.',
+    featuredFramework: 'Featured framework',
+    featuredFrameworkSubtitle: 'From policy to deployable controls: the AI Governance Engine',
+    featuredFrameworkDesc: 'A structured operating model that translates governance commitments into measurable controls, lifecycle gates, decision rights, and verification evidence. This framework informs the analytical approach used throughout this research.',
+    professionalNote: 'Professional note:',
+    professionalNoteText: 'The Engine itself is a proprietary consulting instrument and is not publicly deployed. Research publications reference its conceptual structure without exposing internal scoring models, implementation logic, or client-specific configurations.',
+    operationalContexts: 'Operational contexts',
+    filterByContext: 'Filter briefings by context',
+    all: 'All',
+    briefings: 'Briefings',
+    context: 'Context'
   },
 
-  // Common
+  library: {
+    title: 'AI Governance Library',
+    description: 'A curated reference hub: frameworks, policy sources, standards, and ongoing developments for AI governance practitioners. These resources inform the analytical approach used in client engagements.',
+    keywords: 'FRAMEWORKS \u00B7 REGULATIONS \u00B7 STANDARDS \u00B7 DEVELOPMENTS',
+    sections: {
+      foundational: 'Foundational Frameworks',
+      regulatory: 'Regulatory & Policy Sources',
+      standards: 'Standards & Technical Bodies',
+      ongoing: 'Ongoing Developments'
+    },
+    note: 'Note:',
+    noteText: 'This library is curated for AI governance practitioners. Links are provided for reference and do not constitute endorsement. Always verify current versions and applicability to your jurisdiction.'
+  },
+
+  faq: {
+    title: 'FAQ',
+    description: 'Practical answers on AI risk classification, governance operations, audit readiness, vendor oversight, and evidence architecture.',
+    keywords: 'GOVERNANCE \u00B7 CONTROLS \u00B7 EVIDENCE \u00B7 OPERATIONS',
+    stillHaveQuestions: 'Still have questions?',
+    stillHaveQuestionsDesc: 'Book a 30-minute debrief to discuss your specific governance challenges.',
+    bookDebrief: 'Book a Debrief',
+    assessReadiness: 'Assess readiness',
+    viewServices: 'View services',
+    requestAuditChecklist: 'Request the Audit Checklist',
+    questions: [
+      {
+        question: "What is AI Governance Practice?",
+        answer: "AI governance practice is the operational system that makes AI use legible, controllable, and defensible in your organization. It's not a policy document that sits in a drawer. It's a set of working structures: how you classify risk, who approves what, what controls apply at each tier, and how you maintain evidence that decisions were made responsibly. The goal is a system people can actually follow while they work\u2014not a compliance burden that gets ignored until something goes wrong."
+      },
+      {
+        question: "What's the difference between AI governance and AI ethics?",
+        answer: "AI ethics is about values and principles\u2014what you believe AI should and shouldn't do. AI governance is about operationalization\u2014how you translate those principles into decision rights, controls, and evidence. Ethics tells you that fairness matters. Governance tells you who reviews the fairness metrics, what thresholds trigger escalation, and where the documentation lives. Both matter, but governance is what makes ethics enforceable."
+      },
+      {
+        question: "What do auditors and procurement teams actually want?",
+        answer: "They want to feel confident saying yes. They're looking for evidence that someone was responsible on purpose: documented risk classification, clear decision authority, defined controls, testing records, and monitoring plans. They want to see that you knew what could go wrong and built structures to catch it. The key insight is that auditors don't evaluate intentions\u2014they evaluate artifacts. If you can't produce the evidence, the governance didn't happen.",
+        cta: 'requestAuditChecklist'
+      },
+      {
+        question: "How do you handle third-party/vendor AI?",
+        answer: "Vendor AI requires the same governance discipline as internal AI, but with additional controls around visibility, contractual requirements, and reassessment triggers. We build vendor review frameworks that include: due diligence questionnaires, evaluation criteria mapped to your risk tiers, contractual language for auditability and change notification, and integration-level monitoring. The goal is leverage\u2014you can say yes to vendors without surrendering your ability to govern what they do inside your organization."
+      },
+      {
+        question: "Will governance slow our teams down?",
+        answer: "Bad governance slows teams down. Good governance accelerates them by removing uncertainty. When teams know the rules\u2014what's allowed, what requires approval, what documentation is expected\u2014they stop negotiating the same questions repeatedly. Governance done right is a guardrail, not a speed bump. It reduces rework, prevents surprise escalations, and builds the audit trail as you go rather than scrambling to reconstruct it later."
+      },
+      {
+        question: "What's a typical engagement look like?",
+        answer: "Most engagements start with a diagnostic: what AI systems exist, what governance structures are in place, and what gaps create risk. Then we build incrementally: risk classification first, then decision rights and approval flows, then controls mapped to tiers, then evidence architecture. The output is a governance operating model your teams can execute. For ongoing support, the Oversight Retainer keeps governance current as your AI portfolio evolves.",
+        cta: 'engagementButtons'
+      },
+      {
+        question: "How do I know if my organization needs AI governance?",
+        answer: "If you're deploying AI systems that affect customers, employees, or business decisions, you need governance. The question isn't whether\u2014it's how much. Start with: Do you have an inventory of AI use cases? Can you classify them by risk? Do you know who can approve what? Can you produce evidence of your controls? If the answer to any of these is 'no' or 'not sure,' governance work is overdue."
+      },
+      {
+        question: "What's the relationship between AI governance and model risk management?",
+        answer: "Model risk management (MRM) is a specific discipline, often required in financial services, focused on the technical validation and monitoring of models. AI governance is broader\u2014it includes MRM but also covers decision rights, procurement, vendor management, documentation standards, and organizational accountability. Think of MRM as one control domain within the larger governance architecture."
+      }
+    ]
+  },
+
+  sealedCard: {
+    researchProtocol: 'RESEARCH PROTOCOL',
+    title: 'The Sealed Card Protocol',
+    subtitle: 'Mediated Legitimacy, Charging, and Governance at the Seam',
+    keywords: 'AI GOVERNANCE \u00B7 LEGITIMACY \u00B7 ACCOUNTABILITY \u00B7 TRACEABILITY',
+    fullDocument: 'Full Protocol Document (PDF)',
+    fullDocumentDesc: 'Read the complete research methodology and findings',
+    introduction: 'Introduction',
+    introP1: 'The Sealed Card Protocol is a framework for analyzing how legitimacy is established and maintained, particularly in the context of generative AI and other forms of mediation. It posits that the',
+    glitch: '"glitch"',
+    introP1b: '\u2014the moment a reader or viewer senses mediation\u2014is a crucial threshold event that can either lead to legitimacy or suspicion.',
+    introP2: 'The core problem identified is not technical capability but rather institutional and cultural struggles around',
+    accountability: 'accountability',
+    introP2b: 'and the conversion of recognition into credit. When mediation becomes detectable, evaluation shifts from the artifact itself to its production pathway.',
+    introP3: 'The protocol rejects a "purity model of authenticity," defining authenticity instead as a',
+    introP3quote: '"socially stabilized reading of mediation as coherent and accountable."',
+    introP3b: 'Legitimacy is the institutional version of this stabilization.',
+    keyConcepts: 'Key Concepts',
+    concepts: [
+      { term: 'Glitch', definition: 'A perceptual threshold, not an error, marking the moment a reader senses mediation and reorients evaluation.' },
+      { term: 'Seam', definition: 'The interface where evaluative attention flips from artifact to pathway.' },
+      { term: 'Charging', definition: 'The social allocation of credibility that allows meaning to adhere under circulation, observed through "anchors."' },
+      { term: 'Anchors', definition: 'Cues that permit inference about duration, intention, and responsibility (material traces, revision chains, community endorsement).' },
+      { term: 'Legibility', definition: 'The degree to which an artifact fits the reading habits of a particular regime; a normative fit.' },
+      { term: 'Pathway Policing', definition: 'Institutions focusing on the authorization and procedure of creation rather than solely on the artifact itself.' }
+    ],
+    methodology: 'Methodology: Three Arms',
+    methodologyDesc: 'The protocol uses a triangulated, practice-based design to make legitimacy conversion observable across different domains:',
+    arms: {
+      artistic: { title: 'Artistic Arm', description: 'Visual analysis and comparative reading of aesthetic cues, particularly in photographic sequences. Examines how "charging" is performed through anchors rather than direct claims. Uses controlled variations to observe how legibility engineering and platform optimization influence pathway inference.' },
+      academic: { title: 'Academic Arm', description: 'Procedural autoethnography constrained by traceability. Examines the production process of academic work itself as a "chain-of-production object." Understands how visibility of mediation affects trust and how traceability can be used for accountability.' },
+      ritual: { title: 'Ritual Arm', description: 'Evidentiary critique comparing proof regimes and understanding how credibility is translated across domains. Uses artifacts to highlight how mismatched proof demands can lead to suspicion. Explores symbolic charge, healing, and ritual practices.' }
+    },
+    governancePrinciples: 'AI Governance Principles Derived',
+    principles: [
+      { title: '1. Legitimacy is pathway authorization under consequence pressure', description: 'Generative AI intensifies this by making mediation more inferable and seams easier to detect. Governance must anticipate the glitch.' },
+      { title: '2. Traceability as accountability instrument', description: 'In AI governance, traceability creates the reconstruction layer that regulators, auditors, and stakeholders demand. Evidence integrity anticipates scrutiny.' },
+      { title: '3. Beyond purity policing to control design', description: 'Focus on responsible practices, clear standards for documentation, and incentive structures that reward accountable procedure rather than punish visible mediation.' },
+      { title: '4. Proof regime alignment', description: 'Proof regime mismatch is a significant driver of suspicion. AI systems must be governed with evidence expectations that match the deployment context.' }
+    ],
+    conclusion: 'Conclusion',
+    conclusionP1: 'Legitimacy is an outcome of pathway authorization under consequence pressure. The Sealed Card Protocol argues for a shift from "purity tests" and moralized pathway policing to developing accountability regimes that:',
+    conclusionItems: [
+      'Evaluate procedure, not just artifacts',
+      'Distribute responsibility proportionally',
+      'Separate epistemic risk management from nostalgia for solitary origin'
+    ],
+    backToResearch: 'Back to Research',
+    aboutAuthor: 'About the Author'
+  },
+
+  footer: {
+    copyright: '\u00A9 2026 Martin Lepage, PhD. AI Governance Practice & Research'
+  },
+
   common: {
     learnMore: 'Learn more',
     viewAll: 'View all',
