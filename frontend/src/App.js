@@ -25,6 +25,7 @@ function App() {
   return (
     <div className="App min-h-screen bg-[#f8f9fc]">
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <main>
           <Routes>
