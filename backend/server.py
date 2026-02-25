@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -10,11 +10,9 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 
-
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection with error handling for Atlas
 mongo_url = os.environ.get('MONGO_URL')
 if not mongo_url:
     raise ValueError("MONGO_URL environment variable is required")
@@ -29,17 +27,13 @@ async def get_database():
         db = client[os.environ.get('DB_NAME', 'ai_governance')]
     return db
 
-# Create the main app without a prefix
 app = FastAPI()
-
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# ─── Models ───
 
-# Define Models
 class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
+    model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -47,48 +41,279 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
+class Publication(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    type: str = ""
+    title: str
+    venue: str = ""
+    year: str = ""
+    description: str = ""
+    link: str = ""
+    internal: bool = False
+    status: str = "published"
+    abstract: str = ""
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
-# Health check endpoint for Kubernetes
+class PublicationCreate(BaseModel):
+    type: str = ""
+    title: str
+    venue: str = ""
+    year: str = ""
+    description: str = ""
+    link: str = ""
+    internal: bool = False
+    status: str = "published"
+    abstract: str = ""
+
+class PublicationUpdate(BaseModel):
+    type: Optional[str] = None
+    title: Optional[str] = None
+    venue: Optional[str] = None
+    year: Optional[str] = None
+    description: Optional[str] = None
+    link: Optional[str] = None
+    internal: Optional[bool] = None
+    status: Optional[str] = None
+    abstract: Optional[str] = None
+
+class Booking(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    email: str
+    organization: str = ""
+    date: str
+    time: str
+    topic: str = ""
+    current_state: str = ""
+    status: str = "pending"
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class BookingCreate(BaseModel):
+    name: str
+    email: str
+    organization: str = ""
+    date: str
+    time: str
+    topic: str = ""
+    current_state: str = ""
+
+class BookingStatusUpdate(BaseModel):
+    status: str
+
+# ─── Health ───
+
 @api_router.get("/health")
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
 
 @app.get("/health")
 async def root_health_check():
-    """Root-level health check for Kubernetes probes"""
     return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
+
+@api_router.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+# ─── Status (existing) ───
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
     database = await get_database()
     status_dict = input.model_dump()
     status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
     doc = status_obj.model_dump()
     doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await database.status_checks.insert_one(doc)
+    await database.status_checks.insert_one(doc)
     return status_obj
 
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
     database = await get_database()
-    # Exclude MongoDB's _id field from the query results
     status_checks = await database.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
     for check in status_checks:
         if isinstance(check['timestamp'], str):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
     return status_checks
 
-# Include the router in the main app
+# ─── Publications ───
+
+@api_router.get("/publications", response_model=List[Publication])
+async def get_publications():
+    database = await get_database()
+    pubs = await database.publications.find({}, {"_id": 0}).to_list(100)
+    return pubs
+
+@api_router.post("/publications", response_model=Publication)
+async def create_publication(input: PublicationCreate):
+    database = await get_database()
+    pub = Publication(**input.model_dump())
+    doc = pub.model_dump()
+    await database.publications.insert_one(doc)
+    return pub
+
+@api_router.put("/publications/{pub_id}", response_model=Publication)
+async def update_publication(pub_id: str, input: PublicationUpdate):
+    database = await get_database()
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await database.publications.find_one_and_update(
+        {"id": pub_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Publication not found")
+    return result
+
+@api_router.delete("/publications/{pub_id}")
+async def delete_publication(pub_id: str):
+    database = await get_database()
+    result = await database.publications.delete_one({"id": pub_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Publication not found")
+    return {"status": "deleted"}
+
+# ─── Bookings ───
+
+@api_router.get("/bookings", response_model=List[Booking])
+async def get_bookings():
+    database = await get_database()
+    bookings = await database.bookings.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    return bookings
+
+@api_router.post("/bookings", response_model=Booking)
+async def create_booking(input: BookingCreate):
+    database = await get_database()
+    booking = Booking(**input.model_dump())
+    doc = booking.model_dump()
+    await database.bookings.insert_one(doc)
+    return booking
+
+@api_router.put("/bookings/{booking_id}/status")
+async def update_booking_status(booking_id: str, input: BookingStatusUpdate):
+    database = await get_database()
+    if input.status not in ["pending", "confirmed", "cancelled"]:
+        raise HTTPException(status_code=400, detail="Invalid status")
+    result = await database.bookings.find_one_and_update(
+        {"id": booking_id}, {"$set": {"status": input.status}}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return result
+
+@api_router.delete("/bookings/{booking_id}")
+async def delete_booking(booking_id: str):
+    database = await get_database()
+    result = await database.bookings.delete_one({"id": booking_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    return {"status": "deleted"}
+
+# ─── Booked dates endpoint (public) ───
+
+@api_router.get("/bookings/booked-slots")
+async def get_booked_slots():
+    """Return dates/times that are already booked (for calendar display)"""
+    database = await get_database()
+    bookings = await database.bookings.find(
+        {"status": {"$ne": "cancelled"}},
+        {"_id": 0, "date": 1, "time": 1}
+    ).to_list(500)
+    return bookings
+
+# ─── Seed Data ───
+
+SEED_PUBLICATIONS = [
+    {
+        "id": "pub-sealed-card",
+        "type": "Protocol",
+        "title": "The Sealed Card Protocol: Mediated Legitimacy, Charging, and Governance at the Seam",
+        "venue": "Research Protocol",
+        "year": "2024",
+        "description": "A framework for analyzing how legitimacy is established in the context of generative AI and mediation.",
+        "link": "/sealed-card",
+        "internal": True,
+        "status": "published",
+        "abstract": ""
+    },
+    {
+        "id": "pub-incident-analysis",
+        "type": "Briefing Series",
+        "title": "AI Governance Incident Analysis",
+        "venue": "Research Briefings",
+        "year": "2024",
+        "description": "Seven case studies translating real AI incidents into operational controls: Amazon hiring bias, Clearview data provenance, Zillow forecasting, Dutch welfare scandal, COMPAS, Samsung leaks, Air Canada chatbot.",
+        "link": "/research",
+        "internal": True,
+        "status": "published",
+        "abstract": ""
+    },
+    {
+        "id": "pub-readiness-snapshot",
+        "type": "Framework",
+        "title": "AI Governance Readiness Snapshot",
+        "venue": "Assessment Tool",
+        "year": "2024",
+        "description": "Interactive assessment tool measuring governance maturity across eight dimensions: inventory, risk tiering, decision rights, controls, evidence, vendor review, cadence, and documentation.",
+        "link": "/tool",
+        "internal": True,
+        "status": "published",
+        "abstract": ""
+    }
+]
+
+SEED_WORKING_PAPERS = [
+    {
+        "id": "wp-risk-tiering",
+        "type": "Working Paper",
+        "title": "Risk Tiering for AI Systems: A Practical Framework",
+        "venue": "",
+        "year": "",
+        "description": "Structured criteria for classifying AI use cases by impact, sensitivity, autonomy, and exposure. Includes worked examples across sectors.",
+        "link": "",
+        "internal": False,
+        "status": "in_development",
+        "abstract": "Structured criteria for classifying AI use cases by impact, sensitivity, autonomy, and exposure. Includes worked examples across sectors."
+    },
+    {
+        "id": "wp-evidence-architecture",
+        "type": "Working Paper",
+        "title": "Evidence Architecture for AI Governance",
+        "venue": "",
+        "year": "",
+        "description": "How to design documentation systems that survive audit scrutiny: versioning, ownership, change logs, and reconstruction capability.",
+        "link": "",
+        "internal": False,
+        "status": "in_development",
+        "abstract": "How to design documentation systems that survive audit scrutiny: versioning, ownership, change logs, and reconstruction capability."
+    },
+    {
+        "id": "wp-vendor-due-diligence",
+        "type": "Working Paper",
+        "title": "Vendor AI Due Diligence: A Procurement Framework",
+        "venue": "",
+        "year": "",
+        "description": "Questionnaire design, evaluation criteria, and contractual requirements for third-party AI systems.",
+        "link": "",
+        "internal": False,
+        "status": "in_development",
+        "abstract": "Questionnaire design, evaluation criteria, and contractual requirements for third-party AI systems."
+    }
+]
+
+async def seed_publications():
+    database = await get_database()
+    count = await database.publications.count_documents({})
+    if count == 0:
+        all_pubs = SEED_PUBLICATIONS + SEED_WORKING_PAPERS
+        for pub in all_pubs:
+            pub["created_at"] = datetime.now(timezone.utc).isoformat()
+        await database.publications.insert_many(all_pubs)
+        logger.info(f"Seeded {len(all_pubs)} publications")
+
+# ─── App Setup ───
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -99,7 +324,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -108,8 +332,8 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_db_client():
-    """Initialize database connection on startup"""
     await get_database()
+    await seed_publications()
     logger.info("Database connection initialized")
 
 @app.on_event("shutdown")
