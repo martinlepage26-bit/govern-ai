@@ -1,494 +1,283 @@
-import { useState } from 'react';
-import { Lock, FileText, Plus, Download, Upload, Trash2, Save, Package, CheckCircle, FolderOpen, Mail } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays } from 'lucide-react';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
-const DOCSORTER_ZIP_URL = "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/j7r3jse5_DocSorter_Local_PreProcessor_Windows.zip";
 
 const Admin = () => {
+  const { t } = useLanguage();
   const [authenticated, setAuthenticated] = useState(false);
   const [passphrase, setPassphrase] = useState('');
-  const [error, setError] = useState('');
-  const [drafts, setDrafts] = useState([]);
-  const [activeTab, setActiveTab] = useState('posts');
-  const [currentDraft, setCurrentDraft] = useState({
-    title: '',
-    date: '',
-    type: 'briefing',
-    context: 'regulated',
-    abstract: '',
-    content: ''
-  });
+  const [activeTab, setActiveTab] = useState('publications');
 
-  const contexts = [
-    { id: 'regulated', label: 'Regulated Systems' },
-    { id: 'enterprise-saas', label: 'Enterprise SaaS' },
-    { id: 'procurement', label: 'Procurement & Vendor Risk' },
-    { id: 'public-sector', label: 'Public Sector & Due Process' },
-    { id: 'financial', label: 'Financial & Capital Systems' },
-    { id: 'governance-architecture', label: 'Governance Architecture' }
-  ];
+  // Publications state
+  const [publications, setPublications] = useState([]);
+  const [editingPub, setEditingPub] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [pubForm, setPubForm] = useState({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' });
+
+  // Bookings state
+  const [bookings, setBookings] = useState([]);
+
+  const loadPublications = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/publications`);
+      const data = await res.json();
+      setPublications(data);
+    } catch (e) { /* silent */ }
+  }, []);
+
+  const loadBookings = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/bookings`);
+      const data = await res.json();
+      setBookings(data);
+    } catch (e) { /* silent */ }
+  }, []);
+
+  useEffect(() => {
+    if (authenticated) {
+      loadPublications();
+      loadBookings();
+    }
+  }, [authenticated, loadPublications, loadBookings]);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (passphrase === ADMIN_PASSPHRASE) {
-      setAuthenticated(true);
-      setError('');
-    } else {
-      setError('Invalid passphrase');
-    }
+    if (passphrase === ADMIN_PASSPHRASE) setAuthenticated(true);
   };
 
-  const handleLogout = () => {
-    setAuthenticated(false);
-    setPassphrase('');
+  // Publication CRUD
+  const handlePubSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (editingPub) {
+        await fetch(`${API_URL}/api/publications/${editingPub.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(pubForm)
+        });
+      } else {
+        await fetch(`${API_URL}/api/publications`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(pubForm)
+        });
+      }
+      setShowForm(false);
+      setEditingPub(null);
+      setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' });
+      loadPublications();
+    } catch (e) { /* silent */ }
   };
 
-  const handleSaveDraft = () => {
-    if (!currentDraft.title || !currentDraft.date) {
-      setError('Title and date are required');
-      return;
-    }
-    const newDraft = {
-      ...currentDraft,
-      id: `draft-${Date.now()}`
-    };
-    setDrafts([...drafts, newDraft]);
-    setCurrentDraft({
-      title: '',
-      date: '',
-      type: 'briefing',
-      context: 'regulated',
-      abstract: '',
-      content: ''
+  const handleEditPub = (pub) => {
+    setEditingPub(pub);
+    setPubForm({ type: pub.type, title: pub.title, venue: pub.venue, year: pub.year, description: pub.description, link: pub.link, internal: pub.internal, status: pub.status, abstract: pub.abstract || '' });
+    setShowForm(true);
+  };
+
+  const handleDeletePub = async (id) => {
+    if (!window.confirm(t.admin.deleteConfirm)) return;
+    await fetch(`${API_URL}/api/publications/${id}`, { method: 'DELETE' });
+    loadPublications();
+  };
+
+  const handleBookingStatus = async (id, status) => {
+    await fetch(`${API_URL}/api/bookings/${id}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
     });
-    setError('');
+    loadBookings();
   };
 
-  const handleDeleteDraft = (id) => {
-    setDrafts(drafts.filter(d => d.id !== id));
+  const handleDeleteBooking = async (id) => {
+    await fetch(`${API_URL}/api/bookings/${id}`, { method: 'DELETE' });
+    loadBookings();
   };
 
-  const handleExport = () => {
-    const dataStr = JSON.stringify(drafts, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'posts.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImport = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          const imported = JSON.parse(event.target.result);
-          setDrafts(imported);
-        } catch (err) {
-          setError('Invalid JSON file');
-        }
-      };
-      reader.readAsText(file);
-    }
-  };
-
-  const handleContactClick = () => {
-    window.location.href = 'mailto:martin@martinlepage.com?subject=DocSorter%20Prep%20Tool%20Question';
-  };
+  const statusColors = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
+  const statusIcons = { pending: Clock, confirmed: CheckCircle, cancelled: XCircle };
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 flex items-center justify-center" data-testid="admin-login">
-        <div className="card max-w-md w-full">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center">
-              <Lock className="w-5 h-5 text-[#6366f1]" />
-            </div>
-            <h1 className="font-serif text-2xl font-semibold text-[#1a2744]">Private Posting</h1>
-          </div>
-          <p className="text-gray-600 text-sm mb-6">
-            Draft and export your papers list as posts.json. Replace assets/data/posts.json with the exported file to publish.
-          </p>
-          <p className="text-xs text-gray-500 mb-6 p-3 bg-[#f8f9fc] rounded-lg">
-            Note: this page is a convenience workflow for a static site. It is not a secure authentication system.
-          </p>
-          
-          <form onSubmit={handleLogin}>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Passphrase</label>
-            <input
-              type="password"
-              value={passphrase}
-              onChange={(e) => setPassphrase(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none mb-4"
-              placeholder="Enter passphrase"
-              data-testid="admin-passphrase"
-            />
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-            <button type="submit" className="btn-primary w-full" data-testid="admin-login-btn">
-              Enter
-            </button>
-          </form>
-        </div>
+      <div className="min-h-screen bg-[#f8f9fc] flex items-center justify-center px-6" data-testid="admin-login">
+        <form onSubmit={handleLogin} className="card max-w-sm w-full text-center">
+          <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-4">Admin</h2>
+          <input type="password" value={passphrase} onChange={(e) => setPassphrase(e.target.value)} placeholder="Passphrase" className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none mb-4" data-testid="admin-passphrase" />
+          <button type="submit" className="btn-primary w-full" data-testid="admin-login-btn">Enter</button>
+        </form>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="admin-page">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-serif text-3xl font-semibold text-[#1a2744]">Admin Panel</h1>
-          <button onClick={handleLogout} className="text-gray-500 hover:text-[#6366f1] text-sm">
-            Log out
-          </button>
-        </div>
+      <div className="max-w-5xl mx-auto">
+        <h1 className="font-serif text-3xl font-semibold text-[#1a2744] mb-6">Admin</h1>
 
-        {/* Tabs */}
         <div className="flex gap-2 mb-8">
-          <button
-            onClick={() => setActiveTab('posts')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              activeTab === 'posts'
-                ? 'bg-[#6366f1] text-white'
-                : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'
-            }`}
-          >
-            <FileText className="w-4 h-4 inline mr-2" />
-            Posts Manager
+          <button onClick={() => setActiveTab('publications')} data-testid="admin-tab-publications"
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'publications' ? 'bg-[#6366f1] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'}`}>
+            <BookOpen className="w-4 h-4" /> {t.admin.publications}
           </button>
-          <button
-            onClick={() => setActiveTab('docsorter')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-              activeTab === 'docsorter'
-                ? 'bg-[#6366f1] text-white'
-                : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'
-            }`}
-          >
-            <Package className="w-4 h-4 inline mr-2" />
-            DocSorter Tool
+          <button onClick={() => setActiveTab('bookings')} data-testid="admin-tab-bookings"
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'bookings' ? 'bg-[#6366f1] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#6366f1]'}`}>
+            <CalendarDays className="w-4 h-4" /> {t.admin.bookings}
+            {bookings.filter(b => b.status === 'pending').length > 0 && (
+              <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">{bookings.filter(b => b.status === 'pending').length}</span>
+            )}
           </button>
         </div>
 
-        {activeTab === 'posts' ? (
-          <>
-            {/* Add/Edit Form */}
-            <div className="card mb-8">
-              <h2 className="font-serif text-xl font-semibold text-[#1a2744] mb-4 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-[#6366f1]" />
-                Add / Edit Paper
-              </h2>
-              
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                  <input
-                    type="text"
-                    value={currentDraft.title}
-                    onChange={(e) => setCurrentDraft({...currentDraft, title: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none"
-                    data-testid="admin-title"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date (YYYY-MM-DD)</label>
-                  <input
-                    type="date"
-                    value={currentDraft.date}
-                    onChange={(e) => setCurrentDraft({...currentDraft, date: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none"
-                    data-testid="admin-date"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                  <select
-                    value={currentDraft.type}
-                    onChange={(e) => setCurrentDraft({...currentDraft, type: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none"
-                  >
-                    <option value="briefing">Briefing</option>
-                    <option value="paper">Paper</option>
-                    <option value="protocol">Protocol</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Context</label>
-                  <select
-                    value={currentDraft.context}
-                    onChange={(e) => setCurrentDraft({...currentDraft, context: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none"
-                  >
-                    {contexts.map(c => (
-                      <option key={c.id} value={c.id}>{c.label}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Abstract</label>
-                <textarea
-                  value={currentDraft.abstract}
-                  onChange={(e) => setCurrentDraft({...currentDraft, abstract: e.target.value})}
-                  rows={2}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none resize-none"
-                  data-testid="admin-abstract"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                <textarea
-                  value={currentDraft.content}
-                  onChange={(e) => setCurrentDraft({...currentDraft, content: e.target.value})}
-                  rows={8}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none resize-none"
-                  data-testid="admin-content"
-                />
-              </div>
-
-              {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-              <button onClick={handleSaveDraft} className="btn-primary flex items-center gap-2">
-                <Save className="w-4 h-4" />
-                Save to drafts
+        {activeTab === 'publications' && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif text-xl font-semibold text-[#1a2744]">{t.admin.publications}</h2>
+              <button onClick={() => { setShowForm(true); setEditingPub(null); setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' }); }} className="btn-primary flex items-center gap-2 text-sm" data-testid="add-publication-btn">
+                <Plus className="w-4 h-4" /> {t.admin.addPublication}
               </button>
             </div>
 
-            {/* Drafts List */}
-            <div className="card mb-8">
-              <h2 className="font-serif text-xl font-semibold text-[#1a2744] mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#6366f1]" />
-                Current Drafts ({drafts.length})
-              </h2>
-              
-              {drafts.length === 0 ? (
-                <p className="text-gray-500 text-sm">No drafts yet. Add a paper above.</p>
-              ) : (
-                <div className="space-y-2">
-                  {drafts.map((draft) => (
-                    <div key={draft.id} className="flex items-center justify-between p-3 bg-[#f8f9fc] rounded-lg">
-                      <div>
-                        <p className="font-medium text-[#1a2744]">{draft.title}</p>
-                        <p className="text-xs text-gray-500">{draft.date} · {draft.type} · {draft.context}</p>
+            {showForm && (
+              <div className="card mb-6 border-l-4 border-[#6366f1]" data-testid="publication-form">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-semibold text-[#1a2744]">{editingPub ? t.admin.editPublication : t.admin.addPublication}</h3>
+                  <button onClick={() => { setShowForm(false); setEditingPub(null); }} className="p-1 hover:bg-gray-100 rounded"><X className="w-4 h-4 text-gray-500" /></button>
+                </div>
+                <form onSubmit={handlePubSubmit} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.title} *</label>
+                      <input type="text" value={pubForm.title} onChange={e => setPubForm(p => ({ ...p, title: e.target.value }))} required className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm" data-testid="pub-title" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.type}</label>
+                      <input type="text" value={pubForm.type} onChange={e => setPubForm(p => ({ ...p, type: e.target.value }))} placeholder="Protocol, Briefing, Working Paper..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.venue}</label>
+                      <input type="text" value={pubForm.venue} onChange={e => setPubForm(p => ({ ...p, venue: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.year}</label>
+                      <input type="text" value={pubForm.year} onChange={e => setPubForm(p => ({ ...p, year: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.status}</label>
+                      <select value={pubForm.status} onChange={e => setPubForm(p => ({ ...p, status: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm">
+                        <option value="published">{t.admin.published}</option>
+                        <option value="in_development">{t.admin.inDevelopment}</option>
+                        <option value="draft">{t.admin.draft}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.description}</label>
+                    <textarea value={pubForm.description} onChange={e => setPubForm(p => ({ ...p, description: e.target.value }))} rows={2} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm resize-none" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.link}</label>
+                      <input type="text" value={pubForm.link} onChange={e => setPubForm(p => ({ ...p, link: e.target.value }))} placeholder="/sealed-card or https://..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#6366f1] focus:outline-none text-sm" />
+                    </div>
+                    <div className="flex items-end pb-1">
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                        <input type="checkbox" checked={pubForm.internal} onChange={e => setPubForm(p => ({ ...p, internal: e.target.checked }))} className="rounded border-gray-300" />
+                        {t.admin.internal}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 pt-2">
+                    <button type="submit" className="btn-primary text-sm" data-testid="pub-save-btn">{t.admin.save}</button>
+                    <button type="button" onClick={() => { setShowForm(false); setEditingPub(null); }} className="btn-ghost text-sm">{t.admin.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {publications.length === 0 ? (
+              <p className="text-gray-500 text-sm">{t.admin.noPublications}</p>
+            ) : (
+              <div className="space-y-3">
+                {publications.map((pub) => (
+                  <div key={pub.id} className="card flex items-start justify-between gap-4" data-testid={`admin-pub-${pub.id}`}>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        {pub.type && <span className="text-xs font-medium text-[#6366f1] uppercase tracking-wide">{pub.type}</span>}
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${pub.status === 'published' ? 'bg-green-100 text-green-700' : pub.status === 'in_development' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
+                          {pub.status === 'published' ? t.admin.published : pub.status === 'in_development' ? t.admin.inDevelopment : t.admin.draft}
+                        </span>
+                        {pub.year && <span className="text-xs text-gray-400">{pub.year}</span>}
                       </div>
-                      <button 
-                        onClick={() => handleDeleteDraft(draft.id)}
-                        className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
+                      <h3 className="font-medium text-[#1a2744] text-sm truncate">{pub.title}</h3>
+                      {pub.description && <p className="text-gray-500 text-xs mt-1 line-clamp-1">{pub.description}</p>}
+                    </div>
+                    <div className="flex gap-1 flex-shrink-0">
+                      <button onClick={() => handleEditPub(pub)} className="p-2 hover:bg-[#6366f1]/10 rounded-lg transition-colors" data-testid={`edit-pub-${pub.id}`}>
+                        <Pencil className="w-4 h-4 text-gray-500 hover:text-[#6366f1]" />
+                      </button>
+                      <button onClick={() => handleDeletePub(pub.id)} className="p-2 hover:bg-red-50 rounded-lg transition-colors" data-testid={`delete-pub-${pub.id}`}>
+                        <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />
                       </button>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Export/Import */}
-            <div className="card">
-              <h2 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">Publish Step</h2>
-              <ol className="text-gray-600 text-sm space-y-2 mb-6">
-                <li>1. Click <strong>Export posts.json</strong>.</li>
-                <li>2. Replace assets/data/posts.json with the exported file.</li>
-                <li>3. Upload your updated site to your host (or commit if using Git).</li>
-              </ol>
-              
-              <div className="flex flex-wrap gap-4">
-                <button onClick={handleExport} className="btn-primary flex items-center gap-2">
-                  <Download className="w-4 h-4" />
-                  Export posts.json
-                </button>
-                <label className="btn-ghost flex items-center gap-2 cursor-pointer">
-                  <Upload className="w-4 h-4" />
-                  Import posts.json
-                  <input type="file" accept=".json" onChange={handleImport} className="hidden" />
-                </label>
+                  </div>
+                ))}
               </div>
-            </div>
-          </>
-        ) : (
-          /* DocSorter Tab */
-          <div className="space-y-6">
-            {/* Hero Section */}
-            <div className="card bg-gradient-to-br from-[#1a2744] to-[#6366f1] text-white">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <Package className="w-7 h-7" />
-                </div>
-                <div>
-                  <h2 className="font-serif text-2xl font-semibold mb-2">
-                    DocSorter Prep Tool
-                  </h2>
-                  <p className="text-white/90 text-lg mb-4">
-                    Automatically remove duplicates and rename your documents before you upload to DocSorter.
-                  </p>
-                  <p className="text-white/70 text-sm mb-6">
-                    Free download · Windows only · Your files stay on your machine
-                  </p>
-                  <a 
-                    href={DOCSORTER_ZIP_URL}
-                    download
-                    className="inline-flex items-center gap-2 bg-white text-[#1a2744] px-5 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-                    data-testid="docsorter-download"
-                  >
-                    <Download className="w-5 h-5" />
-                    Download ZIP
-                  </a>
-                </div>
-              </div>
-            </div>
+            )}
+          </div>
+        )}
 
-            {/* What it does */}
-            <div className="card">
-              <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">What it does</h3>
-              <p className="text-gray-600 mb-4">
-                Drop files into a folder on your PC and this tool will:
-              </p>
+        {activeTab === 'bookings' && (
+          <div>
+            <h2 className="font-serif text-xl font-semibold text-[#1a2744] mb-6">{t.admin.bookingsList}</h2>
+            {bookings.length === 0 ? (
+              <p className="text-gray-500 text-sm">{t.admin.noBookings}</p>
+            ) : (
               <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Detect <strong>exact duplicates</strong> and move them aside safely</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700"><strong>Rename PDFs/DOCX/TIFF</strong> using the document's title (best-effort)</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Output a clean, upload-ready folder you can upload manually to DocSorter</span>
-                </div>
+                {bookings.map((booking) => {
+                  const StatusIcon = statusIcons[booking.status] || Clock;
+                  return (
+                    <div key={booking.id} className="card" data-testid={`booking-${booking.id}`}>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className={`text-xs px-2 py-0.5 rounded-full flex items-center gap-1 ${statusColors[booking.status]}`}>
+                              <StatusIcon className="w-3 h-3" />
+                              {booking.status === 'pending' ? t.admin.pending : booking.status === 'confirmed' ? t.admin.confirmed : t.admin.cancelled}
+                            </span>
+                            <span className="text-sm font-medium text-[#1a2744]">{booking.date} at {booking.time}</span>
+                          </div>
+                          <p className="text-sm text-gray-700"><span className="font-medium">{booking.name}</span> — {booking.email}</p>
+                          {booking.organization && <p className="text-xs text-gray-500">{booking.organization}</p>}
+                          {booking.topic && <p className="text-xs text-gray-500 mt-1">{t.bookingCalendar.topic}: {booking.topic}</p>}
+                          {booking.current_state && <p className="text-xs text-gray-400 mt-1 line-clamp-2">{booking.current_state}</p>}
+                        </div>
+                        <div className="flex gap-1 flex-shrink-0">
+                          {booking.status === 'pending' && (
+                            <>
+                              <button onClick={() => handleBookingStatus(booking.id, 'confirmed')} className="p-2 hover:bg-green-50 rounded-lg transition-colors" title={t.admin.confirm} data-testid={`confirm-booking-${booking.id}`}>
+                                <CheckCircle className="w-4 h-4 text-green-600" />
+                              </button>
+                              <button onClick={() => handleBookingStatus(booking.id, 'cancelled')} className="p-2 hover:bg-red-50 rounded-lg transition-colors" title={t.admin.cancel} data-testid={`cancel-booking-${booking.id}`}>
+                                <XCircle className="w-4 h-4 text-red-500" />
+                              </button>
+                            </>
+                          )}
+                          <button onClick={() => handleDeleteBooking(booking.id)} className="p-2 hover:bg-red-50 rounded-lg transition-colors" data-testid={`delete-booking-${booking.id}`}>
+                            <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-500" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
-
-            {/* Why use this */}
-            <div className="card bg-[#6366f1]/5 border border-[#6366f1]/20">
-              <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">Why use this?</h3>
-              <p className="text-gray-600">
-                DocSorter is great for sorting and organizing, but if your intake process includes re-saves, email attachments, scans, or repeat exports, you can end up with duplicate files and messy filenames. This tool cleans everything <em>before</em> upload so your DocSorter library stays tidy.
-              </p>
-            </div>
-
-            {/* How it works */}
-            <div className="card">
-              <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">How it works</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium text-[#1a2744] mb-3">Setup (one time)</h4>
-                  <ol className="space-y-2 text-gray-600 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center text-xs flex-shrink-0">1</span>
-                      Download and unzip
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center text-xs flex-shrink-0">2</span>
-                      Install Python requirements (one command)
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center text-xs flex-shrink-0">3</span>
-                      Double-click <code className="bg-gray-100 px-1 rounded">run_watcher.bat</code>
-                    </li>
-                  </ol>
-                </div>
-                <div>
-                  <h4 className="font-medium text-[#1a2744] mb-3">Usage</h4>
-                  <ol className="space-y-2 text-gray-600 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center text-xs flex-shrink-0">4</span>
-                      Drop files into <strong>INBOX</strong>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#6366f1] text-white flex items-center justify-center text-xs flex-shrink-0">5</span>
-                      Upload from <strong>CLEAN</strong> to DocSorter
-                    </li>
-                  </ol>
-                </div>
-              </div>
-
-              {/* Folder structure */}
-              <div className="mt-6 p-4 bg-[#f8f9fc] rounded-xl">
-                <h4 className="font-medium text-[#1a2744] mb-3 flex items-center gap-2">
-                  <FolderOpen className="w-4 h-4 text-[#6366f1]" />
-                  Folder Structure
-                </h4>
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div className="p-3 bg-white rounded-lg border border-gray-200">
-                    <p className="font-medium text-[#1a2744]">INBOX</p>
-                    <p className="text-gray-500 text-xs">Drop files here</p>
-                  </div>
-                  <div className="p-3 bg-white rounded-lg border border-gray-200">
-                    <p className="font-medium text-[#1a2744]">CLEAN</p>
-                    <p className="text-gray-500 text-xs">Renamed, upload-ready</p>
-                  </div>
-                  <div className="p-3 bg-white rounded-lg border border-gray-200">
-                    <p className="font-medium text-[#1a2744]">DUPLICATES</p>
-                    <p className="text-gray-500 text-xs">Moved aside safely</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Supported files */}
-            <div className="card">
-              <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">Supported files</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">PDF</span>
-                <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">DOCX</span>
-                <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">TIFF / TIF</span>
-                <span className="px-3 py-1.5 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium">DOC (basic fallback)</span>
-              </div>
-              <p className="text-gray-500 text-xs mt-3">
-                DOC is supported as a basic fallback; renaming may be filename-based unless converted.
-              </p>
-            </div>
-
-            {/* Important notes */}
-            <div className="card border-l-4 border-yellow-500">
-              <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">Important notes</h3>
-              <ul className="space-y-2 text-gray-600 text-sm">
-                <li>• Duplicate detection is <strong>exact</strong> (same file bytes). If the same document is scanned twice or saved differently, it may not match.</li>
-                <li>• Title extraction is "best effort" and depends on what's inside the file (scanned documents may need OCR).</li>
-                <li>• This tool is <strong>Windows only</strong> (for now).</li>
-                <li>• Nothing is deleted by default—duplicates are moved to a separate folder.</li>
-              </ul>
-            </div>
-
-            {/* CTA */}
-            <div className="card">
-              <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-1">Ready to clean up your documents?</h3>
-                  <p className="text-gray-600 text-sm">Free download, no signup required.</p>
-                </div>
-                <a 
-                  href={DOCSORTER_ZIP_URL}
-                  download
-                  className="btn-primary flex items-center gap-2 whitespace-nowrap"
-                >
-                  <Download className="w-4 h-4" />
-                  Download ZIP
-                </a>
-              </div>
-            </div>
-
-            {/* Contact */}
-            <div className="p-4 bg-[#f8f9fc] rounded-xl text-center">
-              <p className="text-gray-600 text-sm mb-2">
-                Questions or want enhancements (content-based duplicate detection, DOC conversion, OCR for scanned PDFs)?
-              </p>
-              <button 
-                onClick={handleContactClick}
-                className="text-[#6366f1] font-medium hover:underline inline-flex items-center gap-2"
-              >
-                <Mail className="w-4 h-4" />
-                Contact us
-              </button>
-            </div>
+            )}
           </div>
         )}
       </div>
