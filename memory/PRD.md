@@ -25,14 +25,23 @@ User lost their AI Governance consulting website and needed it recreated from sc
 ## What's Been Implemented (Jan 2026)
 
 ### Pages Completed
-- [x] Home - Hero section with branding, CTAs, medium logo
+- [x] Home - Hero section with branding, CTAs, medium logo on right
 - [x] Services - Core offers, pricing factors
 - [x] Service Menu - 3 packages with deliverables
-- [x] Tool - Full readiness assessment wizard
+- [x] Tool - Full readiness assessment wizard with card deck UI and results drawer
 - [x] FAQ - 6 common questions
-- [x] Research - Framework overview, operational contexts
-- [x] About - Practice approach, bio
+- [x] Research - 7 briefings from real case studies, context filters, paper reader drawer
+- [x] About - Practice approach, bio, link to Portfolio
 - [x] Connect - Contact form with mailto
+- [x] Sealed Card Protocol - Full research protocol page with PDF link
+- [x] Portfolio - Publications and engagement areas
+
+### Design Updates
+- Purple accent color (#6366f1) added throughout site
+- Navigation shows purple underline for active pages
+- Buttons have purple hover states
+- Research papers have purple left border
+- Tool uses purple for active selections and progress dots
 
 ### Tool Functionality
 - Step 1: Sector selection (6 sectors)
