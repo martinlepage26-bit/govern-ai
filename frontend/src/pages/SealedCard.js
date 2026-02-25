@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { FileText, ExternalLink, BookOpen, Sparkles, Eye, Layers } from 'lucide-react';
 
+const PDF_URL = process.env.REACT_APP_SEALED_CARD_PDF_URL || "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/3mzbuwbb_Sealed_Card_Protocol_FINAL.pdf";
+
 const SealedCard = () => {
   return (
     <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="sealed-card-page">
@@ -23,7 +25,7 @@ const SealedCard = () => {
 
         {/* PDF Link Card */}
         <a 
-          href="https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/3mzbuwbb_Sealed_Card_Protocol_FINAL.pdf"
+          href={PDF_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="block mb-8 p-6 bg-gradient-to-r from-[#1a2744] to-[#6366f1] rounded-2xl text-white hover:shadow-xl transition-all group"
