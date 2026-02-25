@@ -1,32 +1,39 @@
 import { Link } from 'react-router-dom';
+import { Shield, FileText, RefreshCw, ArrowRight } from 'lucide-react';
 
 const Services = () => {
   const coreOffers = [
     {
+      icon: Shield,
       title: "Governance Foundation",
-      description: "Establish the minimum viable governance system: inventory, risk tiers, decision rights, and operating cadence.",
-      outputs: "Outputs: use case map, tiering logic, roles and approvals, baseline templates."
+      description: "Establish the minimum viable governance system: AI use case inventory, risk tiers, decision rights, approval flows, and operating cadence.",
+      outputs: "Use case map, tiering logic, RACI matrix, baseline templates, governance calendar.",
+      ideal: "Organizations deploying AI without formal governance structures."
     },
     {
+      icon: FileText,
       title: "Controls and Evidence Pack",
-      description: "Build audit and procurement readiness with a control register, review workflow, and evidence expectations.",
-      outputs: "Outputs: controls map, evaluation criteria, vendor review questions, evidence packet."
+      description: "Build audit and procurement readiness with a control register mapped to risk tiers, evidence expectations, and documentation standards.",
+      outputs: "Control register, evaluation criteria, vendor questionnaires, decision log templates, evidence packet structure.",
+      ideal: "Organizations preparing for internal audit, regulatory review, or customer due diligence."
     },
     {
+      icon: RefreshCw,
       title: "Oversight Retainer",
       description: "Ongoing advisory support to keep governance current as models, vendors, data flows, and use cases evolve.",
-      outputs: "Outputs: monthly oversight, decision log, roadmap updates, review participation."
+      outputs: "Monthly oversight, decision log stewardship, control roadmap updates, audit and procurement support.",
+      ideal: "Organizations with active AI delivery who need stable oversight without slowing delivery."
     }
   ];
 
   const pricingFactors = [
     {
       title: "Scope and surface area",
-      description: "Number of AI use cases, vendors, and data pathways in scope, plus the number of stakeholder groups involved."
+      description: "Number of AI use cases, vendors, and data pathways in scope. Stakeholder groups involved in governance decisions."
     },
     {
-      title: "Sector and evidence expectations",
-      description: "Industry norms, procurement requirements, and audit expectations, including how documentation needs to be structured."
+      title: "Sector and evidence burden",
+      description: "Industry norms, regulatory requirements, and audit expectations. How documentation needs to be structured for your reviewers."
     },
     {
       title: "Timeline and complexity",
@@ -49,12 +56,12 @@ const Services = () => {
         </p>
 
         {/* What I deliver */}
-        <div className="card mb-8">
+        <div className="card mb-12">
           <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-4">
             What I deliver
           </h2>
           <p className="text-gray-600 mb-4">
-            I help organizations operationalize AI governance: risk classification that people can apply, controls that teams can execute, and documentation that supports review by procurement, internal audit, compliance, and customers.
+            I help organizations operationalize AI governance: <span className="text-[#1a2744] font-medium">risk classification</span> that people can apply, <span className="text-[#1a2744] font-medium">controls</span> that teams can execute, and <span className="text-[#1a2744] font-medium">documentation</span> that supports review by procurement, internal audit, compliance, and customers.
           </p>
           <p className="text-gray-600 mb-6">
             Engagements are designed to fit your constraints. You leave with a working model, clear decision rights, and an evidence trail that is practical to maintain.
@@ -62,13 +69,14 @@ const Services = () => {
           <div className="flex flex-wrap gap-4">
             <Link 
               to="/services/menu" 
-              className="btn-primary"
+              className="btn-primary inline-flex items-center gap-2"
               data-testid="view-service-menu-btn"
             >
               View the Service Menu
+              <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/connect" className="btn-ghost">
-              Book a consultation
+              Book a debrief
             </Link>
           </div>
         </div>
@@ -77,24 +85,38 @@ const Services = () => {
         <h2 className="font-serif text-2xl font-semibold text-[#1a2744] mb-6">
           Core offers
         </h2>
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="space-y-6 mb-12">
           {coreOffers.map((offer, index) => (
             <div key={index} className="card card-hover" data-testid={`core-offer-${index}`}>
-              <h3 className="font-serif text-lg font-semibold text-[#1a2744] mb-3">
-                {offer.title}
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">
-                {offer.description}
-              </p>
-              <p className="text-gray-500 text-xs mb-4">
-                {offer.outputs}
-              </p>
-              <Link 
-                to="/services/menu" 
-                className="text-[#1a2744] text-sm font-medium hover:underline"
-              >
-                See details
-              </Link>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#6366f1]/10 flex items-center justify-center flex-shrink-0">
+                  <offer.icon className="w-6 h-6 text-[#6366f1]" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-serif text-xl font-semibold text-[#1a2744] mb-2">
+                    {offer.title}
+                  </h3>
+                  <p className="text-gray-600 mb-3">
+                    {offer.description}
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    <div className="bg-[#f8f9fc] rounded-lg p-3">
+                      <p className="text-xs text-[#6366f1] uppercase tracking-wide font-medium mb-1">Outputs</p>
+                      <p className="text-gray-600 text-sm">{offer.outputs}</p>
+                    </div>
+                    <div className="bg-[#f8f9fc] rounded-lg p-3">
+                      <p className="text-xs text-[#6366f1] uppercase tracking-wide font-medium mb-1">Ideal for</p>
+                      <p className="text-gray-600 text-sm">{offer.ideal}</p>
+                    </div>
+                  </div>
+                  <Link 
+                    to="/services/menu" 
+                    className="text-[#6366f1] text-sm font-medium hover:underline inline-flex items-center gap-1"
+                  >
+                    See package details <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -121,8 +143,9 @@ const Services = () => {
 
         {/* CTA */}
         <div className="flex flex-wrap gap-4">
-          <Link to="/tool" className="btn-secondary" data-testid="assess-readiness-btn">
-            Assess readiness
+          <Link to="/tool" className="btn-primary inline-flex items-center gap-2" data-testid="assess-readiness-btn">
+            Assess your readiness
+            <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/connect" className="btn-ghost">
             Book a 30 minute debrief
