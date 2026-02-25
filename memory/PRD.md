@@ -1,117 +1,66 @@
-# AI Governance Consulting Website - PRD
+# Martin Lepage, PhD — AI Governance Website
 
 ## Original Problem Statement
-User lost their AI Governance consulting website and needed it recreated from screenshots. The website is for Martin Lepage, PhD - AI Governance Strategy & Oversight consultant.
+Rebuild a professional AI Governance consulting website from provided images. Multi-page, feature-rich application for "Martin Lepage, PhD" AI Governance consulting practice.
 
-## User Personas
-- **Primary**: Executives and compliance officers seeking AI governance consulting
-- **Secondary**: Procurement teams evaluating AI vendors
-- **Tertiary**: Auditors assessing AI governance readiness
+## Architecture
+- **Frontend**: React.js, React Router, plain CSS with Tailwind utility classes
+- **Backend**: Minimal FastAPI (health endpoint only)
+- **Database**: MongoDB configured but unused (static content site)
+- **Content**: Static JSON files in `frontend/src/data/`
+- **i18n**: Custom LanguageContext with `translations/en.js` and `translations/fr.js`
 
 ## Core Requirements
-1. Multi-page consulting website with professional design
-2. Pages: Home, Services, Service Menu, Tool, FAQ, Research, About, Connect
-3. Fully functional AI Governance Readiness Snapshot tool
-4. Clean, minimal design with navy/white color scheme
-5. Responsive layout
+- 13-page professional consulting website
+- Bilingual EN/FR with toggle in header
+- Readiness Snapshot assessment tool
+- Case studies, research papers, portfolio
+- Lead magnet (Governance Starter Kit)
+- Simple booking/contact forms (mailto-based)
+- Hidden admin page for content drafts
 
-## Design Specifications (User Feedback)
-- No logo in navigation header
-- Flat footer with small logo on far right
-- Medium logo positioned on right side of home page
-- Tool page with "playing card deck" stacked card UI
-- Results shown in right-side drawer with circular score ring
+## What's Implemented
 
-## What's Been Implemented (Jan 2026)
+### Pages
+1. Home — Hero, capabilities, starter kit CTA, navigation cards
+2. Services — Core offers, pricing factors
+3. Service Menu — 3 packages with deliverables
+4. Tool (Readiness Snapshot) — Sector selection, 8 questions, results drawer
+5. FAQ — 8 Q&A pairs with CTAs
+6. Research — 7 briefings with reader drawer, context filters
+7. Cases — 5 case studies with detail drawer
+8. About — Practice description, bio, headshot, featured research
+9. Connect — Message form + booking form (both tabs)
+10. Sealed Card Protocol — Research protocol page
+11. Portfolio — Publications, working papers, engagement areas, expertise
+12. Library — Curated governance resources with external links
+13. Admin — Post manager + DocSorter tool (hidden, password-protected)
 
-### Pages Completed
-- [x] Home - Hero section with branding, CTAs, medium logo on right
-- [x] Services - Core offers, pricing factors
-- [x] Service Menu - 3 packages with deliverables
-- [x] Tool - Full readiness assessment wizard with card deck UI and results drawer
-- [x] FAQ - 6 common questions
-- [x] Research - 7 briefings with varied titles, context filters, paper reader drawer
-- [x] Library - Curated AI governance reference hub (frameworks, regulations, standards)
-- [x] About - Practice approach, bio, link to Portfolio
-- [x] Connect - Contact form with mailto
-- [x] Sealed Card Protocol - Full research protocol page with PDF link
-- [x] Portfolio - Publications and engagement areas
+### Features
+- **Bilingual (EN/FR)**: Full French translation for all pages except Portfolio (stays English per user request). Language toggle in navbar header. Preference saved to localStorage with browser language auto-detection.
+- **Readiness Snapshot**: Interactive assessment with 6 sectors, 8 questions, scored results
+- **Lead Magnet**: Governance Starter Kit email capture
+- **Content**: 7 research papers, 5 case studies, curated library links
+- **Deployment Ready**: Health endpoints, env-based config
 
-### Design Updates
-- Purple accent color (#6366f1) added throughout site
-- Navigation shows purple underline for active pages
-- Buttons have purple hover states
-- Research papers have purple left border
-- Tool uses purple for active selections and progress dots
-
-### Connect Page
-- Tabbed interface: Send Message / Book Debrief
-- Simple booking form with date picker, time slots (Eastern), topic selector
-- Mailto-based (no backend required)
-- Governance resources sidebar
-
-### Admin Passphrase
-- Updated to: `AIG-ctrl-2026!`
-
-### Lead Magnet
-- AI Governance Starter Kit CTA on home page
-- Email capture via mailto (Risk Tiering Template, Governance Checklist, Control Mapping Guide)
-
-### Case Studies (Mock Portfolio)
-- 5 detailed case studies across sectors:
-  1. Financial Services: Governance Foundation for AI-Powered Lending (8 weeks)
-  2. Healthcare: Vendor AI Assessment for Clinical Decision Support (6 weeks)
-  3. Enterprise Technology: Controls & Evidence Pack for AI Platform (12 weeks)
-  4. Public Sector: Embedding Review for Benefits Navigation AI (10 weeks)
-  5. Enterprise SaaS: Oversight Retainer for AI-Native Platform (18 months ongoing)
-- Each case includes: Challenge, Approach, Outcomes, Quote, Deliverables
-
-### Research Papers (from LEGIBLE.txt)
-- When Hiring AI Quietly Rewrites Your Talent Pipeline
-- When Data Collection Becomes Regulatory Exposure
-- When a Forecasting Model Moves Real Money
-- When Risk Scores Replace Due Process
-- When Vendors Hold the Model and You Hold the Liability
-- When Employees Turn GenAI Into a Leak Vector
-- When a Customer Chatbot Turns Into Institutional Speech
-
-### Tool Functionality
-- Step 1: Sector selection (6 sectors)
-- Step 2: 8 readiness questions, one at a time
-- Step 3: Results drawer with:
-  - Circular score ring (0-100%)
-  - Risk level classification
-  - Score breakdown per question
-  - Recommended next steps
-  - CTAs (Book debrief, View services, Retake)
-
-### Technical Stack
-- React 19 frontend
-- React Router for navigation
-- Tailwind CSS for styling
-- Custom fonts: Cormorant Garamond (headings), DM Sans (body)
+### Completed Tasks (with dates)
+- **Session 1**: Full 13-page site built from images
+- **Session 2**: Content population, bug fixes, deployment readiness
+- **Feb 2026**: French language support implemented and tested (100% pass rate)
 
 ## Prioritized Backlog
 
-### P0 (Critical)
-- All pages functional ✅
-- Tool wizard complete ✅
+### P1
+- Enhance Admin page for managing Portfolio publications without developer help
 
-### P1 (High Priority)
-- [ ] Library page (from library.html - AI governance references)
-- [ ] Admin page for managing research posts
+### P2
+- Replace mailto booking form with calendar integration
+- Update admin passphrase for production
 
-### P2 (Medium Priority)
-- [ ] Research posts/papers integration from JSON
-- [ ] PDF download functionality for resources
-- [ ] Calendar booking integration for consultations
+## Credentials
+- Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
-### P3 (Nice to Have)
-- [ ] Dark mode theme
-- [ ] Animation enhancements
-- [ ] Analytics integration
-
-## Next Tasks
-1. Add Library page with curated resources
-2. Integrate external calendar for booking
-3. Add PDF download links for audit checklist and templates
+## Mocked Functionality
+- Booking system: mailto links (no calendar integration)
+- Admin page: Frontend-only, no backend persistence
+- Contact form: mailto links
