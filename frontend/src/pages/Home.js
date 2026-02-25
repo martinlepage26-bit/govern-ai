@@ -6,16 +6,6 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-[#f8f9fc]" data-testid="home-page">
       <div className="max-w-4xl mx-auto px-6 py-16">
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <img 
-            src={LOGO_URL} 
-            alt="AI Governance Logo" 
-            className="w-16 h-16 object-contain"
-            data-testid="home-logo"
-          />
-        </div>
-
         {/* Main Heading */}
         <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#1a2744] mb-6 text-left">
           AI Governance<br />
@@ -51,24 +41,14 @@ const Home = () => {
           </Link>
         </div>
 
-        {/* Large Hero Image */}
-        <div className="flex justify-center">
+        {/* Medium Hero Image - positioned to the right */}
+        <div className="flex justify-end pr-12">
           <img 
             src={LOGO_URL} 
             alt="AI Governance Symbol" 
-            className="w-full max-w-lg object-contain"
+            className="w-64 md:w-80 object-contain"
             data-testid="home-hero-image"
           />
-        </div>
-
-        {/* Footer Attribution */}
-        <div className="fixed left-6 bottom-6 text-xs text-gray-400 max-w-[150px]">
-          <p>&copy; 2026</p>
-          <p>Martin Lepage,</p>
-          <p>PhD, AI</p>
-          <p>Governance</p>
-          <p>Practice &</p>
-          <p>Research</p>
         </div>
       </div>
     </div>
