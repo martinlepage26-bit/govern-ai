@@ -146,13 +146,13 @@ p {
 .page-title {
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
   font-weight: 600;
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 1.875rem; /* text-3xl */
   color: var(--black);
 }
 
 @media (min-width: 768px) {
   .page-title {
-    font-size: 3rem; /* text-5xl */
+    font-size: 2.25rem; /* text-4xl */
   }
 }
 
