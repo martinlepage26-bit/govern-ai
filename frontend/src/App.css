@@ -141,3 +141,23 @@ p {
 .border-l-3 {
   border-left-width: 3px;
 }
+
+/* ─── Page title styling ─── */
+.page-title {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 2.25rem; /* text-4xl */
+  color: var(--black);
+}
+
+@media (min-width: 768px) {
+  .page-title {
+    font-size: 3rem; /* text-5xl */
+  }
+}
+
+.page-title-home {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-weight: 600;
+  font-variant: small-caps;
+}
