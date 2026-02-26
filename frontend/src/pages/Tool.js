@@ -97,7 +97,7 @@ const Tool = () => {
               <div data-testid="step-1-sector">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-7 h-7 rounded-full bg-[#2A206B] text-white flex items-center justify-center font-bold text-sm">1</span>
-                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
+                  <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">{t.tool.step1.description}</p>
                 <div className="space-y-2.5">
@@ -119,7 +119,7 @@ const Tool = () => {
               <div data-testid="step-2-readiness">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-7 h-7 rounded-full bg-[#2A206B] text-white flex items-center justify-center font-bold text-sm">2</span>
-                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">
+                  <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A]">
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {READINESS_QUESTIONS.length}
                   </h2>
                 </div>
@@ -167,7 +167,7 @@ const Tool = () => {
             <div className="flex items-start justify-between gap-3 p-4 border-b border-gray-100">
               <div>
                 <p className="text-xs tracking-widest uppercase text-[#2A206B]">{t.tool.steps.results}</p>
-                <h3 className="font-serif text-lg font-semibold text-[#0B0F1A]/95 mt-1">{t.tool.results.title}</h3>
+                <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A]/95 mt-1">{t.tool.results.title}</h3>
               </div>
               <button onClick={() => setDrawerOpen(false)} className="p-1 hover:bg-gray-100 rounded-full" data-testid="close-drawer-btn">
                 <X className="w-5 h-5 text-gray-500" />

@@ -14,7 +14,7 @@ const FAQ = () => {
         <div className="space-y-6">
           {t.faq.questions.map((faq, index) => (
             <div key={index} className="card" data-testid={`faq-${index}`}>
-              <h2 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-4">{faq.question}</h2>
+              <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-4">{faq.question}</h2>
               <p className="text-gray-600 leading-relaxed mb-4">{faq.answer}</p>
               
               {faq.cta === 'requestAuditChecklist' && (
@@ -36,7 +36,7 @@ const FAQ = () => {
 
         <div className="mt-12 p-6 bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
-          <h3 className="font-serif text-lg font-semibold mb-2">{t.faq.stillHaveQuestions}</h3>
+          <h3 className="font-serif text-4xl font-semibold mb-2">{t.faq.stillHaveQuestions}</h3>
           <p className="text-white/80 mb-4">{t.faq.stillHaveQuestionsDesc}</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.faq.bookDebrief}</Link>
         </div>

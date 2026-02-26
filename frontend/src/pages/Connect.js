@@ -126,7 +126,7 @@ const Connect = () => {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-[#2A206B]/10 flex items-center justify-center"><Mail className="w-5 h-5 text-[#2A206B]" /></div>
                   <div>
-                    <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.connect.messageTitle}</h2>
+                    <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A]">{t.connect.messageTitle}</h2>
                     <p className="text-sm text-gray-500">{t.connect.messageSubtitle}</p>
                   </div>
                 </div>
@@ -167,7 +167,7 @@ const Connect = () => {
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-[#2A206B]/10 flex items-center justify-center"><CalendarIcon className="w-5 h-5 text-[#2A206B]" /></div>
                   <div>
-                    <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.bookingCalendar.title}</h2>
+                    <h2 className="font-serif text-4xl font-semibold text-[#0B0F1A]">{t.bookingCalendar.title}</h2>
                     <p className="text-sm text-gray-500">{t.bookingCalendar.subtitle}</p>
                   </div>
                 </div>
@@ -177,7 +177,7 @@ const Connect = () => {
                     <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
                       <CheckCircle className="w-8 h-8 text-green-600" />
                     </div>
-                    <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2">{t.bookingCalendar.confirmation}</h3>
+                    <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A] mb-2">{t.bookingCalendar.confirmation}</h3>
                     <button onClick={() => setBookingSubmitted(false)} className="mt-4 text-[#2A206B] font-medium hover:underline text-sm">
                       {language === 'fr' ? 'Nouvelle r\u00e9servation' : 'Book another'}
                     </button>
@@ -291,7 +291,7 @@ const Connect = () => {
 
           {/* Sidebar */}
           <div className="space-y-4">
-            <h3 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.connect.resources.title}</h3>
+            <h3 className="font-serif text-4xl font-semibold text-[#0B0F1A]">{t.connect.resources.title}</h3>
             {resources.map((resource, index) => (
               <div key={index} className="card card-hover" data-testid={`resource-${index}`}>
                 <div className="flex items-start gap-3">
