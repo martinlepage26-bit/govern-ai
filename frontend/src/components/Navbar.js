@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 const Navbar = () => {
   const location = useLocation();
   const { t, language, toggleLanguage } = useLanguage();
+  const isHomePage = location.pathname === '/';
   
   const navItems = [
     { path: '/', label: t.nav.home },
@@ -18,13 +19,17 @@ const Navbar = () => {
 
   return (
     <nav className="w-full py-3 px-6 md:px-12 flex justify-between items-center bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/5" data-testid="navbar">
-      {/* Logo - ML Monogram with Compass - 200% bigger */}
+      {/* Logo - ML Monogram (only on non-home pages) */}
       <Link to="/" className="flex items-center" data-testid="logo-link">
-        <img 
-          src="/images/ml-mono-final.png" 
-          alt="ML" 
-          className="h-12 w-auto"
-        />
+        {!isHomePage ? (
+          <img 
+            src="/images/ml-mono-final.png" 
+            alt="ML" 
+            className="h-12 w-auto"
+          />
+        ) : (
+          <div className="h-12" /> 
+        )}
       </Link>
 
       {/* Navigation */}
