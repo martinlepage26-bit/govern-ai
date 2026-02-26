@@ -88,7 +88,7 @@ export const en = {
       },
       controls: {
         title: 'Controls and Evidence Pack',
-        description: 'Build readiness for Treasury Board review, Quebec's Commission d'accès requirements, and procurement scrutiny with controls mapped to Canadian regulatory expectations.',
+        description: 'Build readiness for Treasury Board review, Quebec\'s Commission d\'accès requirements, and procurement scrutiny with controls mapped to Canadian regulatory expectations.',
         outputs: 'Control register aligned to AIA levels, evaluation criteria, vendor questionnaires for Canadian procurement, decision log templates, evidence packet structure.',
         ideal: 'Organizations preparing for federal audit, provincial regulatory review, or responding to AIDA obligations.'
       },
