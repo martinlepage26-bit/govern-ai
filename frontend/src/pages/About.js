@@ -38,7 +38,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="card mb-8">
+        <div className="card mb-8 card-hover-lift">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6">{t.about.aboutMe}</h2>
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex-shrink-0">
