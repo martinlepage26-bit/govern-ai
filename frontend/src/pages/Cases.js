@@ -118,7 +118,7 @@ const Cases = () => {
         <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-4">Case Studies</h2>
         <div className="space-y-6">
           {caseStudies.map((study) => (
-            <button key={study.id} onClick={() => setSelectedCase(study)} className="w-full text-left card card-hover group" data-testid={`case-${study.id}`}>
+            <button key={study.id} onClick={() => setSelectedCase(study)} className="w-full text-left card card-hover card-hover-lift group" data-testid={`case-${study.id}`}>
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
