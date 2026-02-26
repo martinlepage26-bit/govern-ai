@@ -30,6 +30,7 @@ function App() {
         <BrowserRouter>
           <ScrollToTop />
           <Navbar />
+          <PageMonogram />
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
