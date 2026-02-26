@@ -79,12 +79,12 @@ const Tool = () => {
         <h1 className="page-title mb-0">{t.tool.title}</h1>
         <p className="text-lg text-[#0B0F1A]/50 mb-2" style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}>{t.tool.subtitle}</p>
         <p className="text-gray-600 max-w-2xl">{t.tool.description}</p>
-        <div className="flex gap-3 mt-4 text-xs tracking-wider uppercase">
-          <span className={step >= 1 ? 'text-[#0D0A2E] font-semibold' : 'text-gray-400'}>{t.tool.steps.sector}</span>
-          <span className="text-gray-300">·</span>
-          <span className={step >= 2 ? 'text-[#0D0A2E] font-semibold' : 'text-gray-400'}>{t.tool.steps.readiness}</span>
-          <span className="text-gray-300">·</span>
-          <span className={drawerOpen ? 'text-[#0D0A2E] font-semibold' : 'text-gray-400'}>{t.tool.steps.results}</span>
+        <div className="flex gap-3 mt-4 text-xs tracking-wider uppercase text-[#7b2cbf]">
+          <span className={step >= 1 ? 'font-semibold' : 'opacity-50'}>{t.tool.steps.sector}</span>
+          <span className="opacity-50">·</span>
+          <span className={step >= 2 ? 'font-semibold' : 'opacity-50'}>{t.tool.steps.readiness}</span>
+          <span className="opacity-50">·</span>
+          <span className={drawerOpen ? 'font-semibold' : 'opacity-50'}>{t.tool.steps.results}</span>
         </div>
       </div>
 
