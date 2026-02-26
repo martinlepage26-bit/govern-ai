@@ -43,7 +43,7 @@ const Cases = () => {
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-gradient-to-r from-[#2A206B] via-[#2A206B] to-white/20 rounded-2xl">
+        <div className="mt-12 p-6 bg-[linear-gradient(to_right,#2A206B_0%,#2A206B_40%,#3D2F8A_80%,rgba(255,255,255,0.2)_100%)] rounded-2xl">
           <h3 className="font-serif text-xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
           <p className="text-white/80 mb-4">{t.cases.facingChallengeDesc}</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.cases.bookDebrief}</Link>

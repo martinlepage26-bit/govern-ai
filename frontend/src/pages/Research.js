@@ -34,7 +34,7 @@ const Research = () => {
           <p className="text-gray-600 mb-8">{t.research.howP2}</p>
         </div>
 
-        <div className="mb-12 p-6 bg-gradient-to-r from-[#2A206B] via-[#2A206B] to-white/20 rounded-2xl">
+        <div className="mb-12 p-6 bg-[linear-gradient(to_right,#2A206B_0%,#2A206B_40%,#3D2F8A_80%,rgba(255,255,255,0.2)_100%)] rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
             <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredFramework}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredFrameworkSubtitle}</p>
