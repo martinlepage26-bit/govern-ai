@@ -145,9 +145,10 @@ const Library = () => {
   ];
 
   const onlineTools = [
-    { name: 'Treasury Board AIA Tool', url: '#', tag: 'Assessment', description: 'Algorithmic Impact Assessment for federal systems' },
-    { name: 'NIST AI RMF Playbook', url: '#', tag: 'Implementation', description: 'Practical guidance for AI risk management' },
-    { name: 'Model Card Toolkit', url: '#', tag: 'Documentation', description: 'Generate standardized model documentation' }
+    { name: 'Treasury Board AIA Tool', url: 'https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/responsible-use-ai/algorithmic-impact-assessment.html', tag: 'Assessment', description: 'Algorithmic Impact Assessment for federal systems' },
+    { name: 'NIST AI RMF Playbook', url: 'https://airc.nist.gov/AI_RMF_Knowledge_Base/Playbook', tag: 'Implementation', description: 'Practical guidance for AI risk management' },
+    { name: 'Model Card Toolkit', url: 'https://github.com/tensorflow/model-card-toolkit', tag: 'Documentation', description: 'Generate standardized model documentation' },
+    { name: 'Compass AI', url: 'https://compass.ai/', tag: 'Platform', description: 'AI governance and compliance platform' }
   ];
 
   return (
