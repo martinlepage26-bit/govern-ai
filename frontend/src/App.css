@@ -2,6 +2,19 @@
 /* Institutional authority, academic rigor, operational defensibility */
 /* Black + Purple only on white/off-white */
 
+/* ─── Typography orphan prevention ─── */
+p, h1, h2, h3, h4, h5, h6, li, span {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+/* Prevent orphans after periods and colons */
+p::after, li::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+}
+
 /* ─── Card system ─── */
 .card {
   background: var(--white);
