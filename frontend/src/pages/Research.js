@@ -22,11 +22,11 @@ const Research = () => {
 
         <div className="mb-12">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4">{t.research.howItWorks}</h2>
-          <div className="flex items-center justify-center gap-4 text-sm mb-6">
+          <div className="flex items-center justify-center gap-2 mb-6">
             {[t.research.signal, t.research.pressure, t.research.control, t.research.artifact, t.research.evidence].map((label, i, arr) => (
-              <span key={i}>
-                <span className="text-[#0D0A2E] font-medium">{label}</span>
-                {i < arr.length - 1 && <span className="text-gray-400 ml-4">&rarr;</span>}
+              <span key={i} className="flex items-center">
+                <span className="px-4 py-2 bg-gradient-to-r from-[#0D0A2E]/10 to-[#2D2380]/5 border border-[#0D0A2E]/20 rounded-lg text-[#0D0A2E] font-semibold text-sm">{label}</span>
+                {i < arr.length - 1 && <span className="text-[#7b2cbf] font-bold mx-2 text-lg">→</span>}
               </span>
             ))}
           </div>
