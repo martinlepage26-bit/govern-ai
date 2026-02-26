@@ -23,7 +23,7 @@ const Navbar = () => {
       <Link to="/" className="flex items-center" data-testid="logo-link">
         {!isHomePage ? (
           <img 
-            src="/images/ml-mono-final.png" 
+            src="/images/ml-mono-clean.png" 
             alt="ML" 
             className="h-12 w-auto"
           />
