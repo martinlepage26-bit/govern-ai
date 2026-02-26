@@ -26,20 +26,25 @@ const Home = () => {
               {t.home.subtitle}
             </p>
             
-            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mt-8 mb-3">
-              {t.home.requirementsIntro}
-            </p>
-            
-            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-3">
-              <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>{t.home.requirement1} <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>{t.home.requirement2}<span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span><br/>
-              <span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>{t.home.requirement3}<span style={{color: '#7b2cbf', fontWeight: 700}}>◆</span>
-            </p>
-            
-            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-4">
-              <span className="font-bold">{t.home.productLabel}</span>
-              <span className="text-[#7b2cbf] font-bold mx-2">➜</span>
-              {t.home.productDesc}
-            </p>
+            <div className="mt-8 mb-4 space-y-2">
+              <div className="flex flex-wrap items-center gap-x-1 text-[#0B0F1A]/80">
+                <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[#7b2cbf]/10 to-transparent rounded-full text-sm">
+                  <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mr-2"></span>Treasury Board directives
+                </span>
+                <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[#7b2cbf]/10 to-transparent rounded-full text-sm">
+                  <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mr-2"></span>Quebec's Law&nbsp;25
+                </span>
+                <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-[#7b2cbf]/10 to-transparent rounded-full text-sm">
+                  <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mr-2"></span>Emerging AIDA obligations
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-3 pt-2">
+                <span className="text-sm font-semibold tracking-wide text-[#0B0F1A] uppercase">Product</span>
+                <span className="w-8 h-px bg-gradient-to-r from-[#7b2cbf] to-[#7b2cbf]/30"></span>
+                <span className="text-[#0B0F1A]/70 text-sm">AI decisions that are documented, reviewable, and defensible.</span>
+              </div>
+            </div>
             
             <p className="text-xs tracking-widest text-[#0B0F1A]/35 uppercase mb-8">{t.home.keywords}</p>
             
