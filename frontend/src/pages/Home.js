@@ -15,52 +15,51 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
       <div className="max-w-6xl mx-auto px-6 py-16">
-        {/* Hero Section - Side by side, closer together */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-16">
-          {/* Left: Hero Text */}
-          <div className="text-center md:text-left">
+        {/* Hero Section - Two columns */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          {/* Left: Hero Text - all left aligned */}
+          <div>
             <h1 className="font-serif text-5xl md:text-6xl font-semibold text-[#0B0F1A] leading-none tracking-tight whitespace-nowrap">
               <span className="border-b-2 border-[#0B0F1A] pb-1">AI Governance</span>
             </h1>
             <p className="font-serif text-2xl md:text-3xl text-[#0B0F1A]/60 mt-4">
               Strategies & Oversight
             </p>
+            
+            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mt-8 mb-4">{t.home.description}</p>
+            <p className="text-xs tracking-widest text-[#0B0F1A]/35 uppercase mb-8">{t.home.keywords}</p>
+            
+            <div className="flex flex-wrap gap-4 mb-12">
+              <Link to="/services" className="btn-primary inline-flex items-center gap-2" data-testid="view-services-btn">
+                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link to="/connect" className="btn-ghost inline-flex items-center gap-2" data-testid="book-consultation-btn">
+                {t.home.bookDebrief}
+              </Link>
+            </div>
+
+            <div className="space-y-5">
+              {capabilities.map((cap, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <div className="w-9 h-9 rounded-lg bg-[#4B2ABF]/10 flex items-center justify-center flex-shrink-0">
+                    <cap.icon className="w-4 h-4 text-[#4B2ABF]" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#0B0F1A]">{cap.title}</p>
+                    <p className="text-sm text-[#0B0F1A]/60">{cap.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Right: Logo - slightly larger */}
-          <img 
-            src="/images/logo-home-new.png" 
-            alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-            className="w-72 md:w-[22rem] h-auto"
-          />
-        </div>
-
-        {/* Content Section */}
-        <div className="max-w-3xl mx-auto">
-          <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-4 text-center">{t.home.description}</p>
-          <p className="text-xs tracking-widest text-[#0B0F1A]/35 uppercase mb-8 text-center">{t.home.keywords}</p>
-          
-          <div className="flex flex-wrap gap-4 mb-12 justify-center">
-            <Link to="/services" className="btn-primary inline-flex items-center gap-2" data-testid="view-services-btn">
-              {t.home.viewServices} <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link to="/connect" className="btn-ghost inline-flex items-center gap-2" data-testid="book-consultation-btn">
-              {t.home.bookDebrief}
-            </Link>
-          </div>
-
-          <div className="space-y-5">
-            {capabilities.map((cap, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="w-9 h-9 rounded-lg bg-[#4B2ABF]/10 flex items-center justify-center flex-shrink-0">
-                  <cap.icon className="w-4 h-4 text-[#4B2ABF]" />
-                </div>
-                <div>
-                  <p className="font-medium text-[#0B0F1A]">{cap.title}</p>
-                  <p className="text-sm text-[#0B0F1A]/60">{cap.description}</p>
-                </div>
-              </div>
-            ))}
+          {/* Right: Logo - centered vertically */}
+          <div className="flex items-center justify-center">
+            <img 
+              src="/images/logo-home-new.png" 
+              alt="AI Governance: Practice & Research by Martin Lepage PhD" 
+              className="w-80 md:w-[24rem] h-auto"
+            />
           </div>
         </div>
 
