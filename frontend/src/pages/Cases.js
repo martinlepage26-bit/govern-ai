@@ -43,7 +43,9 @@ const Cases = () => {
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-[linear-gradient(to_right,#2A206B_0%,#2A206B_40%,#3D2F8A_80%,rgba(255,255,255,0.2)_100%)] rounded-2xl">
+        <div className="mt-12 p-6 bg-[linear-gradient(135deg,#2A206B_0%,#2A206B_40%,#4A3D8F_70%,#7B6DB5_100%)] rounded-2xl shadow-[0_8px_32px_rgba(42,32,107,0.4)] relative overflow-hidden">
+          {/* Shine effect */}
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <h3 className="font-serif text-xl font-semibold mb-2 text-white">{t.cases.facingChallenge}</h3>
           <p className="text-white/80 mb-4">{t.cases.facingChallengeDesc}</p>
           <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.cases.bookDebrief}</Link>
