@@ -82,21 +82,21 @@ export const fr = {
     offers: {
       foundation: {
         title: 'Fondation de gouvernance',
-        description: "Établir le syst\u00e8me de gouvernance minimum viable\u00a0: inventaire des cas d\u2019utilisation IA, niveaux de risque, droits de d\u00e9cision, flux d\u2019approbation et cadence op\u00e9rationnelle.",
-        outputs: "Carte des cas d\u2019utilisation, logique de hi\u00e9rarchisation, matrice RACI, mod\u00e8les de base, calendrier de gouvernance.",
-        ideal: "Organisations qui d\u00e9ploient l\u2019IA sans structures de gouvernance formelles."
+        description: "Établir une gouvernance alignée sur les exigences canadiennes : inventaire des cas d'utilisation IA structuré pour l'Évaluation de l'incidence algorithmique, niveaux de risque qui satisfont les obligations de la Loi 25, et droits de décision adaptés aux attentes fédérales et provinciales.",
+        outputs: "Carte des cas d'utilisation alignée sur l'ÉIA, logique de hiérarchisation, matrice RACI, modèles de conformité Québec, calendrier de gouvernance.",
+        ideal: "Organisations canadiennes déployant l'IA sans structures de gouvernance formelles ou devant aligner leurs pratiques existantes aux exigences fédérales/provinciales."
       },
       controls: {
         title: 'Contr\u00f4les et dossier de preuves',
-        description: "B\u00e2tir la pr\u00e9paration aux audits et \u00e0 l\u2019approvisionnement avec un registre de contr\u00f4les, des attentes en mati\u00e8re de preuves et des normes de documentation.",
-        outputs: "Registre de contr\u00f4les, crit\u00e8res d\u2019\u00e9valuation, questionnaires fournisseurs, mod\u00e8les de journal de d\u00e9cisions, structure du dossier de preuves.",
-        ideal: "Organisations se pr\u00e9parant \u00e0 un audit interne, un examen r\u00e9glementaire ou une v\u00e9rification diligente client."
+        description: "Bâtir la préparation à l'examen du Conseil du Trésor, aux exigences de la Commission d'accès du Québec et à l'examen d'approvisionnement avec des contrôles adaptés aux attentes réglementaires canadiennes.",
+        outputs: "Registre de contrôles aligné sur les niveaux ÉIA, critères d'évaluation, questionnaires fournisseurs pour l'approvisionnement canadien, modèles de journal de décisions, structure du dossier de preuves.",
+        ideal: "Organisations se préparant à un audit fédéral, un examen réglementaire provincial ou répondant aux obligations LIAD."
       },
       oversight: {
         title: 'Mandat de supervision continue',
-        description: "Soutien consultatif continu pour maintenir la gouvernance \u00e0 jour \u00e0 mesure que les mod\u00e8les, fournisseurs, flux de donn\u00e9es et cas d\u2019utilisation \u00e9voluent.",
-        outputs: "Supervision mensuelle, gestion du journal de d\u00e9cisions, mises \u00e0 jour de la feuille de route des contr\u00f4les, soutien aux audits et \u00e0 l\u2019approvisionnement.",
-        ideal: "Organisations avec une livraison IA active qui ont besoin d\u2019une supervision stable sans ralentir la livraison."
+        description: "Soutien consultatif continu pour maintenir la conformité à mesure que la réglementation canadienne de l'IA évolue—de la mise en œuvre de la LIAD aux mises à jour d'application de la Loi 25.",
+        outputs: "Supervision mensuelle, gestion du journal de décisions, notes sur les mises à jour réglementaires, mises à jour de la feuille de route des contrôles, soutien aux audits et à l'approvisionnement.",
+        ideal: "Organisations avec une livraison IA active au Canada qui ont besoin d'une supervision stable alors que le paysage réglementaire mûrit."
       }
     },
     pricing: {
