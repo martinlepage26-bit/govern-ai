@@ -11,8 +11,8 @@ const Tool = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const sectorKeys = ['regulated', 'enterpriseSaas', 'procurement', 'publicSector', 'financial', 'governance'];
-  const sectorIds = ['regulated', 'enterprise-saas', 'procurement', 'public-sector', 'financial', 'governance-model'];
+  const sectorKeys = ['regulated', 'enterpriseSaas', 'procurement', 'publicSector', 'financial', 'construction', 'governance'];
+  const sectorIds = ['regulated', 'enterprise-saas', 'procurement', 'public-sector', 'financial', 'construction', 'governance-model'];
 
   const questionKeys = ['inventory', 'riskTiering', 'decisionRights', 'controls', 'evidence', 'vendorReview', 'cadence', 'documentation'];
   const questionOptions = [
