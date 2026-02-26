@@ -64,5 +64,7 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - Admin passphrase: See `frontend/.env` → `REACT_APP_ADMIN_PASSPHRASE`
 
 ## Backlog
+- P1: Enhance Admin page to manage other content sections (Services, FAQ) to reduce reliance on static JSON files
 - P2: Verify domain in Resend to send emails to any recipient
 - P2: Update admin passphrase for production
+- P2: Migrate static JSON content (Cases, Research) to database
