@@ -13,7 +13,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F6F7FB]" data-testid="home-page">
+    <div className="min-h-screen bg-white" data-testid="home-page">
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Left: Text Content */}
