@@ -40,21 +40,22 @@ p::after, li::after {
   align-items: center;
   gap: 8px;
   padding: 0.75rem 1.5rem;
-  background: var(--black);
+  background: linear-gradient(135deg, #0B0F1A 0%, #0B0F1A 60%, #0D0A2E 100%);
   color: white;
   border-radius: 0.375rem;
   font-family: var(--font-sans);
   font-weight: 500;
   font-size: 14px;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px rgba(13, 10, 46, 0.3);
 }
 
 .btn-primary:hover {
-  background: var(--primary-purple);
+  background: linear-gradient(135deg, #0D0A2E 0%, #1A1555 100%);
+  box-shadow: 0 4px 12px rgba(13, 10, 46, 0.4);
 }
 
 .btn-ghost {
