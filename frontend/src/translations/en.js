@@ -197,7 +197,7 @@ export const en = {
   },
 
   tool: {
-    title: 'AI Governance Readiness Snapshot',
+    title: 'Preliminary Assessment of AI Governance Readiness',
     description: 'Choose your sector of operation to assess your readiness to audits, regulators, and risk assessment.',
     steps: { sector: 'SECTOR', readiness: 'READINESS', results: 'RESULTS' },
     step1: {
