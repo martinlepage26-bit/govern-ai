@@ -17,7 +17,7 @@ const Research = () => {
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="research-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.research.title}</h1>
+        <h1 className="page-title mb-4">{t.research.title}</h1>
         <p className="text-gray-600 mb-8 max-w-2xl">{t.research.description}</p>
 
         <div className="mb-12">
