@@ -18,30 +18,50 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full h-10 px-6 md:px-12 flex justify-end items-center bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/5" data-testid="navbar">
-      {/* Navigation - centered vertically, aligned far right */}
-      <div className="flex gap-4 md:gap-6 items-center h-full">
-        {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            data-testid={`nav-${item.path.replace('/', '') || 'home'}`}
-            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#0D0A2E] flex items-center h-full ${
-              location.pathname === item.path
-                ? 'text-[#0B0F1A] border-b-2 border-[#0D0A2E]'
-                : 'text-[#0B0F1A]/50 border-b-2 border-transparent'
-            }`}
+    <nav className="w-full px-6 md:px-12 py-4 bg-white sticky top-0 z-50 border-b border-[#1a1a1a]/5" data-testid="navbar">
+      <div className="flex items-start justify-between">
+        {/* Left: Logo/Business Name */}
+        <Link to="/" className="flex flex-col" data-testid="nav-brand">
+          <span 
+            className="text-lg md:text-xl font-bold text-[#1a1a1a]" 
+            style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}
           >
-            {item.label}
-          </Link>
-        ))}
-        <button
-          onClick={toggleLanguage}
-          data-testid="lang-toggle"
-          className="ml-2 px-2.5 py-1 text-xs font-medium tracking-wide text-[#0B0F1A]/60 hover:text-[#0D0A2E] transition-colors"
-        >
-          {language === 'en' ? 'FR' : 'EN'}
-        </button>
+            Martin Lepage, PhD
+          </span>
+          <span 
+            className="text-xs md:text-sm text-[#1a1a1a]/60 mt-0.5" 
+            style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
+          >
+            AI Governance Consultant (Practice & Research)
+          </span>
+        </Link>
+
+        {/* Right: Navigation */}
+        <div className="flex gap-3 md:gap-5 items-center">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              data-testid={`nav-${item.path.replace('/', '') || 'home'}`}
+              className={`text-xs font-medium tracking-wide transition-all px-2 py-1 rounded ${
+                location.pathname === item.path
+                  ? 'text-[#1a1a1a] bg-[#7b2cbf]/10'
+                  : 'text-[#1a1a1a]/60 hover:text-[#1a1a1a] hover:bg-[#7b2cbf]/5'
+              }`}
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <button
+            onClick={toggleLanguage}
+            data-testid="lang-toggle"
+            className="ml-1 px-2 py-1 text-xs font-medium tracking-wide text-[#1a1a1a]/50 hover:text-[#7b2cbf] hover:bg-[#7b2cbf]/5 rounded transition-all"
+            style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+          >
+            {language === 'en' ? 'FR' : 'EN'}
+          </button>
+        </div>
       </div>
     </nav>
   );
