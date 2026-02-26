@@ -1,4 +1,4 @@
-import { ExternalLink, BookOpen, Scale, Shield, TrendingUp } from 'lucide-react';
+import { ExternalLink, BookOpen, Scale, Shield, TrendingUp, Wrench } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Library = () => {
@@ -33,6 +33,12 @@ const Library = () => {
     ]
   ];
 
+  const onlineTools = [
+    { name: 'DocSort', url: '#', tag: 'Documentation', description: 'AI-powered document classification and organization' },
+    { name: 'Scriptorium', url: '#', tag: 'Writing', description: 'Governance policy drafting assistant' },
+    { name: 'Compass AI', url: '#', tag: 'Assessment', description: 'AI readiness and risk assessment tool' }
+  ];
+
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="library-page">
       <div className="max-w-4xl mx-auto">
@@ -64,6 +70,27 @@ const Library = () => {
               </div>
             );
           })}
+
+          {/* Online Tools Section */}
+          <div className="card p-4" data-testid="library-section-tools">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center"><Wrench className="w-4 h-4 text-[#0D0A2E]" /></div>
+              <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">Online Tools</h2>
+            </div>
+            <div className="space-y-2">
+              {onlineTools.map((tool, i) => (
+                <a key={i} href={tool.url} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-between p-2 rounded-lg bg-[#F6F7FB] hover:bg-[#0D0A2E]/5 transition-colors group" data-testid={`library-tool-${i}`}>
+                  <div className="flex items-center gap-2 flex-1">
+                    <span className="text-sm text-gray-700 group-hover:text-[#0D0A2E] transition-colors font-medium">{tool.name}</span>
+                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{tool.tag}</span>
+                    <span className="text-xs text-gray-500 ml-2 hidden md:inline">{tool.description}</span>
+                  </div>
+                  <ExternalLink className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#0D0A2E] transition-colors" />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 p-4 bg-[#0D0A2E]/5 rounded-xl border border-[#0D0A2E]/20">
