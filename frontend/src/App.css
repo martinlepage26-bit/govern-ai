@@ -3,16 +3,22 @@
 /* Black + Purple only on white/off-white */
 
 /* ─── Typography orphan prevention ─── */
-p, h1, h2, h3, h4, h5, h6, li, span {
+p, h1, h2, h3, h4, h5, h6, li, span, div {
   text-wrap: pretty;
   overflow-wrap: break-word;
+  orphans: 3;
+  widows: 3;
 }
 
-/* Prevent orphans after periods and colons */
-p::after, li::after {
-  content: "";
-  display: inline-block;
-  width: 0;
+/* Balance text in headings */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Prevent orphans in paragraphs */
+p {
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 /* ─── Card system ─── */
