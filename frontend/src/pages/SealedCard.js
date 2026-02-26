@@ -1,58 +1,77 @@
 import { Link } from 'react-router-dom';
-import { FileText, ExternalLink, BookOpen, Sparkles, Eye, Layers } from 'lucide-react';
+import { FileText, BookOpen, Sparkles, Eye, Layers, Lock, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-
-const PDF_URL = process.env.REACT_APP_SEALED_CARD_PDF_URL || "https://customer-assets.emergentagent.com/job_site-resurrection-1/artifacts/3mzbuwbb_Sealed_Card_Protocol_FINAL.pdf";
 
 const SealedCard = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="sealed-card-page">
+    <div className="min-h-screen bg-gradient-to-br from-[#F6F7FB] via-[#F6F7FB] to-[#0D0A2E]/5 py-12 px-6 md:px-12" data-testid="sealed-card-page">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
-          <p className="text-xs tracking-widest text-[#0D0A2E] uppercase mb-3">{t.sealedCard.researchProtocol}</p>
-          <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.title}</h1>
-          <p className="text-xl text-gray-600 mb-6">{t.sealedCard.subtitle}</p>
-          <p className="text-xs tracking-widest text-gray-400 uppercase">{t.sealedCard.keywords}</p>
+        {/* Hero Section */}
+        <div className="mb-12 relative">
+          <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#7b2cbf]/5 rounded-full blur-2xl"></div>
+          <div className="absolute top-10 right-10 w-32 h-32 bg-[#0D0A2E]/5 rounded-full blur-3xl"></div>
+          <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-3 font-semibold">{t.sealedCard.researchProtocol}</p>
+          <h1 className="page-title text-4xl md:text-5xl mb-4 relative">
+            <span className="bg-gradient-to-r from-[#0B0F1A] via-[#2D2380] to-[#0B0F1A] bg-clip-text" style={{WebkitBackgroundClip: 'text'}}>
+              {t.sealedCard.title}
+            </span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-6 max-w-2xl">{t.sealedCard.subtitle}</p>
+          <p className="text-xs tracking-widest text-[#7b2cbf] uppercase">{t.sealedCard.keywords}</p>
         </div>
 
-        <a href={PDF_URL} target="_blank" rel="noopener noreferrer" className="block mb-8 p-6 bg-[linear-gradient(135deg,#0D0A2E_0%,#0D0A2E_40%,#1A1555_70%,#2D2380_100%)] rounded-2xl text-white shadow-[0_8px_32px_rgba(42,32,107,0.4)] hover:shadow-[0_12px_40px_rgba(42,32,107,0.5)] transition-all group relative overflow-hidden" data-testid="pdf-download">
-          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
-          <div className="flex items-center justify-between">
+        {/* PDF Block - Coming Soon */}
+        <div className="mb-8 p-6 bg-gradient-to-br from-[#0D0A2E]/10 via-[#2D2380]/5 to-[#7b2cbf]/5 rounded-2xl border border-[#0D0A2E]/20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(45,35,128,0.05)_50%,transparent_70%)]"></div>
+          <div className="flex items-center justify-between relative">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center"><FileText className="w-6 h-6" /></div>
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0D0A2E]/20 to-[#7b2cbf]/10 flex items-center justify-center">
+                <FileText className="w-7 h-7 text-[#0D0A2E]" />
+              </div>
               <div>
-                <p className="font-semibold text-lg">{t.sealedCard.fullDocument}</p>
-                <p className="text-white/70 text-sm">{t.sealedCard.fullDocumentDesc}</p>
+                <p className="font-semibold text-lg text-[#0B0F1A]">{t.sealedCard.fullDocument}</p>
+                <p className="text-gray-500 text-sm">{t.sealedCard.fullDocumentDesc}</p>
               </div>
             </div>
-            <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 rounded-full">
+              <Lock className="w-4 h-4 text-amber-700" />
+              <span className="text-xs font-semibold text-amber-700">Coming soon</span>
+            </div>
           </div>
-        </a>
+        </div>
 
-        <div className="card mb-8">
+        {/* Introduction */}
+        <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] border border-gray-100 p-6 mb-6 card-hover-lift">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-4 flex items-center gap-3">
-            <BookOpen className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.introduction}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0D0A2E]/15 to-[#7b2cbf]/10 flex items-center justify-center">
+              <BookOpen className="w-5 h-5 text-[#0D0A2E]" />
+            </div>
+            {t.sealedCard.introduction}
           </h2>
           <p className="text-gray-600 mb-4">
-            {t.sealedCard.introP1} <span className="font-semibold text-[#0B0F1A]">{t.sealedCard.glitch}</span>{t.sealedCard.introP1b}
+            {t.sealedCard.introP1} <span className="font-semibold text-[#0D0A2E]">{t.sealedCard.glitch}</span>{t.sealedCard.introP1b}
           </p>
           <p className="text-gray-600 mb-4">
-            {t.sealedCard.introP2} <span className="font-semibold text-[#0B0F1A]">{t.sealedCard.accountability}</span> {t.sealedCard.introP2b}
+            {t.sealedCard.introP2} <span className="font-semibold text-[#0D0A2E]">{t.sealedCard.accountability}</span> {t.sealedCard.introP2b}
           </p>
           <p className="text-gray-600">
-            {t.sealedCard.introP3} <span className="italic">{t.sealedCard.introP3quote}</span> {t.sealedCard.introP3b}
+            {t.sealedCard.introP3} <span className="italic text-[#7b2cbf]">{t.sealedCard.introP3quote}</span> {t.sealedCard.introP3b}
           </p>
         </div>
 
-        <div className="card mb-8">
+        {/* Key Concepts */}
+        <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] border border-gray-100 p-6 mb-6 card-hover-lift">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
-            <Sparkles className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.keyConcepts}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7b2cbf]/15 to-[#2D2380]/10 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[#7b2cbf]" />
+            </div>
+            {t.sealedCard.keyConcepts}
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             {t.sealedCard.concepts.map((item, i) => (
-              <div key={i} className="p-4 bg-[#F6F7FB] rounded-xl border-l-3 border-[#0D0A2E]">
+              <div key={i} className="p-4 bg-gradient-to-r from-[#F6F7FB] to-white rounded-xl border-l-4 border-[#7b2cbf]">
                 <p className="font-semibold text-[#0B0F1A] mb-1">{item.term}</p>
                 <p className="text-gray-600 text-sm">{item.definition}</p>
               </div>
@@ -60,34 +79,47 @@ const SealedCard = () => {
           </div>
         </div>
 
-        <div className="card mb-8">
+        {/* Methodology */}
+        <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] border border-gray-100 p-6 mb-6 card-hover-lift">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
-            <Layers className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.methodology}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0D0A2E]/15 to-[#2D2380]/10 flex items-center justify-center">
+              <Layers className="w-5 h-5 text-[#0D0A2E]" />
+            </div>
+            {t.sealedCard.methodology}
           </h2>
           <p className="text-gray-600 mb-6">{t.sealedCard.methodologyDesc}</p>
           <div className="space-y-4">
             {['artistic', 'academic', 'ritual'].map((key, i) => {
-              const colors = ['#0D0A2E', '#3A1FA0', '#2D1A5E'];
+              const gradients = [
+                'from-[#0D0A2E]/8 via-[#0D0A2E]/3 to-transparent',
+                'from-[#2D2380]/8 via-[#2D2380]/3 to-transparent',
+                'from-[#7b2cbf]/8 via-[#7b2cbf]/3 to-transparent'
+              ];
+              const colors = ['#0D0A2E', '#2D2380', '#7b2cbf'];
               return (
-                <div key={key} className={`p-5 bg-gradient-to-r from-[${colors[i]}]/5 to-transparent rounded-xl border border-[${colors[i]}]/20`}>
+                <div key={key} className={`p-5 bg-gradient-to-r ${gradients[i]} rounded-xl border border-gray-100`}>
                   <div className="flex items-center gap-3 mb-2">
-                    <span className={`w-8 h-8 rounded-full bg-[${colors[i]}] text-white flex items-center justify-center font-bold`}>{i + 1}</span>
+                    <span className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm" style={{backgroundColor: colors[i]}}>{i + 1}</span>
                     <h3 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.sealedCard.arms[key].title}</h3>
                   </div>
-                  <p className="text-gray-600 text-sm ml-11">{t.sealedCard.arms[key].description}</p>
+                  <p className="text-gray-600 text-sm ml-12">{t.sealedCard.arms[key].description}</p>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="card mb-8">
+        {/* Governance Principles */}
+        <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] border border-gray-100 p-6 mb-6 card-hover-lift">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
-            <Eye className="w-6 h-6 text-[#0D0A2E]" />{t.sealedCard.governancePrinciples}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0D0A2E]/15 to-[#7b2cbf]/10 flex items-center justify-center">
+              <Eye className="w-5 h-5 text-[#0D0A2E]" />
+            </div>
+            {t.sealedCard.governancePrinciples}
           </h2>
           <div className="space-y-4">
             {t.sealedCard.principles.map((p, i) => (
-              <div key={i} className="p-4 bg-[#F6F7FB] rounded-xl">
+              <div key={i} className="p-4 bg-[#F6F7FB] rounded-xl hover:bg-[#0D0A2E]/5 transition-colors">
                 <p className="font-semibold text-[#0B0F1A] mb-2">{p.title}</p>
                 <p className="text-gray-600 text-sm">{p.description}</p>
               </div>
@@ -95,12 +127,16 @@ const SealedCard = () => {
           </div>
         </div>
 
-        <div className="card mb-8 border-l-4 border-[#0D0A2E]">
+        {/* Conclusion */}
+        <div className="bg-gradient-to-r from-[#0D0A2E]/5 via-white to-[#7b2cbf]/5 rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] border-l-4 border-[#0D0A2E] p-6 mb-8">
           <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-4">{t.sealedCard.conclusion}</h2>
           <p className="text-gray-600 mb-4">{t.sealedCard.conclusionP1}</p>
           <ul className="text-gray-600 space-y-2 ml-4">
             {t.sealedCard.conclusionItems.map((item, i) => (
-              <li key={i} className="flex items-start gap-2"><span className="text-[#0D0A2E] mt-1">•</span>{item}</li>
+              <li key={i} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-[#7b2cbf] rounded-full mt-2 flex-shrink-0"></span>
+                {item}
+              </li>
             ))}
           </ul>
         </div>
