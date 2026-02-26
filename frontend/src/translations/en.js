@@ -353,6 +353,9 @@ export const en = {
     title: 'Case Studies',
     description: 'Selected engagements illustrating governance challenges and solutions across sectors. Details anonymized to protect client confidentiality.',
     keywords: 'FINANCIAL SERVICES \u00B7 HEALTHCARE \u00B7 ENTERPRISE \u00B7 PUBLIC SECTOR',
+    sectorsWeServe: 'Sectors We Serve',
+    outputs: 'Outputs',
+    assessReadiness: 'Assess readiness',
     challenge: 'Challenge',
     approach: 'Approach',
     outcomes: 'Outcomes',
@@ -360,9 +363,52 @@ export const en = {
     discussChallenge: 'Discuss a Similar Challenge',
     facingChallenge: 'Facing a similar challenge?',
     facingChallengeDesc: 'Book a debrief to discuss how these approaches might apply to your organization.',
-    bookDebrief: 'Book a Debrief'
+    bookDebrief: 'Book a Debrief',
+    sectorCards: {
+      regulated: {
+        title: 'Regulated Systems',
+        subtitle: 'Higher evidence burden, tighter approvals.',
+        body: 'AI in regulated environments demands governance that satisfies external scrutiny. We build classification aligned with sector-specific requirements and evidence trails that auditors expect.',
+        deliverable: 'Risk tiering, approval workflows, audit-ready documentation.'
+      },
+      enterpriseSaas: {
+        title: 'Enterprise SaaS',
+        subtitle: 'Governance that ships with your release cadence.',
+        body: 'SaaS teams need governance that keeps pace with continuous delivery. We design lightweight controls that prevent drift without blocking deployment velocity.',
+        deliverable: 'Feature governance intake, vendor AI review, evidence collection.'
+      },
+      procurement: {
+        title: 'Procurement & Vendor Risk',
+        subtitle: 'Questionnaires become controls.',
+        body: 'Procurement scrutiny is increasing. We transform due diligence into operational governance with contract-backed proof and reassessment triggers.',
+        deliverable: 'Vendor questionnaires, evaluation scorecards, contract templates.'
+      },
+      publicSector: {
+        title: 'Public Sector',
+        subtitle: 'Contestability and due process.',
+        body: 'Public sector AI requires citizen-facing accountability. We build appeal pathways, trace retention policies, and fairness monitoring that survives scrutiny.',
+        deliverable: 'Contestability procedures, fairness dashboards, retention policies.'
+      },
+      financial: {
+        title: 'Financial Systems',
+        subtitle: 'Models that move money need exposure controls.',
+        body: 'Financial AI carries concentrated risk. We design controls for model materiality, adverse action logic, and stress testing that regulators expect.',
+        deliverable: 'Model risk framework, exposure controls, regulatory mapping.'
+      },
+      construction: {
+        title: 'Construction & Infrastructure',
+        subtitle: 'Jobsite safety and operational automation.',
+        body: 'Construction AI governance must survive incident review. We build evidence trails for safety tech, asset tracking, and predictive maintenance systems.',
+        deliverable: 'Safety governance, equipment AI controls, incident documentation.'
+      },
+      governance: {
+        title: 'Governance Operating Model',
+        subtitle: 'Decision rights and lifecycle gates.',
+        body: 'Organizations need a governance operating model that scales. We design decision rights, approval flows, and evidence architecture that grows with your AI portfolio.',
+        deliverable: 'RACI matrix, governance calendar, lifecycle gates.'
+      }
+    }
   },
-
   research: {
     title: 'Research',
     description: 'This research translates AI governance pressure into operational clarity: controls, lifecycle gates, procurement artifacts, and audit-ready evidence. Each briefing focuses on the practical decisions institutions must make when deploying, buying, or overseeing AI systems.',
