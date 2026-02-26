@@ -39,7 +39,7 @@ const Research = () => {
           {/* Shine effect */}
           <div className="absolute inset-0 bg-[linear-gradient(120deg,transparent_30%,rgba(255,255,255,0.1)_50%,transparent_70%)] pointer-events-none"></div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-            <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredFramework}</h2>
+            <h2 className="font-serif text-2xl font-semibold text-white">{t.research.featuredResearch}</h2>
             <p className="text-white/80 text-sm">{t.research.featuredFrameworkSubtitle}</p>
           </div>
           <p className="text-white/90 mb-4">{t.research.featuredFrameworkDesc}</p>
