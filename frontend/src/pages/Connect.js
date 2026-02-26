@@ -310,7 +310,7 @@ const Connect = () => {
                 <a href="mailto:martin@martinlepage.com" className="text-[#4B2ABF] hover:underline">martin@martinlepage.com</a>
               </p>
             </div>
-            <Link to="/tool" className="block p-4 bg-[#0B0F1A] text-white rounded-xl hover:bg-[#4B2ABF] transition-colors">
+            <Link to="/tool" className="block p-4 bg-[#1A1033] text-white rounded-xl hover:bg-[#4B2ABF] transition-colors">
               <p className="font-semibold mb-1">{t.connect.resources.notSure}</p>
               <p className="text-sm text-white/80">{t.connect.resources.takeSnapshot}</p>
             </Link>
