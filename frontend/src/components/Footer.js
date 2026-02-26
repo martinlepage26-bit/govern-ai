@@ -1,13 +1,23 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
-// Small compass NE for footer
-const FooterCompass = ({ className = "w-5 h-5" }) => (
-  <svg viewBox="0 0 40 40" className={className}>
-    <circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" strokeWidth="1"/>
-    <line x1="20" y1="20" x2="32" y2="8" stroke="#6366f1" strokeWidth="2"/>
-    <polygon points="32,8 25,10 30,15" fill="#6366f1"/>
-    <circle cx="20" cy="20" r="2" fill="currentColor"/>
+// ML Monogram - small version for footer
+const MLMonogramSmall = ({ className = "h-5" }) => (
+  <svg viewBox="0 0 80 50" className={className} fill="currentColor">
+    <path d="M5 45 L5 8 L20 30 L35 8 L35 45" 
+          fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M35 45 L55 45" 
+          fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
+  </svg>
+);
+
+// Compass NE - tiny version
+const CompassNETiny = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5">
+    <circle cx="12" cy="12" r="8" />
+    <path d="M12 12 L17 7" strokeWidth="2"/>
+    <polygon points="17,7 14,8 16,10" fill="currentColor" stroke="none"/>
+    <circle cx="12" cy="12" r="1" fill="currentColor"/>
   </svg>
 );
 
@@ -15,22 +25,22 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="py-6 px-6 md:px-12 bg-white border-t border-black/5" data-testid="footer">
+    <footer className="py-6 px-6 md:px-12 bg-white border-t border-[#0B0F1A]/5" data-testid="footer">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <p className="text-sm text-[#0a0a0a]/50">
+          <p className="text-sm text-[#0B0F1A]/40">
             {t.footer.copyright}
           </p>
           <Link 
             to="/admin" 
-            className="w-1.5 h-1.5 rounded-full bg-black/10 hover:bg-[#6366f1] transition-colors"
+            className="w-1.5 h-1.5 rounded-full bg-[#0B0F1A]/10 hover:bg-[#4B2ABF] transition-colors"
             title=""
             data-testid="admin-link"
           />
         </div>
-        <div className="flex items-center gap-3">
-          <span className="font-serif text-sm text-[#0a0a0a]/40 tracking-tight">ML</span>
-          <FooterCompass className="w-5 h-5 text-[#0a0a0a]/30" />
+        <div className="flex items-center gap-2">
+          <MLMonogramSmall className="h-4 text-[#0B0F1A]/25" />
+          <CompassNETiny className="w-3.5 h-3.5 text-[#4B2ABF]/40" />
         </div>
       </div>
     </footer>
