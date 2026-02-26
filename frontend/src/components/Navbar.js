@@ -10,6 +10,7 @@ const Navbar = () => {
     { path: '/services', label: t.nav.services },
     { path: '/cases', label: t.nav.portfolio },
     { path: '/tool', label: t.nav.tool },
+    { path: '/faq', label: t.nav.faq },
     { path: '/research', label: t.nav.research },
     { path: '/library', label: t.nav.library },
     { path: '/about', label: t.nav.about },
