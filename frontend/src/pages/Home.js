@@ -26,7 +26,22 @@ const Home = () => {
               Strategies & Oversight
             </p>
             
-            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mt-8 mb-4">{t.home.description}</p>
+            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mt-8 mb-3">
+              Governance systems aligned with Canadian requirements:
+            </p>
+            
+            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-3">
+              <span className="text-[#7b2cbf] font-bold mr-1.5">◆</span> Treasury Board directives
+              <span className="text-[#7b2cbf] font-bold mx-1.5 ml-4">◆</span> Quebec's Law 25
+              <span className="text-[#7b2cbf] font-bold mx-1.5 ml-4">◆</span> Emerging AIDA obligations
+            </p>
+            
+            <p className="text-[#0B0F1A]/70 text-lg leading-relaxed mb-4">
+              <span className="font-bold">Product</span>
+              <span className="text-[#7b2cbf] font-bold mx-2">➜</span>
+              AI decisions that are documented, reviewable, and defensible.
+            </p>
+            
             <p className="text-xs tracking-widest text-[#0B0F1A]/35 uppercase mb-8">{t.home.keywords}</p>
             
             <div className="flex flex-wrap gap-4 mb-12">
