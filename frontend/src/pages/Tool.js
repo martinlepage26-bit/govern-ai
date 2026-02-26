@@ -87,28 +87,28 @@ const Tool = () => {
         </div>
       </div>
 
-      <div className="flex justify-center py-4">
-        <div className="w-[min(460px,94vw)] relative">
-          <div className="relative bg-white/95 border border-gray-200/60 rounded-3xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] p-5 overflow-visible">
-            <div className="absolute inset-0 rounded-3xl border border-gray-200/50 bg-white/70 -z-10 translate-x-2.5 translate-y-3 shadow-[0_3px_12px_rgba(11,15,26,0.04)]" />
-            <div className="absolute inset-0 rounded-3xl border border-gray-200/40 bg-white/55 -z-20 translate-x-5 translate-y-6 shadow-[0_2px_8px_rgba(11,15,26,0.03)]" />
+      <div className="flex justify-center py-2">
+        <div className="w-[min(420px,94vw)] relative">
+          <div className="relative bg-white/95 border border-gray-200/60 rounded-2xl shadow-[0_4px_20px_rgba(11,15,26,0.06)] p-4 overflow-visible">
+            <div className="absolute inset-0 rounded-2xl border border-gray-200/50 bg-white/70 -z-10 translate-x-2 translate-y-2.5 shadow-[0_3px_12px_rgba(11,15,26,0.04)]" />
+            <div className="absolute inset-0 rounded-2xl border border-gray-200/40 bg-white/55 -z-20 translate-x-4 translate-y-5 shadow-[0_2px_8px_rgba(11,15,26,0.03)]" />
 
             {step === 1 && (
               <div data-testid="step-1-sector">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-bold text-sm">1</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="w-6 h-6 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-bold text-xs">1</span>
+                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">{t.tool.step1.description}</p>
-                <div className="space-y-2.5">
+                <p className="text-gray-600 text-xs mb-3">{t.tool.step1.description}</p>
+                <div className="space-y-1.5">
                   {sectorKeys.map((key, i) => (
                     <button key={key} onClick={() => handleSectorSelect(sectorIds[i])} data-testid={`sector-${sectorIds[i]}`}
-                      className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_2px_8px_rgba(11,15,26,0.04)] hover:translate-y-[-1px] hover:shadow-[0_3px_10px_rgba(11,15,26,0.06)] ${
-                        selectedSector === sectorIds[i] ? 'border-[#0D0A2E]/55 shadow-[0_3px_12px_rgba(75,42,191,0.12)] bg-[#0D0A2E]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#0D0A2E]/25'
+                      className={`w-full text-left px-3 py-2 rounded-xl border transition-all duration-150 shadow-[0_1px_4px_rgba(11,15,26,0.04)] hover:translate-y-[-1px] hover:shadow-[0_2px_6px_rgba(11,15,26,0.06)] ${
+                        selectedSector === sectorIds[i] ? 'border-[#0D0A2E]/55 shadow-[0_2px_8px_rgba(75,42,191,0.12)] bg-[#0D0A2E]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#0D0A2E]/25'
                       }`}
                     >
-                      <h3 className="font-bold text-[#0B0F1A]/90 mb-1 text-sm">{t.tool.sectors[key].title}</h3>
-                      <p className="text-[#0B0F1A]/70 text-sm leading-snug">{t.tool.sectors[key].description}</p>
+                      <h3 className="font-bold text-[#0B0F1A]/90 text-xs">{t.tool.sectors[key].title}</h3>
+                      <p className="text-[#0B0F1A]/70 text-xs leading-snug">{t.tool.sectors[key].description}</p>
                     </button>
                   ))}
                 </div>
@@ -117,44 +117,44 @@ const Tool = () => {
 
             {step === 2 && (
               <div data-testid="step-2-readiness">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-bold text-sm">2</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="w-6 h-6 rounded-full bg-[#0D0A2E] text-white flex items-center justify-center font-bold text-xs">2</span>
+                  <h2 className="font-serif text-lg font-semibold text-[#0B0F1A]">
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {READINESS_QUESTIONS.length}
                   </h2>
                 </div>
-                <p className="text-[#0B0F1A]/90 font-medium mb-4" data-testid={`question-${currentQ.id}`}>{currentQ.question}</p>
-                <div className="grid grid-cols-3 gap-2.5">
+                <p className="text-[#0B0F1A]/90 font-medium text-sm mb-3" data-testid={`question-${currentQ.id}`}>{currentQ.question}</p>
+                <div className="grid grid-cols-3 gap-2">
                   {currentQ.options.map((option) => (
                     <button key={option.value} onClick={() => handleAnswer(currentQ.id, option.value, option.score)}
-                      className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_3px_10px_rgba(11,15,26,0.05)] ${
-                        answers[currentQ.id]?.value === option.value ? 'border-[#0D0A2E]/55 shadow-[0_3px_10px_rgba(75,42,191,0.10)] bg-[#0D0A2E] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#0D0A2E]/25'
+                      className={`rounded-full border py-2 px-2 font-bold text-xs transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_2px_6px_rgba(11,15,26,0.05)] ${
+                        answers[currentQ.id]?.value === option.value ? 'border-[#0D0A2E]/55 shadow-[0_2px_8px_rgba(75,42,191,0.10)] bg-[#0D0A2E] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#0D0A2E]/25'
                       }`}
                     >{option.label}</button>
                   ))}
                 </div>
-                <div className="flex justify-center gap-1.5 mt-4">
+                <div className="flex justify-center gap-1 mt-3">
                   {READINESS_QUESTIONS.map((_, i) => (
-                    <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === currentQuestion ? 'bg-[#0D0A2E]' : answers[READINESS_QUESTIONS[i].id] ? 'bg-[#0D0A2E]/40' : 'bg-gray-300'}`} />
+                    <div key={i} className={`w-1.5 h-1.5 rounded-full transition-colors ${i === currentQuestion ? 'bg-[#0D0A2E]' : answers[READINESS_QUESTIONS[i].id] ? 'bg-[#0D0A2E]/40' : 'bg-gray-300'}`} />
                   ))}
                 </div>
               </div>
             )}
 
-            <div className="flex items-center gap-2.5 mt-4 pt-4 border-t border-gray-100">
+            <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
               {(step > 1 || (step === 2 && currentQuestion > 0)) && (
-                <button onClick={handleBack} className="text-gray-600 hover:text-[#0D0A2E] font-medium text-sm" data-testid="back-btn">{t.tool.buttons.back}</button>
+                <button onClick={handleBack} className="text-gray-600 hover:text-[#0D0A2E] font-medium text-xs" data-testid="back-btn">{t.tool.buttons.back}</button>
               )}
-              <button onClick={handleReset} className="text-gray-500 hover:text-gray-700 text-sm" data-testid="reset-btn">{t.tool.buttons.reset}</button>
+              <button onClick={handleReset} className="text-gray-500 hover:text-gray-700 text-xs" data-testid="reset-btn">{t.tool.buttons.reset}</button>
               <button onClick={handleNext} disabled={!canProceed} data-testid="next-btn"
-                className={`ml-auto px-5 py-2 rounded-full font-semibold text-sm transition-all ${canProceed ? 'bg-[#0D0A2E] text-white hover:bg-[#3A1FA0]' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                className={`ml-auto px-4 py-1.5 rounded-full font-semibold text-xs transition-all ${canProceed ? 'bg-[#0D0A2E] text-white hover:bg-[#3A1FA0]' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
               >
                 {isLastQuestion && step === 2 ? t.tool.buttons.seeResults : t.tool.buttons.next}
               </button>
             </div>
 
             {step === 1 && !selectedSector && (
-              <p className="text-[#0D0A2E]/80 font-semibold text-sm mt-2.5">{t.tool.buttons.selectSector}</p>
+              <p className="text-[#0D0A2E]/80 font-semibold text-xs mt-2">{t.tool.buttons.selectSector}</p>
             )}
           </div>
         </div>

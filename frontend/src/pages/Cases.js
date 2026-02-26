@@ -1,73 +1,159 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { caseStudies } from '../data/caseStudies';
-import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X, HardHat, ArrowRight } from 'lucide-react';
+import { Building2, Clock, ChevronRight, Quote, CheckCircle, FileText, X, HardHat, ArrowRight, Shield, Server, ShoppingCart, Landmark, DollarSign, Settings } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Cases = () => {
   const [selectedCase, setSelectedCase] = useState(null);
   const { t } = useLanguage();
 
-  const sectors = [...new Set(caseStudies.map(c => c.sector))];
-
-  // Construction sector card data
-  const constructionSector = {
-    title: 'Construction & Infrastructure',
-    subtitle: 'Safety systems, equipment intelligence, and operational decisions that must survive scrutiny.',
-    body: `Construction environments turn governance into consequence fast. Asset tracking, jobsite safety tech, and maintenance automation sit inside a chain where one weak link produces downtime, cost overruns, and injury exposure. We help owners, GCs, and specialized contractors treat these systems as auditable operations, not just apps.
-
-We focus on what actually breaks under pressure: access control across sites and subcontractors, data quality in the field, offline sync conflicts, and automation rules that quietly reroute accountability. If you are adding predictive maintenance, anomaly detection, or computer vision safety, we build the governance layer that keeps decisions defensible when incidents, disputes, or insurers demand a clear story.`,
-    deliverable: 'An implementation-first governance package: risk classification, control design, evidence trails, and practical oversight workflows that fit jobsite realities.'
-  };
+  // All 7 sector cards data
+  const sectorCards = [
+    {
+      id: 'regulated',
+      icon: Shield,
+      title: 'Regulated Systems',
+      subtitle: 'Higher evidence burden, tighter approvals.',
+      body: 'AI in regulated environments demands governance that satisfies external scrutiny. We build classification aligned with sector-specific requirements and evidence trails that auditors expect.',
+      deliverable: 'Risk tiering, approval workflows, audit-ready documentation.'
+    },
+    {
+      id: 'enterprise-saas',
+      icon: Server,
+      title: 'Enterprise SaaS',
+      subtitle: 'Governance that ships with your release cadence.',
+      body: 'SaaS teams need governance that keeps pace with continuous delivery. We design lightweight controls that prevent drift without blocking deployment velocity.',
+      deliverable: 'Feature governance intake, vendor AI review, evidence collection.'
+    },
+    {
+      id: 'procurement',
+      icon: ShoppingCart,
+      title: 'Procurement & Vendor Risk',
+      subtitle: 'Questionnaires become controls.',
+      body: 'Procurement scrutiny is increasing. We transform due diligence into operational governance with contract-backed proof and reassessment triggers.',
+      deliverable: 'Vendor questionnaires, evaluation scorecards, contract templates.'
+    },
+    {
+      id: 'public-sector',
+      icon: Landmark,
+      title: 'Public Sector',
+      subtitle: 'Contestability and due process.',
+      body: 'Public sector AI requires citizen-facing accountability. We build appeal pathways, trace retention policies, and fairness monitoring that survives scrutiny.',
+      deliverable: 'Contestability procedures, fairness dashboards, retention policies.'
+    },
+    {
+      id: 'financial',
+      icon: DollarSign,
+      title: 'Financial Systems',
+      subtitle: 'Models that move money need exposure controls.',
+      body: 'Financial AI carries concentrated risk. We design controls for model materiality, adverse action logic, and stress testing that regulators expect.',
+      deliverable: 'Model risk framework, exposure controls, regulatory mapping.'
+    },
+    {
+      id: 'construction',
+      icon: HardHat,
+      title: 'Construction & Infrastructure',
+      subtitle: 'Jobsite safety and operational automation.',
+      body: 'Construction AI governance must survive incident review. We build evidence trails for safety tech, asset tracking, and predictive maintenance systems.',
+      deliverable: 'Safety governance, equipment AI controls, incident documentation.'
+    },
+    {
+      id: 'governance',
+      icon: Settings,
+      title: 'Governance Operating Model',
+      subtitle: 'Decision rights and lifecycle gates.',
+      body: 'Organizations need a governance operating model that scales. We design decision rights, approval flows, and evidence architecture that grows with your AI portfolio.',
+      deliverable: 'RACI matrix, governance calendar, lifecycle gates.'
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="cases-page">
       <div className="max-w-5xl mx-auto">
         <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.cases.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.cases.description}</p>
-        <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.cases.keywords}</p>
+        <p className="text-xs tracking-widest text-gray-400 uppercase mb-10">{t.cases.keywords}</p>
 
-        {/* Sector Tags */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {sectors.map((sector, i) => (
-            <span key={i} className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm text-gray-600">{sector}</span>
-          ))}
-          <span className="px-3 py-1.5 bg-[#0D0A2E] text-white rounded-full text-sm font-medium">Construction & Infrastructure</span>
-        </div>
+        {/* Sector Cards Grid - 2 rows of 3, then 1 row of 1 centered */}
+        <div className="mb-12">
+          <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-5">Sectors We Serve</h2>
+          
+          {/* First row: 3 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            {sectorCards.slice(0, 3).map((sector) => {
+              const Icon = sector.icon;
+              return (
+                <div key={sector.id} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sector.id}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-4 h-4 text-[#0D0A2E]" />
+                    </div>
+                    <h3 className="font-serif text-base font-semibold text-[#0B0F1A] leading-tight">{sector.title}</h3>
+                  </div>
+                  <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
+                  <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
+                  <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
+                    <span className="font-medium text-[#0B0F1A]">Outputs:</span> {sector.deliverable}
+                  </div>
+                  <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
+                    Assess readiness <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Construction Sector Card */}
-        <div className="mb-8 card p-6 border-l-4 border-[#0D0A2E]" data-testid="construction-sector-card">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-[#0D0A2E]/10 flex items-center justify-center">
-              <HardHat className="w-6 h-6 text-[#0D0A2E]" />
+          {/* Second row: 3 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            {sectorCards.slice(3, 6).map((sector) => {
+              const Icon = sector.icon;
+              return (
+                <div key={sector.id} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sector.id}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-4 h-4 text-[#0D0A2E]" />
+                    </div>
+                    <h3 className="font-serif text-base font-semibold text-[#0B0F1A] leading-tight">{sector.title}</h3>
+                  </div>
+                  <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
+                  <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
+                  <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
+                    <span className="font-medium text-[#0B0F1A]">Outputs:</span> {sector.deliverable}
+                  </div>
+                  <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
+                    Assess readiness <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Third row: 1 card centered */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-start-2">
+              {sectorCards.slice(6, 7).map((sector) => {
+                const Icon = sector.icon;
+                return (
+                  <div key={sector.id} className="card p-4 flex flex-col h-full border-l-3 border-[#0D0A2E]/30 hover:border-[#0D0A2E] transition-colors" data-testid={`sector-card-${sector.id}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#0D0A2E]/10 flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-4 h-4 text-[#0D0A2E]" />
+                      </div>
+                      <h3 className="font-serif text-base font-semibold text-[#0B0F1A] leading-tight">{sector.title}</h3>
+                    </div>
+                    <p className="text-xs text-[#0D0A2E] mb-2">{sector.subtitle}</p>
+                    <p className="text-sm text-gray-600 mb-3 flex-1">{sector.body}</p>
+                    <div className="p-2 bg-[#F6F7FB] rounded text-xs text-gray-600 mb-3">
+                      <span className="font-medium text-[#0B0F1A]">Outputs:</span> {sector.deliverable}
+                    </div>
+                    <Link to="/tool" className="text-xs text-[#0D0A2E] hover:underline inline-flex items-center gap-1 mt-auto">
+                      Assess readiness <ChevronRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
-            <div>
-              <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{constructionSector.title}</h2>
-              <p className="text-sm text-[#0D0A2E]">{constructionSector.subtitle}</p>
-            </div>
-          </div>
-          
-          <div className="space-y-4 text-gray-600 mb-6">
-            {constructionSector.body.split('\n\n').map((para, i) => (
-              <p key={i} className="leading-relaxed">{para}</p>
-            ))}
-          </div>
-          
-          <div className="p-4 bg-[#F6F7FB] rounded-lg mb-6">
-            <p className="text-sm font-medium text-[#0B0F1A] mb-1">What you get:</p>
-            <p className="text-sm text-gray-600">{constructionSector.deliverable}</p>
-          </div>
-          
-          <div className="flex flex-wrap gap-3">
-            <Link to="/tool" className="btn-primary inline-flex items-center gap-2">
-              Assess readiness <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link to="/services" className="btn-ghost inline-flex items-center gap-2">
-              View services
-            </Link>
-            <Link to="/connect" className="text-sm text-[#0D0A2E] hover:underline inline-flex items-center gap-1">
-              Book a debrief <ChevronRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
 
