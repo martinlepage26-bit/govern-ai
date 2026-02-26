@@ -260,20 +260,20 @@ export const en = {
 
   about: {
     title: 'About Me',
-    description: 'Governance that is usable under real constraints: decision rights, controls, and documentation that holds under review.',
-    keywords: 'PRACTICE \u00B7 APPROACH \u00B7 BACKGROUND',
-    practiceTitle: 'What AI Governance Practice means',
-    practiceP1: "AI governance isn't a policy PDF.",
-    practiceP1b: 'It is a system people can actually use: a way to classify risk, apply the right controls, define who owns decisions, and keep a record of what was decided, why, and by whom.',
+    description: 'Governance built for the Canadian context: federal directives, Quebec\'s Law 25, and the distinct requirements of operating in Canada\'s AI ecosystem.',
+    keywords: 'MONTREAL · QUEBEC · CANADA',
+    practiceTitle: 'What AI Governance Practice means in Canada',
+    practiceP1: "AI governance in Canada isn't a policy PDF.",
+    practiceP1b: 'It\'s a system aligned with Treasury Board directives, Quebec\'s automated decision-making requirements under Law 25, and the emerging obligations of AIDA—a way to classify risk, apply the right controls, and maintain evidence that satisfies Canadian regulators.',
     practiceP2: 'My work',
-    practiceP2b: 'is to help you build that system in your organization: map AI use cases, define practical risk tiers, set approvals and decision rights, and deliver templates and documentation buyers and auditors expect.',
+    practiceP2b: 'is to help Canadian organizations build governance that meets federal and provincial requirements: use case inventories structured for the Algorithmic Impact Assessment, risk tiers that address Law 25 obligations, and documentation that satisfies both the Treasury Board and the Commission d\'accès à l\'information.',
     steps: {
-      classify: { title: 'Classify risk', description: 'Build a use-case and vendor inventory, then tier by impact, sensitivity, autonomy, and exposure.' },
-      design: { title: 'Design controls', description: 'Define decision rights, approvals, testing expectations, monitoring, and ownership (RACI).' },
-      maintain: { title: 'Maintain evidence', description: 'Keep documentation current as models, prompts, data, and vendors change.' }
+      classify: { title: 'Classify risk', description: 'Build inventories aligned with the Algorithmic Impact Assessment, then tier by impact levels that satisfy both federal and Quebec requirements.' },
+      design: { title: 'Design controls', description: 'Define decision rights and approvals that meet Treasury Board expectations and Law 25 automated decision-making provisions.' },
+      maintain: { title: 'Maintain evidence', description: 'Keep documentation current as Canadian AI regulation evolves—from AIDA implementation to provincial enforcement.' }
     },
     aboutMe: 'About me',
-    bio: 'Martin Lepage (PhD) is a Montreal-based AI systems and risk mapping consultant who helps organizations make AI use legible, governable, and defensible. He builds minimum-viable governance that survives real constraints: use-case inventories, risk maps, decision traceability, evaluation criteria, and executive-ready documentation.',
+    bio: 'Martin Lepage (PhD) is a Montreal-based AI governance consultant operating at the intersection of federal and Quebec regulatory requirements. Based in Canada\'s AI hub—home to Mila and the Montreal Declaration for Responsible AI—he helps organizations build governance systems that satisfy Treasury Board directives, Law 25 obligations, and emerging AIDA requirements while remaining practical to operate.',
     viewPortfolio: 'View Portfolio & Publications',
     featuredResearch: 'Featured Research',
     sealedCard: 'The Sealed Card Protocol',
