@@ -13,7 +13,7 @@ export const fr = {
   home: {
     title: 'Gouvernance IA',
     subtitle: 'Strat\u00e9gie & Supervision',
-    description: "Des systèmes de gouvernance alignés sur les exigences canadiennes—directives du Conseil du Trésor, Loi 25 du Québec et obligations LIAD émergentes—qui rendent les décisions IA documentées, vérifiables et défendables.",
+    description: "Des systèmes de gouvernance alignés sur les exigences canadiennes:directives du Conseil du Trésor, Loi 25 du Québec et obligations LIAD émergentes:qui rendent les décisions IA documentées, vérifiables et défendables.",
     keywords: 'CONFORMITÉ CANADIENNE · LOI 25 QUÉBEC · PISTE PROBANTE',
     viewServices: 'Voir les services',
     bookDebrief: 'R\u00e9server un entretien',
@@ -58,7 +58,7 @@ export const fr = {
 
   services: {
     title: 'Services',
-    description: "Des systèmes de gouvernance IA conçus pour le paysage réglementaire canadien—de la conformité aux directives fédérales aux exigences de la Loi 25 du Québec en matière de décisions automatisées.",
+    description: "Des systèmes de gouvernance IA conçus pour le paysage réglementaire canadien:de la conformité aux directives fédérales aux exigences de la Loi 25 du Québec en matière de décisions automatisées.",
     keywords: 'CADRES CANADIENS · CONFORMITÉ QUÉBEC · DIRECTIVES FÉDÉRALES',
     whatIDeliver: 'Ce que je livre',
     deliverP1: "J'aide les organisations canadiennes à opérationnaliser la gouvernance IA :",
@@ -94,7 +94,7 @@ export const fr = {
       },
       oversight: {
         title: 'Mandat de supervision continue',
-        description: "Soutien consultatif continu pour maintenir la conformité à mesure que la réglementation canadienne de l'IA évolue—de la mise en œuvre de la LIAD aux mises à jour d'application de la Loi 25.",
+        description: "Soutien consultatif continu pour maintenir la conformité à mesure que la réglementation canadienne de l'IA évolue:de la mise en œuvre de la LIAD aux mises à jour d'application de la Loi 25.",
         outputs: "Supervision mensuelle, gestion du journal de décisions, notes sur les mises à jour réglementaires, mises à jour de la feuille de route des contrôles, soutien aux audits et à l'approvisionnement.",
         ideal: "Organisations avec une livraison IA active au Canada qui ont besoin d'une supervision stable alors que le paysage réglementaire mûrit."
       }
@@ -264,16 +264,16 @@ export const fr = {
     keywords: 'MONTRÉAL · QUÉBEC · CANADA',
     practiceTitle: "Ce que signifie la Pratique de gouvernance IA au Canada",
     practiceP1: "La gouvernance IA au Canada n'est pas un PDF de politiques.",
-    practiceP1b: "C'est un système aligné sur les directives du Conseil du Trésor, les exigences de la Loi 25 du Québec en matière de décisions automatisées et les obligations émergentes de la LIAD—une façon de classifier les risques, d'appliquer les bons contrôles et de maintenir des preuves qui satisfont les régulateurs canadiens.",
+    practiceP1b: "C'est un système aligné sur les directives du Conseil du Trésor, les exigences de la Loi 25 du Québec en matière de décisions automatisées et les obligations émergentes de la LIAD:une façon de classifier les risques, d'appliquer les bons contrôles et de maintenir des preuves qui satisfont les régulateurs canadiens.",
     practiceP2: 'Mon travail',
     practiceP2b: "consiste à aider les organisations canadiennes à bâtir une gouvernance qui répond aux exigences fédérales et provinciales : inventaires de cas d'utilisation structurés pour l'Évaluation de l'incidence algorithmique, niveaux de risque qui répondent aux obligations de la Loi 25, et documentation qui satisfait le Conseil du Trésor et la Commission d'accès à l'information.",
     steps: {
       classify: { title: 'Classifier les risques', description: "Bâtir des inventaires alignés sur l'Évaluation de l'incidence algorithmique, puis hiérarchiser par niveaux d'impact qui satisfont les exigences fédérales et québécoises." },
       design: { title: 'Concevoir les contrôles', description: "Définir les droits de décision et approbations qui répondent aux attentes du Conseil du Trésor et aux dispositions de la Loi 25 sur les décisions automatisées." },
-      maintain: { title: 'Maintenir les preuves', description: "Garder la documentation à jour à mesure que la réglementation canadienne de l'IA évolue—de la mise en œuvre de la LIAD à l'application provinciale." }
+      maintain: { title: 'Maintenir les preuves', description: "Garder la documentation à jour à mesure que la réglementation canadienne de l'IA évolue:de la mise en œuvre de la LIAD à l'application provinciale." }
     },
     aboutMe: '\u00c0 propos de moi',
-    bio: "Martin Lepage (PhD) est un consultant montréalais en gouvernance IA opérant à l'intersection des exigences réglementaires fédérales et québécoises. Basé dans le hub IA du Canada—berceau de Mila et de la Déclaration de Montréal pour un développement responsable de l'IA—il aide les organisations à bâtir des systèmes de gouvernance qui satisfont les directives du Conseil du Trésor, les obligations de la Loi 25 et les exigences émergentes de la LIAD tout en restant pratiques à opérer.",
+    bio: "Martin Lepage (PhD) est un consultant montréalais en gouvernance IA opérant à l'intersection des exigences réglementaires fédérales et québécoises. Basé dans le hub IA du Canada:berceau de Mila et de la Déclaration de Montréal pour un développement responsable de l'IA:il aide les organisations à bâtir des systèmes de gouvernance qui satisfont les directives du Conseil du Trésor, les obligations de la Loi 25 et les exigences émergentes de la LIAD tout en restant pratiques à opérer.",
     viewPortfolio: 'Voir le portfolio et les publications',
     featuredResearch: 'Recherche en vedette',
     sealedCard: 'The Sealed Card Protocol',

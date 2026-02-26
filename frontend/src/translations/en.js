@@ -13,7 +13,7 @@ export const en = {
   home: {
     title: 'AI Governance',
     subtitle: 'Strategy & Oversight',
-    description: 'Governance systems aligned with Canadian requirements—Treasury Board directives, Quebec\'s Law 25, and emerging AIDA obligations—that make AI decisions documented, reviewable, and defensible.',
+    description: 'Governance systems aligned with Canadian requirements:Treasury Board directives, Quebec\'s Law 25, and emerging AIDA obligations:that make AI decisions documented, reviewable, and defensible.',
     keywords: 'CANADIAN COMPLIANCE · QUEBEC LAW 25 · EVIDENCE TRAIL',
     viewServices: 'View Services',
     bookDebrief: 'Book a Debrief',
@@ -58,7 +58,7 @@ export const en = {
 
   services: {
     title: 'Services',
-    description: 'AI governance systems designed for the Canadian regulatory landscape—from federal Directive compliance to Quebec\'s Law 25 automated decision-making requirements.',
+    description: 'AI governance systems designed for the Canadian regulatory landscape:from federal Directive compliance to Quebec\'s Law 25 automated decision-making requirements.',
     keywords: 'CANADIAN FRAMEWORKS · QUEBEC COMPLIANCE · FEDERAL DIRECTIVES',
     whatIDeliver: 'What I deliver',
     deliverP1: 'I help Canadian organizations operationalize AI governance:',
@@ -94,7 +94,7 @@ export const en = {
       },
       oversight: {
         title: 'Oversight Retainer',
-        description: 'Ongoing advisory support to maintain compliance as Canadian AI regulation evolves—from AIDA implementation to Law 25 enforcement updates.',
+        description: 'Ongoing advisory support to maintain compliance as Canadian AI regulation evolves:from AIDA implementation to Law 25 enforcement updates.',
         outputs: 'Monthly oversight, decision log stewardship, regulatory update briefings, control roadmap updates, audit and procurement support.',
         ideal: 'Organizations with active AI delivery in Canada who need stable oversight as the regulatory landscape matures.'
       }
@@ -264,16 +264,16 @@ export const en = {
     keywords: 'MONTREAL · QUEBEC · CANADA',
     practiceTitle: 'What AI Governance Practice means in Canada',
     practiceP1: "AI governance in Canada isn't a policy PDF.",
-    practiceP1b: 'It\'s a system aligned with Treasury Board directives, Quebec\'s automated decision-making requirements under Law 25, and the emerging obligations of AIDA—a way to classify risk, apply the right controls, and maintain evidence that satisfies Canadian regulators.',
+    practiceP1b: 'It\'s a system aligned with Treasury Board directives, Quebec\'s automated decision-making requirements under Law 25, and the emerging obligations of AIDA:a way to classify risk, apply the right controls, and maintain evidence that satisfies Canadian regulators.',
     practiceP2: 'My work',
     practiceP2b: 'is to help Canadian organizations build governance that meets federal and provincial requirements: use case inventories structured for the Algorithmic Impact Assessment, risk tiers that address Law 25 obligations, and documentation that satisfies both the Treasury Board and the Commission d\'accès à l\'information.',
     steps: {
       classify: { title: 'Classify risk', description: 'Build inventories aligned with the Algorithmic Impact Assessment, then tier by impact levels that satisfy both federal and Quebec requirements.' },
       design: { title: 'Design controls', description: 'Define decision rights and approvals that meet Treasury Board expectations and Law 25 automated decision-making provisions.' },
-      maintain: { title: 'Maintain evidence', description: 'Keep documentation current as Canadian AI regulation evolves—from AIDA implementation to provincial enforcement.' }
+      maintain: { title: 'Maintain evidence', description: 'Keep documentation current as Canadian AI regulation evolves:from AIDA implementation to provincial enforcement.' }
     },
     aboutMe: 'About me',
-    bio: 'Martin Lepage (PhD) is a Montreal-based AI governance consultant operating at the intersection of federal and Quebec regulatory requirements. Based in Canada\'s AI hub—home to Mila and the Montreal Declaration for Responsible AI—he helps organizations build governance systems that satisfy Treasury Board directives, Law 25 obligations, and emerging AIDA requirements while remaining practical to operate.',
+    bio: 'Martin Lepage (PhD) is a Montreal-based AI governance consultant operating at the intersection of federal and Quebec regulatory requirements. Based in Canada\'s AI hub:home to Mila and the Montreal Declaration for Responsible AI:he helps organizations build governance systems that satisfy Treasury Board directives, Law 25 obligations, and emerging AIDA requirements while remaining practical to operate.',
     viewPortfolio: 'View Portfolio & Publications',
     featuredResearch: 'Featured Research',
     sealedCard: 'The Sealed Card Protocol',
