@@ -17,15 +17,15 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full py-2 px-6 md:px-12 flex justify-end items-center bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/5" data-testid="navbar">
-      {/* Navigation - no monogram */}
-      <div className="flex gap-4 md:gap-6 items-center">
+    <nav className="w-full h-10 px-6 md:px-12 flex justify-end items-center bg-white sticky top-0 z-50 border-b border-[#0B0F1A]/5" data-testid="navbar">
+      {/* Navigation - centered vertically, aligned far right */}
+      <div className="flex gap-4 md:gap-6 items-center h-full">
         {navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
             data-testid={`nav-${item.path.replace('/', '') || 'home'}`}
-            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#180E66] pb-1 ${
+            className={`text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#180E66] flex items-center h-full ${
               location.pathname === item.path
                 ? 'text-[#0B0F1A] border-b-2 border-[#180E66]'
                 : 'text-[#0B0F1A]/50 border-b-2 border-transparent'
