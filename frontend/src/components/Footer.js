@@ -7,7 +7,7 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="py-6 px-6 md:px-12 bg-[#f8f9fc] border-t border-gray-200" data-testid="footer">
+    <footer className="py-6 px-6 md:px-12 bg-[#F6F7FB] border-t border-gray-200" data-testid="footer">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4">
           <p className="text-sm text-gray-500">
@@ -15,7 +15,7 @@ const Footer = () => {
           </p>
           <Link 
             to="/admin" 
-            className="w-2 h-2 rounded-full bg-gray-300 hover:bg-[#6366f1] transition-colors opacity-50 hover:opacity-100"
+            className="w-2 h-2 rounded-full bg-gray-300 hover:bg-[#4B2ABF] transition-colors opacity-50 hover:opacity-100"
             title=""
             data-testid="admin-link"
           />

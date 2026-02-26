@@ -25,7 +25,7 @@ import Cases from "./pages/Cases";
 function App() {
   return (
     <LanguageProvider>
-      <div className="App min-h-screen bg-[#f8f9fc]">
+      <div className="App min-h-screen bg-[#F6F7FB]">
         <BrowserRouter>
           <ScrollToTop />
           <Navbar />

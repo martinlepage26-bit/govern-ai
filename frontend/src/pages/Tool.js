@@ -74,16 +74,16 @@ const Tool = () => {
   const isLastQuestion = currentQuestion === READINESS_QUESTIONS.length - 1;
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] py-12 px-6" data-testid="tool-page">
+    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6" data-testid="tool-page">
       <div className="max-w-[980px] mx-auto mb-6">
-        <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#1a2744] mb-2">{t.tool.title}</h1>
+        <h1 className="font-serif text-3xl md:text-4xl font-semibold text-[#0B0F1A] mb-2">{t.tool.title}</h1>
         <p className="text-gray-600 max-w-2xl">{t.tool.description}</p>
         <div className="flex gap-4 mt-4 text-xs tracking-wider uppercase">
-          <span className={step >= 1 ? 'text-[#6366f1] font-semibold' : 'text-gray-400'}>{t.tool.steps.sector}</span>
+          <span className={step >= 1 ? 'text-[#4B2ABF] font-semibold' : 'text-gray-400'}>{t.tool.steps.sector}</span>
           <span className="text-gray-300">·</span>
-          <span className={step >= 2 ? 'text-[#6366f1] font-semibold' : 'text-gray-400'}>{t.tool.steps.readiness}</span>
+          <span className={step >= 2 ? 'text-[#4B2ABF] font-semibold' : 'text-gray-400'}>{t.tool.steps.readiness}</span>
           <span className="text-gray-300">·</span>
-          <span className={drawerOpen ? 'text-[#6366f1] font-semibold' : 'text-gray-400'}>{t.tool.steps.results}</span>
+          <span className={drawerOpen ? 'text-[#4B2ABF] font-semibold' : 'text-gray-400'}>{t.tool.steps.results}</span>
         </div>
       </div>
 
@@ -96,19 +96,19 @@ const Tool = () => {
             {step === 1 && (
               <div data-testid="step-1-sector">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#6366f1] text-white flex items-center justify-center font-bold text-sm">1</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#1a2744]">{t.tool.step1.title}</h2>
+                  <span className="w-7 h-7 rounded-full bg-[#4B2ABF] text-white flex items-center justify-center font-bold text-sm">1</span>
+                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.tool.step1.title}</h2>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">{t.tool.step1.description}</p>
                 <div className="space-y-2.5">
                   {sectorKeys.map((key, i) => (
                     <button key={key} onClick={() => handleSectorSelect(sectorIds[i])} data-testid={`sector-${sectorIds[i]}`}
                       className={`w-full text-left p-3 rounded-2xl border transition-all duration-150 shadow-[0_10px_20px_rgba(15,23,42,0.06)] hover:translate-y-[-1px] hover:shadow-[0_14px_26px_rgba(15,23,42,0.08)] ${
-                        selectedSector === sectorIds[i] ? 'border-[#6366f1]/55 shadow-[0_16px_30px_rgba(99,102,241,0.15)] bg-[#6366f1]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#6366f1]/25'
+                        selectedSector === sectorIds[i] ? 'border-[#4B2ABF]/55 shadow-[0_16px_30px_rgba(99,102,241,0.15)] bg-[#4B2ABF]/5' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
                       }`}
                     >
-                      <h3 className="font-bold text-[#0b1220]/90 mb-1 text-sm">{t.tool.sectors[key].title}</h3>
-                      <p className="text-[#0b1220]/70 text-sm leading-snug">{t.tool.sectors[key].description}</p>
+                      <h3 className="font-bold text-[#0B0F1A]/90 mb-1 text-sm">{t.tool.sectors[key].title}</h3>
+                      <p className="text-[#0B0F1A]/70 text-sm leading-snug">{t.tool.sectors[key].description}</p>
                     </button>
                   ))}
                 </div>
@@ -118,24 +118,24 @@ const Tool = () => {
             {step === 2 && (
               <div data-testid="step-2-readiness">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="w-7 h-7 rounded-full bg-[#6366f1] text-white flex items-center justify-center font-bold text-sm">2</span>
-                  <h2 className="font-serif text-xl font-semibold text-[#1a2744]">
+                  <span className="w-7 h-7 rounded-full bg-[#4B2ABF] text-white flex items-center justify-center font-bold text-sm">2</span>
+                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {READINESS_QUESTIONS.length}
                   </h2>
                 </div>
-                <p className="text-[#0b1220]/90 font-medium mb-4" data-testid={`question-${currentQ.id}`}>{currentQ.question}</p>
+                <p className="text-[#0B0F1A]/90 font-medium mb-4" data-testid={`question-${currentQ.id}`}>{currentQ.question}</p>
                 <div className="grid grid-cols-3 gap-2.5">
                   {currentQ.options.map((option) => (
                     <button key={option.value} onClick={() => handleAnswer(currentQ.id, option.value, option.score)}
                       className={`rounded-full border py-2.5 px-3 font-bold text-sm transition-all duration-150 hover:translate-y-[-1px] hover:shadow-[0_12px_22px_rgba(15,23,42,0.08)] ${
-                        answers[currentQ.id]?.value === option.value ? 'border-[#6366f1]/55 shadow-[0_14px_26px_rgba(99,102,241,0.15)] bg-[#6366f1] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#6366f1]/25'
+                        answers[currentQ.id]?.value === option.value ? 'border-[#4B2ABF]/55 shadow-[0_14px_26px_rgba(99,102,241,0.15)] bg-[#4B2ABF] text-white' : 'border-gray-200/60 bg-white/90 hover:border-[#4B2ABF]/25'
                       }`}
                     >{option.label}</button>
                   ))}
                 </div>
                 <div className="flex justify-center gap-1.5 mt-4">
                   {READINESS_QUESTIONS.map((_, i) => (
-                    <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === currentQuestion ? 'bg-[#6366f1]' : answers[READINESS_QUESTIONS[i].id] ? 'bg-[#6366f1]/40' : 'bg-gray-300'}`} />
+                    <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === currentQuestion ? 'bg-[#4B2ABF]' : answers[READINESS_QUESTIONS[i].id] ? 'bg-[#4B2ABF]/40' : 'bg-gray-300'}`} />
                   ))}
                 </div>
               </div>
@@ -143,18 +143,18 @@ const Tool = () => {
 
             <div className="flex items-center gap-2.5 mt-4 pt-4 border-t border-gray-100">
               {(step > 1 || (step === 2 && currentQuestion > 0)) && (
-                <button onClick={handleBack} className="text-gray-600 hover:text-[#6366f1] font-medium text-sm" data-testid="back-btn">{t.tool.buttons.back}</button>
+                <button onClick={handleBack} className="text-gray-600 hover:text-[#4B2ABF] font-medium text-sm" data-testid="back-btn">{t.tool.buttons.back}</button>
               )}
               <button onClick={handleReset} className="text-gray-500 hover:text-gray-700 text-sm" data-testid="reset-btn">{t.tool.buttons.reset}</button>
               <button onClick={handleNext} disabled={!canProceed} data-testid="next-btn"
-                className={`ml-auto px-5 py-2 rounded-full font-semibold text-sm transition-all ${canProceed ? 'bg-[#6366f1] text-white hover:bg-[#5558e3]' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                className={`ml-auto px-5 py-2 rounded-full font-semibold text-sm transition-all ${canProceed ? 'bg-[#4B2ABF] text-white hover:bg-[#3A1FA0]' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
               >
                 {isLastQuestion && step === 2 ? t.tool.buttons.seeResults : t.tool.buttons.next}
               </button>
             </div>
 
             {step === 1 && !selectedSector && (
-              <p className="text-[#6366f1]/80 font-semibold text-sm mt-2.5">{t.tool.buttons.selectSector}</p>
+              <p className="text-[#4B2ABF]/80 font-semibold text-sm mt-2.5">{t.tool.buttons.selectSector}</p>
             )}
           </div>
         </div>
@@ -162,12 +162,12 @@ const Tool = () => {
 
       {drawerOpen && (
         <>
-          <div className="fixed inset-0 bg-[#0b1220]/35 z-[4000]" onClick={() => setDrawerOpen(false)} data-testid="drawer-backdrop" />
+          <div className="fixed inset-0 bg-[#0B0F1A]/35 z-[4000]" onClick={() => setDrawerOpen(false)} data-testid="drawer-backdrop" />
           <div className="fixed top-0 right-0 h-screen w-[min(440px,92vw)] bg-white/95 border-l border-gray-200/60 shadow-[-18px_0_60px_rgba(15,23,42,0.18)] z-[4500] flex flex-col" data-testid="results-drawer">
             <div className="flex items-start justify-between gap-3 p-4 border-b border-gray-100">
               <div>
-                <p className="text-xs tracking-widest uppercase text-[#6366f1]">{t.tool.steps.results}</p>
-                <h3 className="font-serif text-xl font-semibold text-[#0b1220]/95 mt-1">{t.tool.results.title}</h3>
+                <p className="text-xs tracking-widest uppercase text-[#4B2ABF]">{t.tool.steps.results}</p>
+                <h3 className="font-serif text-xl font-semibold text-[#0B0F1A]/95 mt-1">{t.tool.results.title}</h3>
               </div>
               <button onClick={() => setDrawerOpen(false)} className="p-1 hover:bg-gray-100 rounded-full" data-testid="close-drawer-btn">
                 <X className="w-5 h-5 text-gray-500" />
@@ -184,17 +184,17 @@ const Tool = () => {
                   <>
                     <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
                       <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_14px_26px_rgba(99,102,241,0.15)]"
-                        style={{ background: `conic-gradient(#6366f1 ${percentage * 3.6}deg, rgba(15,23,42,0.08) ${percentage * 3.6}deg 360deg)` }}>
-                        <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0b1220]/90">{percentage}%</div>
+                        style={{ background: `conic-gradient(#4B2ABF ${percentage * 3.6}deg, rgba(15,23,42,0.08) ${percentage * 3.6}deg 360deg)` }}>
+                        <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0B0F1A]/90">{percentage}%</div>
                       </div>
                       <div>
                         <p className="text-xs tracking-wider uppercase text-gray-500 font-bold mb-1">{sectorTitle}</p>
-                        <p className="font-serif font-bold text-xl text-[#6366f1] mb-1">{risk}</p>
-                        <p className="text-[#0b1220]/75 text-sm leading-snug">{recommendation}</p>
+                        <p className="font-serif font-bold text-xl text-[#4B2ABF] mb-1">{risk}</p>
+                        <p className="text-[#0B0F1A]/75 text-sm leading-snug">{recommendation}</p>
                       </div>
                     </div>
                     <div className="mt-3 p-3 border border-gray-200/60 rounded-2xl bg-white/90">
-                      <h4 className="font-bold text-[#0b1220]/90 mb-2">{t.tool.results.scoreBreakdown}</h4>
+                      <h4 className="font-bold text-[#0B0F1A]/90 mb-2">{t.tool.results.scoreBreakdown}</h4>
                       <div className="space-y-2">
                         {READINESS_QUESTIONS.map((q) => {
                           const answer = answers[q.id];
@@ -210,19 +210,19 @@ const Tool = () => {
                       </div>
                       <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 font-bold">
                         <span>{t.tool.results.total}</span>
-                        <span className="text-[#6366f1]">{score}/{total}</span>
+                        <span className="text-[#4B2ABF]">{score}/{total}</span>
                       </div>
                     </div>
                     <div className="mt-3 p-3 border border-gray-200/60 rounded-2xl bg-white/90">
-                      <h4 className="font-bold text-[#0b1220]/90 mb-2">{t.tool.results.recommendedSteps}</h4>
-                      <ul className="text-[#0b1220]/75 text-sm space-y-1.5 pl-4 list-disc">
+                      <h4 className="font-bold text-[#0B0F1A]/90 mb-2">{t.tool.results.recommendedSteps}</h4>
+                      <ul className="text-[#0B0F1A]/75 text-sm space-y-1.5 pl-4 list-disc">
                         {nextSteps.map((s, i) => <li key={i}>{s}</li>)}
                       </ul>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-4">
                       <Link to="/connect" className="btn-primary text-sm" data-testid="book-debrief-btn">{t.tool.results.bookDebrief}</Link>
                       <Link to="/services" className="btn-ghost text-sm">{t.tool.results.viewServices}</Link>
-                      <button onClick={handleReset} className="text-gray-500 hover:text-[#6366f1] text-sm ml-auto">{t.tool.results.retake}</button>
+                      <button onClick={handleReset} className="text-gray-500 hover:text-[#4B2ABF] text-sm ml-auto">{t.tool.results.retake}</button>
                     </div>
                   </>
                 );

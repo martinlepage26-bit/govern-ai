@@ -34,9 +34,9 @@ const Library = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="library-page">
+    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="library-page">
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#1a2744] mb-4">{t.library.title}</h1>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.library.title}</h1>
         <p className="text-gray-600 mb-8 max-w-2xl">{t.library.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.library.keywords}</p>
 
@@ -46,18 +46,18 @@ const Library = () => {
             return (
               <div key={key} className="card" data-testid={`library-section-${idx}`}>
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#6366f1]" /></div>
-                  <h2 className="font-serif text-xl font-semibold text-[#1a2744]">{t.library.sections[key]}</h2>
+                  <div className="w-10 h-10 rounded-xl bg-[#4B2ABF]/10 flex items-center justify-center"><Icon className="w-5 h-5 text-[#4B2ABF]" /></div>
+                  <h2 className="font-serif text-xl font-semibold text-[#0B0F1A]">{t.library.sections[key]}</h2>
                 </div>
                 <div className="space-y-3">
                   {sectionItems[idx].map((item, i) => (
                     <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3 rounded-xl bg-[#f8f9fc] hover:bg-[#6366f1]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
+                      className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7FB] hover:bg-[#4B2ABF]/5 transition-colors group" data-testid={`library-item-${idx}-${i}`}>
                       <div className="flex items-center gap-3">
-                        <span className="text-gray-700 group-hover:text-[#6366f1] transition-colors">{item.name}</span>
+                        <span className="text-gray-700 group-hover:text-[#4B2ABF] transition-colors">{item.name}</span>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">{item.tag}</span>
                       </div>
-                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#6366f1] transition-colors" />
+                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#4B2ABF] transition-colors" />
                     </a>
                   ))}
                 </div>
@@ -66,9 +66,9 @@ const Library = () => {
           })}
         </div>
 
-        <div className="mt-8 p-4 bg-[#6366f1]/5 rounded-xl border border-[#6366f1]/20">
+        <div className="mt-8 p-4 bg-[#4B2ABF]/5 rounded-xl border border-[#4B2ABF]/20">
           <p className="text-sm text-gray-600">
-            <span className="font-semibold text-[#1a2744]">{t.library.note}</span> {t.library.noteText}
+            <span className="font-semibold text-[#0B0F1A]">{t.library.note}</span> {t.library.noteText}
           </p>
         </div>
       </div>

@@ -26,7 +26,7 @@ const StarterKitCTA = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-[#1a2744] via-[#2a3a5c] to-[#6366f1] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
+    <div className="bg-gradient-to-br from-[#0B0F1A] via-[#1A1033] to-[#4B2ABF] rounded-2xl p-8 text-white" data-testid="starter-kit-cta">
       <div className="flex items-start gap-4 mb-6">
         <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
           <Download className="w-7 h-7" />
@@ -46,7 +46,7 @@ const StarterKitCTA = () => {
         <div className="space-y-2">
           {kitContents.map((item, i) => (
             <div key={i} className="flex items-center gap-3">
-              <item.icon className="w-4 h-4 text-[#a78bfa]" />
+              <item.icon className="w-4 h-4 text-[#7C5CD6]" />
               <span className="text-white/90 text-sm">{item.text}</span>
             </div>
           ))}
@@ -62,7 +62,7 @@ const StarterKitCTA = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t.starterKit.emailPlaceholder}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6366f1]"
+            className="w-full pl-10 pr-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#4B2ABF]"
             data-testid="starter-kit-email"
           />
         </div>
@@ -71,7 +71,7 @@ const StarterKitCTA = () => {
           className={`px-5 py-3 rounded-lg font-semibold transition-all flex items-center gap-2 ${
             submitted 
               ? 'bg-green-500 text-white' 
-              : 'bg-white text-[#1a2744] hover:bg-gray-100'
+              : 'bg-white text-[#0B0F1A] hover:bg-gray-100'
           }`}
           data-testid="starter-kit-submit"
         >

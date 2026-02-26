@@ -5,20 +5,20 @@ const FAQ = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] py-12 px-6 md:px-12" data-testid="faq-page">
+    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="faq-page">
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#1a2744] mb-4">{t.faq.title}</h1>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold text-[#0B0F1A] mb-4">{t.faq.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.faq.description}</p>
         <p className="text-xs tracking-widest text-gray-400 uppercase mb-12">{t.faq.keywords}</p>
 
         <div className="space-y-6">
           {t.faq.questions.map((faq, index) => (
             <div key={index} className="card" data-testid={`faq-${index}`}>
-              <h2 className="font-serif text-xl font-semibold text-[#1a2744] mb-4">{faq.question}</h2>
+              <h2 className="font-serif text-xl font-semibold text-[#0B0F1A] mb-4">{faq.question}</h2>
               <p className="text-gray-600 leading-relaxed mb-4">{faq.answer}</p>
               
               {faq.cta === 'requestAuditChecklist' && (
-                <Link to="/connect" className="text-[#6366f1] font-medium hover:underline text-sm">
+                <Link to="/connect" className="text-[#4B2ABF] font-medium hover:underline text-sm">
                   {t.faq.requestAuditChecklist} &rarr;
                 </Link>
               )}
@@ -34,10 +34,10 @@ const FAQ = () => {
           ))}
         </div>
 
-        <div className="mt-12 p-6 bg-gradient-to-r from-[#1a2744] to-[#6366f1] rounded-2xl text-white">
+        <div className="mt-12 p-6 bg-gradient-to-r from-[#0B0F1A] to-[#4B2ABF] rounded-2xl text-white">
           <h3 className="font-serif text-xl font-semibold mb-2">{t.faq.stillHaveQuestions}</h3>
           <p className="text-white/80 mb-4">{t.faq.stillHaveQuestionsDesc}</p>
-          <Link to="/connect" className="inline-block bg-white text-[#1a2744] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.faq.bookDebrief}</Link>
+          <Link to="/connect" className="inline-block bg-white text-[#0B0F1A] px-5 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">{t.faq.bookDebrief}</Link>
         </div>
       </div>
     </div>
