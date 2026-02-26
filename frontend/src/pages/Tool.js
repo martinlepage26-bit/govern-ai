@@ -192,12 +192,12 @@ const Tool = () => {
                   <>
                     <div className="grid grid-cols-[120px_1fr] gap-4 items-center p-3 border border-gray-200/60 rounded-2xl bg-[#f6f7fb]/70">
                       <div className="w-[110px] h-[110px] rounded-full grid place-items-center shadow-[0_3px_10px_rgba(75,42,191,0.10)]"
-                        style={{ background: `conic-gradient(#0D0A2E ${percentage * 3.6}deg, rgba(11,15,26,0.06) ${percentage * 3.6}deg 360deg)` }}>
+                        style={{ background: `conic-gradient(${percentage >= 70 ? '#7CB97C' : percentage >= 40 ? '#E6C860' : '#E07A7A'} ${percentage * 3.6}deg, rgba(11,15,26,0.06) ${percentage * 3.6}deg 360deg)` }}>
                         <div className="w-[82px] h-[82px] rounded-full bg-white/95 border border-gray-200/60 grid place-items-center font-extrabold text-2xl text-[#0B0F1A]/90">{percentage}%</div>
                       </div>
                       <div>
                         <p className="text-xs tracking-wider uppercase text-gray-500 font-bold mb-1">{sectorTitle}</p>
-                        <p className="font-serif font-bold text-xl text-[#0D0A2E] mb-1">{risk}</p>
+                        <p className={`font-serif font-bold text-xl mb-1 ${percentage >= 70 ? 'text-[#7CB97C]' : percentage >= 40 ? 'text-[#C9A227]' : 'text-[#C94A4A]'}`}>{risk}</p>
                         <p className="text-[#0B0F1A]/75 text-sm leading-snug">{recommendation}</p>
                       </div>
                     </div>
