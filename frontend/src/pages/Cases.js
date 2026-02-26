@@ -8,65 +8,19 @@ const Cases = () => {
   const [selectedCase, setSelectedCase] = useState(null);
   const { t } = useLanguage();
 
-  // All 7 sector cards data
-  const sectorCards = [
-    {
-      id: 'regulated',
-      icon: Shield,
-      title: 'Regulated Systems',
-      subtitle: 'Higher evidence burden, tighter approvals.',
-      body: 'AI in regulated environments demands governance that satisfies external scrutiny. We build classification aligned with sector-specific requirements and evidence trails that auditors expect.',
-      deliverable: 'Risk tiering, approval workflows, audit-ready documentation.'
-    },
-    {
-      id: 'enterprise-saas',
-      icon: Server,
-      title: 'Enterprise SaaS',
-      subtitle: 'Governance that ships with your release cadence.',
-      body: 'SaaS teams need governance that keeps pace with continuous delivery. We design lightweight controls that prevent drift without blocking deployment velocity.',
-      deliverable: 'Feature governance intake, vendor AI review, evidence collection.'
-    },
-    {
-      id: 'procurement',
-      icon: ShoppingCart,
-      title: 'Procurement & Vendor Risk',
-      subtitle: 'Questionnaires become controls.',
-      body: 'Procurement scrutiny is increasing. We transform due diligence into operational governance with contract-backed proof and reassessment triggers.',
-      deliverable: 'Vendor questionnaires, evaluation scorecards, contract templates.'
-    },
-    {
-      id: 'public-sector',
-      icon: Landmark,
-      title: 'Public Sector',
-      subtitle: 'Contestability and due process.',
-      body: 'Public sector AI requires citizen-facing accountability. We build appeal pathways, trace retention policies, and fairness monitoring that survives scrutiny.',
-      deliverable: 'Contestability procedures, fairness dashboards, retention policies.'
-    },
-    {
-      id: 'financial',
-      icon: DollarSign,
-      title: 'Financial Systems',
-      subtitle: 'Models that move money need exposure controls.',
-      body: 'Financial AI carries concentrated risk. We design controls for model materiality, adverse action logic, and stress testing that regulators expect.',
-      deliverable: 'Model risk framework, exposure controls, regulatory mapping.'
-    },
-    {
-      id: 'construction',
-      icon: HardHat,
-      title: 'Construction & Infrastructure',
-      subtitle: 'Jobsite safety and operational automation.',
-      body: 'Construction AI governance must survive incident review. We build evidence trails for safety tech, asset tracking, and predictive maintenance systems.',
-      deliverable: 'Safety governance, equipment AI controls, incident documentation.'
-    },
-    {
-      id: 'governance',
-      icon: Settings,
-      title: 'Governance Operating Model',
-      subtitle: 'Decision rights and lifecycle gates.',
-      body: 'Organizations need a governance operating model that scales. We design decision rights, approval flows, and evidence architecture that grows with your AI portfolio.',
-      deliverable: 'RACI matrix, governance calendar, lifecycle gates.'
-    }
-  ];
+  // Sector icons mapping
+  const sectorIcons = {
+    regulated: Shield,
+    enterpriseSaas: Server,
+    procurement: ShoppingCart,
+    publicSector: Landmark,
+    financial: DollarSign,
+    construction: HardHat,
+    governance: Settings
+  };
+
+  const sectorKeys = ['regulated', 'enterpriseSaas', 'procurement', 'publicSector', 'financial', 'construction', 'governance'];
+  const sectorIds = ['regulated', 'enterprise-saas', 'procurement', 'public-sector', 'financial', 'construction', 'governance'];
 
   return (
     <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="cases-page">
