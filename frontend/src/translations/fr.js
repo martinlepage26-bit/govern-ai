@@ -384,16 +384,16 @@ export const fr = {
 
   library: {
     title: 'Biblioth\u00e8que de gouvernance IA',
-    description: "Un hub de r\u00e9f\u00e9rence s\u00e9lectionn\u00e9\u00a0: cadres, sources politiques, normes et d\u00e9veloppements en cours pour les praticiens de la gouvernance IA. Ces ressources informent l\u2019approche analytique utilis\u00e9e dans les mandats clients.",
-    keywords: 'CADRES \u00B7 R\u00c9GLEMENTATIONS \u00B7 NORMES \u00B7 D\u00c9VELOPPEMENTS',
+    description: "Un hub de r\u00e9f\u00e9rence ancr\u00e9 dans le paysage de gouvernance canadien. Les cadres et l\u00e9gislations du Canada constituent la fondation; les normes internationales des \u00c9tats-Unis et de l\u2019UE sont fournies pour comparaison et sensibilisation interjuridictionnelle.",
+    keywords: 'CADRES CANADIENS \u00B7 L\u00c9GISLATION \u00B7 COMPARAISON INTERNATIONALE \u00B7 NORMES',
     sections: {
-      foundational: 'Cadres fondamentaux',
-      regulatory: 'Sources r\u00e9glementaires et politiques',
-      standards: 'Normes et organismes techniques',
-      ongoing: 'D\u00e9veloppements en cours'
+      canadian: 'Cadres et l\u00e9gislation canadiens',
+      canadianOrgs: 'Normes et organisations canadiennes',
+      international: 'Cadres internationaux (Comparaison)',
+      standards: 'Normes et organismes de r\u00e9f\u00e9rence'
     },
     note: 'Note\u00a0:',
-    noteText: "Cette biblioth\u00e8que est s\u00e9lectionn\u00e9e pour les praticiens de la gouvernance IA. Les liens sont fournis \u00e0 titre de r\u00e9f\u00e9rence et ne constituent pas une approbation. V\u00e9rifiez toujours les versions actuelles et l\u2019applicabilit\u00e9 \u00e0 votre juridiction."
+    noteText: "Cette biblioth\u00e8que est s\u00e9lectionn\u00e9e pour les praticiens de la gouvernance IA op\u00e9rant au Canada ou conseillant des organisations canadiennes. Les r\u00e9f\u00e9rences internationales sont incluses pour la comparaison interjuridictionnelle. V\u00e9rifiez toujours les versions actuelles et l\u2019applicabilit\u00e9 \u00e0 votre province et secteur."
   },
 
   faq: {
