@@ -90,24 +90,11 @@ const Home = () => {
             
             {/* Martin Lepage PhD - more readable */}
             <p 
-              className="text-[#2a2a2a]/60 text-sm tracking-wide mb-4" 
+              className="text-[#2a2a2a]/60 text-sm tracking-wide" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               Martin Lepage PhD
             </p>
-            
-            {/* Compliant with regulations - more readable */}
-            <div 
-              className="flex flex-wrap items-center justify-center gap-x-2 text-[#2a2a2a]/55 text-xs tracking-wide" 
-              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
-            >
-              <span>{language === 'fr' ? 'Conforme aux' : 'Compliant with'}</span>
-              <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
-              <span>{language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}</span>
-              <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
-              <span>{language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}</span>
-              <span>{language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}</span>
-            </div>
           </div>
 
           {/* Right: Tagline + Buttons - centered, stacked */}
