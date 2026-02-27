@@ -18,37 +18,37 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full px-6 md:px-12 py-4 bg-white sticky top-0 z-50 border-b border-[#1a1a1a]/5" data-testid="navbar">
-      <div className="flex items-start justify-between">
-        {/* Left: Logo/Business Name */}
-        <Link to="/" className="flex flex-col" data-testid="nav-brand">
+    <nav className="w-full px-6 md:px-10 py-3 bg-white sticky top-0 z-50 border-b border-[#1a1a1a]/5" data-testid="navbar">
+      <div className="flex items-center justify-between">
+        {/* Left: Name and Title - Single Line */}
+        <Link to="/" className="flex items-baseline gap-1" data-testid="nav-brand">
           <span 
-            className="text-lg md:text-xl font-bold text-[#1a1a1a]" 
-            style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}
+            className="text-base md:text-lg font-bold text-[#1a1a1a]" 
+            style={{fontFamily: "'Lato', 'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '-0.01em'}}
           >
             Martin Lepage, PhD
           </span>
           <span 
-            className="text-xs md:text-sm text-[#1a1a1a]/60 mt-0.5" 
-            style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
+            className="text-xs md:text-sm text-[#1a1a1a]/50 ml-1" 
+            style={{fontFamily: "'Lato', 'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
           >
             AI Governance Consultant (Practice & Research)
           </span>
         </Link>
 
-        {/* Right: Navigation */}
-        <div className="flex gap-3 md:gap-5 items-center">
+        {/* Right: Navigation - Single Line */}
+        <div className="flex gap-2 md:gap-4 items-center">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               data-testid={`nav-${item.path.replace('/', '') || 'home'}`}
-              className={`text-xs font-medium tracking-wide transition-all px-2 py-1 rounded ${
+              className={`text-xs font-medium tracking-wide transition-all px-1.5 py-0.5 ${
                 location.pathname === item.path
-                  ? 'text-[#1a1a1a] bg-[#7b2cbf]/10'
-                  : 'text-[#1a1a1a]/60 hover:text-[#1a1a1a] hover:bg-[#7b2cbf]/5'
+                  ? 'text-[#1a1a1a] border-b border-[#1a1a1a]'
+                  : 'text-[#1a1a1a]/50 hover:text-[#1a1a1a]'
               }`}
-              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+              style={{fontFamily: "'Lato', 'IBM Plex Sans', system-ui, sans-serif"}}
             >
               {item.label}
             </Link>
@@ -56,8 +56,8 @@ const Navbar = () => {
           <button
             onClick={toggleLanguage}
             data-testid="lang-toggle"
-            className="ml-1 px-2 py-1 text-xs font-medium tracking-wide text-[#1a1a1a]/50 hover:text-[#7b2cbf] hover:bg-[#7b2cbf]/5 rounded transition-all"
-            style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+            className="ml-1 px-1.5 py-0.5 text-xs font-medium tracking-wide text-[#1a1a1a]/40 hover:text-[#1a1a1a] transition-all"
+            style={{fontFamily: "'Lato', 'IBM Plex Sans', system-ui, sans-serif"}}
           >
             {language === 'en' ? 'FR' : 'EN'}
           </button>
