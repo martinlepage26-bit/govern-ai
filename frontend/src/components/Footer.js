@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <footer className="py-6 px-6 md:px-12 bg-white border-t border-[#1a1a1a]/5 relative overflow-hidden" data-testid="footer">
