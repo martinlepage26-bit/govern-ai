@@ -14,109 +14,96 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 py-8">
         
-        {/* Hero Section with black frame */}
-        <div className="relative mb-8">
-          {/* Top black bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 bg-[#0B0F1A] -mx-6"></div>
-          {/* Left black bar */}
-          <div className="absolute top-0 bottom-0 left-0 w-6 bg-[#0B0F1A] -ml-6"></div>
-          {/* Right black bar */}
-          <div className="absolute top-12 bottom-0 right-0 w-6 bg-[#0B0F1A] -mr-6 hidden md:block"></div>
+        {/* Hero Section - Two columns, tight spacing */}
+        <div className="grid md:grid-cols-[1fr,auto] gap-6 items-center mb-10">
           
-          <div className="relative pt-16 pb-10 px-4 md:px-8">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              
-              {/* Left: Editorial Text */}
-              <div>
-                <h1 
-                  className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-2" 
-                  style={{
-                    fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
-                    fontVariant: 'small-caps', 
-                    letterSpacing: '-0.01em'
-                  }}
-                >
-                  {t.home.title}
-                </h1>
-                
-                {/* Decorative line with diamond */}
-                <div className="flex items-center mb-1" style={{maxWidth: '260px'}}>
-                  <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                    <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
-                  </svg>
-                  <div className="mx-1" style={{
-                    width: '7px',
-                    height: '12px',
-                    background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                    clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                    flexShrink: 0
-                  }}></div>
-                  <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
-                    <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
-                  </svg>
-                </div>
-                
-                <p 
-                  className="text-lg md:text-xl text-[#1a1a1a]/50 mb-5" 
-                  style={{
-                    fontFamily: "'Source Serif 4', Georgia, serif", 
-                    fontStyle: 'italic', 
-                    fontWeight: 400
-                  }}
-                >
-                  {t.home.subtitle}
-                </p>
-                
-                {/* Bullet points */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#0B0F1A]/60 mb-6">
-                  <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                    <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
-                    {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
-                  </span>
-                  <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                    <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
-                    {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
-                  </span>
-                  <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                    <span className="w-1.5 h-1.5 mr-2 bg-[#2D2380] rotate-45"></span>
-                    {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
-                  </span>
-                </div>
-                
-                {/* Buttons */}
-                <div className="flex flex-wrap gap-3">
-                  <Link 
-                    to="/services" 
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
-                    data-testid="view-services-btn"
-                    style={{fontFamily: "'Lato', sans-serif"}}
-                  >
-                    {t.home.viewServices} <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link 
-                    to="/connect" 
-                    className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors bg-white" 
-                    data-testid="book-consultation-btn"
-                    style={{fontFamily: "'Lato', sans-serif"}}
-                  >
-                    {t.home.bookDebrief}
-                  </Link>
-                </div>
-              </div>
-
-              {/* Right: Logo in card */}
-              <div className="flex justify-center md:justify-end">
-                <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
-                  <img 
-                    src="/images/logo-home-new.png" 
-                    alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-                    className="w-48 md:w-56 h-auto"
-                  />
-                </div>
-              </div>
+          {/* Left: Editorial Text */}
+          <div>
+            <h1 
+              className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-1" 
+              style={{
+                fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
+                fontVariant: 'small-caps', 
+                letterSpacing: '-0.01em'
+              }}
+            >
+              {t.home.title}
+            </h1>
+            
+            {/* Decorative line with diamond */}
+            <div className="flex items-center mb-1" style={{maxWidth: '240px'}}>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
+              </svg>
+              <div className="mx-0.5" style={{
+                width: '6px',
+                height: '10px',
+                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                flexShrink: 0
+              }}></div>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
+              </svg>
             </div>
+            
+            <p 
+              className="text-lg text-[#1a1a1a]/50 mb-4" 
+              style={{
+                fontFamily: "'Source Serif 4', Georgia, serif", 
+                fontStyle: 'italic', 
+                fontWeight: 400
+              }}
+            >
+              {t.home.subtitle}
+            </p>
+            
+            {/* Bullet points */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-5">
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
+              </span>
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
+              </span>
+              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
+              </span>
+            </div>
+            
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-2">
+              <Link 
+                to="/services" 
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] text-white text-sm font-medium rounded-sm hover:bg-[#333] transition-colors" 
+                data-testid="view-services-btn"
+                style={{fontFamily: "'Lato', sans-serif"}}
+              >
+                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link 
+                to="/connect" 
+                className="inline-flex items-center gap-2 px-4 py-2 border border-[#1a1a1a]/20 text-[#1a1a1a] text-sm font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
+                data-testid="book-consultation-btn"
+                style={{fontFamily: "'Lato', sans-serif"}}
+              >
+                {t.home.bookDebrief}
+              </Link>
+            </div>
+          </div>
+
+          {/* Right: Logo */}
+          <div className="flex justify-center">
+            <img 
+              src="/images/logo-home-new.png" 
+              alt="AI Governance: Practice & Research by Martin Lepage PhD" 
+              className="w-44 md:w-52 h-auto"
+            />
           </div>
         </div>
 
