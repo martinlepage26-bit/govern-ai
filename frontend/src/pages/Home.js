@@ -100,18 +100,18 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Right: Logo */}
+          {/* Right: Logo - bigger */}
           <div className="flex-shrink-0 mt-6 md:mt-0">
             <img 
               src="/images/logo-home-new.png" 
               alt="AI Governance" 
-              className="w-44 md:w-52 h-auto"
+              className="w-56 md:w-72 h-auto"
             />
           </div>
         </div>
 
         {/* Three Feature Boxes - Separate cards in horizontal row */}
-        <div className="grid md:grid-cols-3 gap-4 mb-10">
+        <div className="grid md:grid-cols-3 gap-4 mb-16">
           {capabilities.map((cap, i) => (
             <div 
               key={i} 
