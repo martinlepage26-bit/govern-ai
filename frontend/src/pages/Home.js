@@ -113,43 +113,48 @@ const Home = () => {
 
           {/* Right: Tagline + Buttons - centered, stacked */}
           <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
-            {/* Main tagline - no diamonds */}
+            {/* Main tagline - with medium diamonds */}
             <div className="mb-8">
-              <p 
-                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-3"
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
-              >
-                {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
-              </p>
-              <p 
-                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-3"
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
-              >
-                {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
-              </p>
-              <p 
-                className="text-lg md:text-xl text-[#2a2a2a]/70"
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
-              >
-                {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
-              </p>
+              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+                <span 
+                  className="text-lg md:text-xl text-[#2a2a2a]/70"
+                  style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
+                >
+                  {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
+                </span>
+                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
+                <span 
+                  className="text-lg md:text-xl text-[#2a2a2a]/70"
+                  style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
+                >
+                  {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
+                </span>
+                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
+                <span 
+                  className="text-lg md:text-xl text-[#2a2a2a]/70"
+                  style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
+                >
+                  {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
+                </span>
+              </div>
             </div>
             
-            {/* Smaller Buttons */}
-            <div className="flex flex-wrap justify-center gap-3">
+            {/* Elegant Buttons */}
+            <div className="flex flex-wrap justify-center gap-4">
               <Link 
                 to="/services" 
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#2a2a2a] to-[#3d3d3d] text-white text-xs font-medium rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" 
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-[#2a2a2a] text-white text-xs font-medium tracking-wide rounded-full shadow-md hover:shadow-xl hover:bg-[#1a1a1a] transition-all duration-300" 
                 data-testid="view-services-btn"
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '0.05em'}}
               >
-                {t.home.viewServices} <ArrowRight className="w-3 h-3" />
+                {t.home.viewServices} 
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <Link 
                 to="/connect" 
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-[#2a2a2a]/15 text-[#2a2a2a] text-xs font-medium rounded-full shadow-sm hover:border-[#2a2a2a]/40 hover:shadow-md hover:scale-105 transition-all duration-300" 
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-transparent border border-[#2a2a2a]/25 text-[#2a2a2a] text-xs font-medium tracking-wide rounded-full hover:border-[#2a2a2a]/50 hover:bg-[#2a2a2a]/5 transition-all duration-300" 
                 data-testid="book-consultation-btn"
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", letterSpacing: '0.05em'}}
               >
                 {t.home.bookDebrief}
               </Link>
