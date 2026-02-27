@@ -32,7 +32,7 @@ const Navbar = () => {
             className="text-xs md:text-sm text-[#1a1a1a]/50 ml-1" 
             style={{fontFamily: "'Lato', 'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
           >
-            AI Governance Consultant
+            {language === 'fr' ? 'Consultant, Gouvernance de l\'IA' : 'AI Governance Consultant'}
           </span>
         </Link>
 

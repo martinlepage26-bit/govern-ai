@@ -556,7 +556,7 @@ export const fr = {
   },
 
   footer: {
-    copyright: '\u00A9 2026 Martin Lepage, PhD. Pratique et recherche en gouvernance IA'
+    copyright: '\u00A9 2026 Martin Lepage, PhD.'
   },
 
   admin: {
