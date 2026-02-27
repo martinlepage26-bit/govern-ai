@@ -36,7 +36,7 @@ const Connect = () => {
     e.preventDefault();
     const subject = encodeURIComponent(`AI Governance Inquiry: ${formData.lookingFor || 'General'}`);
     const body = encodeURIComponent(`${t.connect.form.name}: ${formData.name}\n${t.connect.form.email}: ${formData.email}\n${t.connect.form.organization}: ${formData.organization}\n\n${t.connect.form.lookingFor}: ${formData.lookingFor}\n\n${t.connect.form.context}:\n${formData.context}`);
-    window.location.href = `mailto:martin@martinlepage.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:consult@govern-ai.ca?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
   };
@@ -98,7 +98,7 @@ const Connect = () => {
   const handleResourceRequest = (resourceName) => {
     const subject = encodeURIComponent(`Resource Request: ${resourceName}`);
     const body = encodeURIComponent(`I would like to request: ${resourceName}\n\n${t.connect.form.name}: \n${t.connect.form.organization}: \n${t.connect.form.email}: `);
-    window.location.href = `mailto:martin@martinlepage.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:consult@govern-ai.ca?subject=${subject}&body=${body}`;
   };
 
   const availableSlots = getAvailableSlots();
@@ -307,7 +307,7 @@ const Connect = () => {
             <div className="p-4 bg-[#0D0A2E]/5 rounded-xl border border-[#0D0A2E]/20 mt-6">
               <p className="text-sm text-gray-600">
                 <span className="font-semibold text-[#0B0F1A]">{t.connect.resources.directContact}</span><br />
-                <a href="mailto:martin@martinlepage.com" className="text-[#0D0A2E] hover:underline">martin@martinlepage.com</a>
+                <a href="mailto:consult@govern-ai.ca" className="text-[#0D0A2E] hover:underline">consult@govern-ai.ca</a>
               </p>
             </div>
             <Link to="/tool" className="block p-4 bg-[#0D0A2E] text-white rounded-xl hover:bg-[#0D0A2E] transition-colors">
