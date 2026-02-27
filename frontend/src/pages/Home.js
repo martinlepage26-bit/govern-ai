@@ -157,26 +157,26 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Three Feature Boxes - Separate cards in horizontal row */}
+        {/* Three Feature Boxes - Separate cards in horizontal row with hover raise */}
         <div className="grid md:grid-cols-3 gap-4 mb-16">
           {capabilities.map((cap, i) => (
             <div 
               key={i} 
-              className="flex items-start gap-3 p-4 bg-[#F6F7FB] rounded-lg border border-transparent hover:border-[#0D0A2E]/10 hover:bg-white hover:shadow-sm transition-all duration-300"
+              className="flex items-start gap-3 p-4 bg-[#F6F7FB] rounded-lg border border-transparent hover:border-[#2a2a2a]/10 hover:bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
             >
               <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                <cap.icon className="w-4 h-4 text-[#0D0A2E]" />
+                <cap.icon className="w-4 h-4 text-[#2a2a2a]" />
               </div>
               <div>
                 <p 
-                  className="font-semibold text-[#0B0F1A] leading-tight text-sm"
+                  className="font-semibold text-[#2a2a2a] leading-tight text-sm"
                   style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
                 >
                   {cap.title}
                 </p>
                 <p 
-                  className="text-xs text-[#0B0F1A]/60 leading-relaxed mt-0.5"
-                  style={{fontFamily: "'Lato', sans-serif"}}
+                  className="text-xs text-[#2a2a2a]/60 leading-relaxed mt-0.5"
+                  style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
                 >
                   {cap.description}
                 </p>
