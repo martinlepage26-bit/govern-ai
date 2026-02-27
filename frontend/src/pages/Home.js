@@ -21,13 +21,13 @@ const Home = () => {
           
           {/* Left: Logo with AI GOVERNANCE treatment */}
           <div className="flex-1 flex flex-col items-center">
-            {/* ai governance - lowercase small caps */}
+            {/* ai governance - lowercase small caps, increased weight */}
             <h1 
               className="text-2xl md:text-3xl text-[#2a2a2a] leading-none tracking-widest text-center lowercase" 
               style={{
                 fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
                 fontVariant: 'small-caps',
-                fontWeight: 500,
+                fontWeight: 600,
                 letterSpacing: '0.15em'
               }}
             >
@@ -59,10 +59,10 @@ const Home = () => {
               />
             </div>
             
-            {/* Bottom: Strategies ◆ Oversight ◆ Research - more elegant */}
+            {/* Bottom: Strategies ◆ Oversight ◆ Research - increased weight */}
             <div 
-              className="flex items-center gap-3 text-[#2a2a2a]/50 text-xs tracking-wider mb-2" 
-              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
+              className="flex items-center gap-3 text-[#2a2a2a]/60 text-xs tracking-wider mb-2" 
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
               <span className="text-[#7b2cbf]/60 text-[8px]">◆</span>
@@ -88,64 +88,51 @@ const Home = () => {
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#2a2a2a]/20"></div>
             </div>
             
-            {/* Martin Lepage PhD - regular caps */}
+            {/* Martin Lepage PhD - increased weight */}
             <p 
-              className="text-[#2a2a2a]/35 text-xs tracking-wide" 
-              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
+              className="text-[#2a2a2a]/45 text-xs tracking-wide mb-4" 
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
               Martin Lepage PhD
             </p>
+            
+            {/* Compliant with regulations */}
+            <div 
+              className="flex flex-wrap items-center justify-center gap-x-2 text-[#2a2a2a]/45 text-xs tracking-wide" 
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
+            >
+              <span>{language === 'fr' ? 'Conforme aux' : 'Compliant with'}</span>
+              <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+              <span>{language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}</span>
+              <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+              <span>{language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}</span>
+              <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+              <span>{language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}</span>
+            </div>
           </div>
 
-          {/* Right: Tagline + Bullets + Buttons - centered, stacked */}
+          {/* Right: Tagline + Buttons - centered, stacked */}
           <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
-            {/* Main tagline - decreased font size */}
-            <div className="mb-6">
+            {/* Main tagline - no diamonds */}
+            <div className="mb-8">
               <p 
-                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-2"
+                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-3"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
               </p>
-              <p className="text-[#7b2cbf]/50 text-sm mb-2">◆</p>
               <p 
-                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-2"
+                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-3"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
               </p>
-              <p className="text-[#7b2cbf]/50 text-sm mb-2">◆</p>
               <p 
                 className="text-lg md:text-xl text-[#2a2a2a]/70"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
               </p>
-            </div>
-            
-            {/* Bullet points - more elegant */}
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#2a2a2a]/50 mb-6">
-              <span 
-                className="inline-flex items-center text-xs tracking-wide" 
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
-              >
-                <span className="text-[#7b2cbf]/50 text-[8px] mr-1.5">◆</span>
-                {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
-              </span>
-              <span 
-                className="inline-flex items-center text-xs tracking-wide" 
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
-              >
-                <span className="text-[#7b2cbf]/50 text-[8px] mr-1.5">◆</span>
-                {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
-              </span>
-              <span 
-                className="inline-flex items-center text-xs tracking-wide" 
-                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
-              >
-                <span className="text-[#7b2cbf]/50 text-[8px] mr-1.5">◆</span>
-                {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
-              </span>
             </div>
             
             {/* Smaller Buttons */}
