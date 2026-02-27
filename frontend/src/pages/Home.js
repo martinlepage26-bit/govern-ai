@@ -106,7 +106,6 @@ const Home = () => {
               <span>{language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}</span>
               <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
               <span>{language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}</span>
-              <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
               <span>{language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}</span>
             </div>
           </div>
