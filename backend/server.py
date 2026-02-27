@@ -470,6 +470,92 @@ SEED_WORKING_PAPERS = [
     }
 ]
 
+# ─── FAQ Endpoints ───
+
+@api_router.get("/faq", response_model=List[FAQItem])
+async def get_faq_items():
+    database = await get_database()
+    items = await database.faq_items.find({}, {"_id": 0}).sort("order", 1).to_list(100)
+    return items
+
+@api_router.get("/faq/{section}", response_model=List[FAQItem])
+async def get_faq_by_section(section: str):
+    database = await get_database()
+    items = await database.faq_items.find({"section": section, "active": True}, {"_id": 0}).sort("order", 1).to_list(100)
+    return items
+
+@api_router.post("/faq", response_model=FAQItem)
+async def create_faq_item(input: FAQItemCreate):
+    database = await get_database()
+    item = FAQItem(**input.model_dump())
+    doc = item.model_dump()
+    await database.faq_items.insert_one(doc)
+    return item
+
+@api_router.put("/faq/{item_id}", response_model=FAQItem)
+async def update_faq_item(item_id: str, input: FAQItemUpdate):
+    database = await get_database()
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await database.faq_items.find_one_and_update(
+        {"id": item_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="FAQ item not found")
+    return result
+
+@api_router.delete("/faq/{item_id}")
+async def delete_faq_item(item_id: str):
+    database = await get_database()
+    result = await database.faq_items.delete_one({"id": item_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="FAQ item not found")
+    return {"status": "deleted"}
+
+# ─── Service Packages Endpoints ───
+
+@api_router.get("/services", response_model=List[ServicePackage])
+async def get_service_packages():
+    database = await get_database()
+    packages = await database.service_packages.find({}, {"_id": 0}).sort("package_number", 1).to_list(10)
+    return packages
+
+@api_router.get("/services/active", response_model=List[ServicePackage])
+async def get_active_service_packages():
+    database = await get_database()
+    packages = await database.service_packages.find({"active": True}, {"_id": 0}).sort("package_number", 1).to_list(10)
+    return packages
+
+@api_router.post("/services", response_model=ServicePackage)
+async def create_service_package(input: ServicePackageCreate):
+    database = await get_database()
+    package = ServicePackage(**input.model_dump())
+    doc = package.model_dump()
+    await database.service_packages.insert_one(doc)
+    return package
+
+@api_router.put("/services/{package_id}", response_model=ServicePackage)
+async def update_service_package(package_id: str, input: ServicePackageUpdate):
+    database = await get_database()
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await database.service_packages.find_one_and_update(
+        {"id": package_id}, {"$set": update_data}, return_document=True, projection={"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Service package not found")
+    return result
+
+@api_router.delete("/services/{package_id}")
+async def delete_service_package(package_id: str):
+    database = await get_database()
+    result = await database.service_packages.delete_one({"id": package_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Service package not found")
+    return {"status": "deleted"}
+
 async def seed_publications():
     database = await get_database()
     count = await database.publications.count_documents({})
