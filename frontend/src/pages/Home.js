@@ -21,9 +21,9 @@ const Home = () => {
           
           {/* Left: Logo with AI GOVERNANCE treatment */}
           <div className="flex-1 flex flex-col items-center">
-            {/* AI GOVERNANCE title - elegant small caps */}
+            {/* ai governance - lowercase small caps */}
             <h1 
-              className="text-2xl md:text-3xl text-[#0B0F1A] leading-none tracking-widest text-center" 
+              className="text-2xl md:text-3xl text-[#2a2a2a] leading-none tracking-widest text-center lowercase" 
               style={{
                 fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
                 fontVariant: 'small-caps',
@@ -31,12 +31,12 @@ const Home = () => {
                 letterSpacing: '0.15em'
               }}
             >
-              {t.home.title}
+              ai governance
             </h1>
             
             {/* Top decorative line - more elegant */}
             <div className="flex items-center my-3" style={{width: '240px'}}>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#0B0F1A]/40 to-[#0B0F1A]"></div>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#2a2a2a]/40 to-[#2a2a2a]"></div>
               <div 
                 className="mx-2"
                 style={{
@@ -47,7 +47,7 @@ const Home = () => {
                   flexShrink: 0
                 }}
               ></div>
-              <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#0B0F1A]/40 to-[#0B0F1A]"></div>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#2a2a2a]/40 to-[#2a2a2a]"></div>
             </div>
             
             {/* Logo Eye image */}
@@ -61,7 +61,7 @@ const Home = () => {
             
             {/* Bottom: Strategies ◆ Oversight ◆ Research - more elegant */}
             <div 
-              className="flex items-center gap-3 text-[#0B0F1A]/50 text-xs tracking-wider mb-2" 
+              className="flex items-center gap-3 text-[#2a2a2a]/50 text-xs tracking-wider mb-2" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
             >
               <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
@@ -73,7 +73,7 @@ const Home = () => {
             
             {/* Bottom decorative line - elegant */}
             <div className="flex items-center mb-2" style={{width: '180px'}}>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#0B0F1A]/20"></div>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#2a2a2a]/20"></div>
               <div 
                 className="mx-1.5"
                 style={{
@@ -85,12 +85,12 @@ const Home = () => {
                   opacity: 0.5
                 }}
               ></div>
-              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#0B0F1A]/20"></div>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#2a2a2a]/20"></div>
             </div>
             
             {/* Martin Lepage PhD - regular caps */}
             <p 
-              className="text-[#0B0F1A]/35 text-xs tracking-wide" 
+              className="text-[#2a2a2a]/35 text-xs tracking-wide" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
             >
               Martin Lepage PhD
@@ -102,21 +102,21 @@ const Home = () => {
             {/* Main tagline - decreased font size */}
             <div className="mb-6">
               <p 
-                className="text-lg md:text-xl text-[#0B0F1A]/65 mb-2"
+                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-2"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
               </p>
               <p className="text-[#7b2cbf]/50 text-sm mb-2">◆</p>
               <p 
-                className="text-lg md:text-xl text-[#0B0F1A]/65 mb-2"
+                className="text-lg md:text-xl text-[#2a2a2a]/70 mb-2"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
               </p>
               <p className="text-[#7b2cbf]/50 text-sm mb-2">◆</p>
               <p 
-                className="text-lg md:text-xl text-[#0B0F1A]/65"
+                className="text-lg md:text-xl text-[#2a2a2a]/70"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
@@ -124,7 +124,7 @@ const Home = () => {
             </div>
             
             {/* Bullet points - more elegant */}
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#0B0F1A]/50 mb-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#2a2a2a]/50 mb-6">
               <span 
                 className="inline-flex items-center text-xs tracking-wide" 
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
@@ -152,7 +152,7 @@ const Home = () => {
             <div className="flex flex-wrap justify-center gap-3">
               <Link 
                 to="/services" 
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#0D0A2E] to-[#2D2380] text-white text-xs font-medium rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" 
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#2a2a2a] to-[#3d3d3d] text-white text-xs font-medium rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" 
                 data-testid="view-services-btn"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
               >
@@ -160,7 +160,7 @@ const Home = () => {
               </Link>
               <Link 
                 to="/connect" 
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-[#0D0A2E]/15 text-[#0D0A2E] text-xs font-medium rounded-full shadow-sm hover:border-[#2D2380]/40 hover:shadow-md hover:scale-105 transition-all duration-300" 
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-[#2a2a2a]/15 text-[#2a2a2a] text-xs font-medium rounded-full shadow-sm hover:border-[#2a2a2a]/40 hover:shadow-md hover:scale-105 transition-all duration-300" 
                 data-testid="book-consultation-btn"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
               >
