@@ -32,42 +32,56 @@ const Home = () => {
               {t.home.title}
             </h1>
             
-            {/* Decorative L-shape with line and diamond */}
-            <div className="flex items-start mt-1 mb-0">
-              {/* Vertical bar */}
-              <div className="w-3 bg-[#0B0F1A] self-stretch mr-0" style={{minHeight: '60px'}}></div>
+            {/* Decorative: L-shape + horizontal line with diamond */}
+            <div className="relative mt-2 mb-1">
+              {/* Thick L-shape on the left */}
+              <div 
+                className="absolute bg-[#0B0F1A]" 
+                style={{
+                  left: 0,
+                  top: 0,
+                  width: '12px',
+                  height: '50px'
+                }}
+              ></div>
+              <div 
+                className="absolute bg-[#0B0F1A]" 
+                style={{
+                  left: 0,
+                  top: '38px',
+                  width: '80px',
+                  height: '12px'
+                }}
+              ></div>
               
-              <div className="flex flex-col flex-1">
-                {/* Horizontal line with diamond */}
-                <div className="flex items-center" style={{height: '20px'}}>
-                  <svg viewBox="0 0 200 8" className="flex-1 h-2" preserveAspectRatio="none">
-                    <polygon points="0,4 200,0 200,8" fill="#0B0F1A" />
-                  </svg>
-                  <div className="mx-0" style={{
-                    width: '10px',
-                    height: '18px',
-                    background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                    clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                    flexShrink: 0,
-                    marginTop: '2px'
-                  }}></div>
-                  <svg viewBox="0 0 200 8" className="flex-1 h-2" preserveAspectRatio="none">
-                    <polygon points="0,0 200,4 0,8" fill="#0B0F1A" />
-                  </svg>
-                </div>
-                
-                {/* Subtitle */}
-                <p 
-                  className="text-lg text-[#1a1a1a]/50 mt-1 pl-1" 
-                  style={{
-                    fontFamily: "'Source Serif 4', Georgia, serif", 
-                    fontStyle: 'italic', 
-                    fontWeight: 400
-                  }}
-                >
-                  {t.home.subtitle}
-                </p>
+              {/* Horizontal line with diamond - spanning right */}
+              <div className="flex items-center pl-16" style={{paddingTop: '6px'}}>
+                <svg viewBox="0 0 150 6" className="h-1.5" style={{width: '120px'}} preserveAspectRatio="none">
+                  <polygon points="0,3 150,0 150,6" fill="#0B0F1A" />
+                </svg>
+                <div style={{
+                  width: '8px',
+                  height: '16px',
+                  background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                  clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                  flexShrink: 0
+                }}></div>
+                <svg viewBox="0 0 150 6" className="flex-1 h-1.5" preserveAspectRatio="none">
+                  <polygon points="0,0 150,3 0,6" fill="#0B0F1A" />
+                </svg>
               </div>
+              
+              {/* Subtitle - positioned below line, to the right of L */}
+              <p 
+                className="pl-16 mt-1 text-lg text-[#1a1a1a]/50" 
+                style={{
+                  fontFamily: "'Source Serif 4', Georgia, serif", 
+                  fontStyle: 'italic', 
+                  fontWeight: 400
+                }}
+              >
+                {t.home.subtitle}
+              </p>
             </div>
             
             {/* Bullet points */}
