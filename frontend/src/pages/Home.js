@@ -80,7 +80,7 @@ const Home = () => {
             </div>
             
             {/* Buttons - smaller */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-5">
               <Link 
                 to="/services" 
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1a1a] text-white text-xs font-medium rounded-sm hover:bg-[#333] transition-colors" 
@@ -97,6 +97,18 @@ const Home = () => {
               >
                 {t.home.bookDebrief}
               </Link>
+            </div>
+            
+            {/* Tagline */}
+            <div 
+              className="flex items-center gap-3 text-[#0B0F1A]/50 text-xs"
+              style={{fontFamily: "'Lato', sans-serif"}}
+            >
+              <span>{language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}</span>
+              <span className="text-[#0B0F1A]/20">|</span>
+              <span>{language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}</span>
+              <span className="text-[#0B0F1A]/20">|</span>
+              <span>{language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}</span>
             </div>
           </div>
 
