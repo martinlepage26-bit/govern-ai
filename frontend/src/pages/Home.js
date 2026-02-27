@@ -14,13 +14,13 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-3xl mx-auto px-6 py-8">
         
-        {/* Hero Section - Two columns, tight */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+        {/* Hero Section - Very tight two columns */}
+        <div className="flex items-center justify-center gap-8 mb-10">
           
-          {/* Left: Editorial Text */}
-          <div className="flex-1 max-w-lg">
+          {/* Left: Text */}
+          <div>
             <h1 
               className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight" 
               style={{
@@ -32,61 +32,36 @@ const Home = () => {
               {t.home.title}
             </h1>
             
-            {/* Decorative: L-shape + horizontal line with diamond */}
-            <div className="relative mt-2 mb-1" style={{minHeight: '70px'}}>
-              {/* Thick L-shape on the left */}
-              <div 
-                className="absolute bg-[#0B0F1A]" 
-                style={{
-                  left: 0,
-                  top: 0,
-                  width: '10px',
-                  height: '55px'
-                }}
-              ></div>
-              <div 
-                className="absolute bg-[#0B0F1A]" 
-                style={{
-                  left: 0,
-                  top: '45px',
-                  width: '70px',
-                  height: '10px'
-                }}
-              ></div>
-              
-              {/* Horizontal line with diamond - spanning right */}
-              <div className="flex items-center" style={{paddingLeft: '80px', paddingTop: '4px'}}>
-                <svg viewBox="0 0 150 6" className="h-1.5" style={{width: '100px'}} preserveAspectRatio="none">
-                  <polygon points="0,3 150,0 150,6" fill="#0B0F1A" />
-                </svg>
-                <div style={{
-                  width: '8px',
-                  height: '16px',
-                  background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                  clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                  flexShrink: 0
-                }}></div>
-                <svg viewBox="0 0 150 6" className="flex-1 h-1.5" preserveAspectRatio="none">
-                  <polygon points="0,0 150,3 0,6" fill="#0B0F1A" />
-                </svg>
-              </div>
-              
-              {/* Subtitle - positioned below line, to the right of L */}
-              <p 
-                className="mt-2 text-lg text-[#1a1a1a]/50" 
-                style={{
-                  paddingLeft: '80px',
-                  fontFamily: "'Source Serif 4', Georgia, serif", 
-                  fontStyle: 'italic', 
-                  fontWeight: 400
-                }}
-              >
-                {t.home.subtitle}
-              </p>
+            {/* Simple horizontal line with diamond */}
+            <div className="flex items-center my-2" style={{maxWidth: '320px'}}>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
+              </svg>
+              <div style={{
+                width: '8px',
+                height: '16px',
+                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                flexShrink: 0
+              }}></div>
+              <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
+                <polygon points="0,0 100,2 0,4" fill="#0B0F1A" />
+              </svg>
             </div>
             
+            <p 
+              className="text-lg text-[#1a1a1a]/50 mb-4" 
+              style={{
+                fontFamily: "'Source Serif 4', Georgia, serif", 
+                fontStyle: 'italic', 
+                fontWeight: 400
+              }}
+            >
+              {t.home.subtitle}
+            </p>
+            
             {/* Bullet points */}
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mt-4 mb-5">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-4">
               <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
                 <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
@@ -123,13 +98,11 @@ const Home = () => {
           </div>
 
           {/* Right: Logo */}
-          <div className="flex-shrink-0">
-            <img 
-              src="/images/logo-home-new.png" 
-              alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-              className="w-40 md:w-48 h-auto"
-            />
-          </div>
+          <img 
+            src="/images/logo-home-new.png" 
+            alt="AI Governance" 
+            className="w-36 md:w-44 h-auto"
+          />
         </div>
 
         {/* Three Feature Boxes - Tighter */}
