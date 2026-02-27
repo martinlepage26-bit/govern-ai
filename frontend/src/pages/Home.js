@@ -98,9 +98,9 @@ const Home = () => {
           </div>
 
           {/* Right: Tagline + Buttons - centered, stacked */}
-          <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
+          <div className="flex-1 flex flex-col items-center text-center mt-8 md:mt-0">
             {/* Main tagline - elegant stacked, clean typography */}
-            <div className="mb-12 flex flex-col items-center space-y-6">
+            <div className="mb-8 flex flex-col items-center space-y-4">
               <span 
                 className="text-xl md:text-2xl text-[#2a2a2a]/80 tracking-wide"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400, fontStyle: 'italic'}}
@@ -122,7 +122,7 @@ const Home = () => {
             </div>
             
             {/* Refined Buttons - matching elegant style */}
-            <div className="flex flex-wrap justify-center gap-5">
+            <div className="flex flex-wrap justify-center gap-5 mb-6">
               <Link 
                 to="/services" 
                 className="group inline-flex items-center gap-2.5 px-6 py-3 bg-[#2a2a2a] text-white text-sm tracking-widest uppercase hover:bg-[#1a1a1a] transition-all duration-300" 
@@ -140,6 +140,25 @@ const Home = () => {
               >
                 {t.home.bookDebrief}
               </Link>
+            </div>
+            
+            {/* Compliance text - under buttons */}
+            <div 
+              className="flex flex-col items-center text-[#2a2a2a]/50 text-xs tracking-wide" 
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+                <span>{language === 'fr' ? 'Conforme aux' : 'Compliant with'}</span>
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+              </div>
+              <div className="flex items-center gap-1.5 mt-1">
+                <span>{language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}</span>
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+                <span>{language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}</span>
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+                <span>{language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}</span>
+              </div>
             </div>
           </div>
         </div>
