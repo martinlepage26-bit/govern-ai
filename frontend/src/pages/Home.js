@@ -63,18 +63,18 @@ const Home = () => {
               {t.home.subtitle}
             </p>
             
-            {/* Bullet points */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#0B0F1A]/70 mb-4">
-              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-2 h-2 mr-2 bg-[#2D2380] rotate-45"></span>
+            {/* Bullet points - smaller font */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-4">
+              <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
               </span>
-              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-2 h-2 mr-2 bg-[#2D2380] rotate-45"></span>
+              <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
               </span>
-              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-2 h-2 mr-2 bg-[#2D2380] rotate-45"></span>
+              <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
+                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
                 {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
               </span>
             </div>
