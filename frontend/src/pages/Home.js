@@ -14,13 +14,13 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-5xl mx-auto px-6 py-8">
+      <div className="max-w-4xl mx-auto px-6 py-8">
         
-        {/* Hero Section - Two columns, tight spacing */}
-        <div className="grid md:grid-cols-[1fr,auto] gap-6 items-center mb-10">
+        {/* Hero Section - Two columns, tight */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
           
           {/* Left: Editorial Text */}
-          <div>
+          <div className="flex-1 max-w-lg">
             <h1 
               className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight mb-1" 
               style={{
@@ -33,7 +33,7 @@ const Home = () => {
             </h1>
             
             {/* Decorative line with diamond */}
-            <div className="flex items-center mb-1" style={{maxWidth: '240px'}}>
+            <div className="flex items-center mb-1" style={{maxWidth: '220px'}}>
               <svg viewBox="0 0 100 4" className="flex-1 h-1" preserveAspectRatio="none">
                 <polygon points="0,2 100,0 100,4" fill="#0B0F1A" />
               </svg>
@@ -98,11 +98,11 @@ const Home = () => {
           </div>
 
           {/* Right: Logo */}
-          <div className="flex justify-center">
+          <div className="flex-shrink-0">
             <img 
               src="/images/logo-home-new.png" 
               alt="AI Governance: Practice & Research by Martin Lepage PhD" 
-              className="w-44 md:w-52 h-auto"
+              className="w-40 md:w-48 h-auto"
             />
           </div>
         </div>
