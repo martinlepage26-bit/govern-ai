@@ -113,38 +113,34 @@ const Home = () => {
 
           {/* Right: Tagline + Buttons - centered, stacked */}
           <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
-            {/* Main tagline - stacked with diamonds on both sides */}
-            <div className="mb-8 space-y-2">
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
-                <span 
-                  className="text-lg md:text-xl text-[#2a2a2a]/70"
-                  style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
-                >
-                  {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
-                </span>
-                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
-                <span 
-                  className="text-lg md:text-xl text-[#2a2a2a]/70"
-                  style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
-                >
-                  {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
-                </span>
-                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
-                <span 
-                  className="text-lg md:text-xl text-[#2a2a2a]/70"
-                  style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
-                >
-                  {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
-                </span>
-                <span className="text-[#7b2cbf]/60 text-xs">◆</span>
-              </div>
+            {/* Main tagline - elegant stacked with diamonds */}
+            <div className="mb-10 flex flex-col items-center">
+              <span className="text-[#7b2cbf]/50 text-sm mb-3">◆</span>
+              <span 
+                className="text-xl md:text-2xl text-[#2a2a2a]/75 mb-3"
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
+              >
+                {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
+              </span>
+              <span className="text-[#7b2cbf]/50 text-sm mb-1">◆</span>
+              
+              <span className="text-[#7b2cbf]/50 text-sm mb-3 mt-2">◆</span>
+              <span 
+                className="text-xl md:text-2xl text-[#2a2a2a]/75 mb-3"
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
+              >
+                {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
+              </span>
+              <span className="text-[#7b2cbf]/50 text-sm mb-1">◆</span>
+              
+              <span className="text-[#7b2cbf]/50 text-sm mb-3 mt-2">◆</span>
+              <span 
+                className="text-xl md:text-2xl text-[#2a2a2a]/75 mb-3"
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
+              >
+                {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
+              </span>
+              <span className="text-[#7b2cbf]/50 text-sm">◆</span>
             </div>
             
             {/* Elegant Buttons */}
