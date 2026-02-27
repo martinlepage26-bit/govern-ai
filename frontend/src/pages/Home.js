@@ -14,10 +14,10 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-5xl mx-auto px-6 py-16">
+      <div className="max-w-5xl mx-auto px-6 py-8">
         
         {/* Hero Section - Two columns */}
-        <div className="flex flex-col md:flex-row md:items-center md:gap-12 mb-16">
+        <div className="flex flex-col md:flex-row md:items-center md:gap-10 mb-12">
           
           {/* Left: Logo with AI GOVERNANCE treatment */}
           <div className="flex-1 flex flex-col items-center">
