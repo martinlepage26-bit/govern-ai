@@ -135,18 +135,21 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Three Feature Boxes - Centered and aligned */}
+        {/* Three Feature Boxes - Centered and aligned with hover animations */}
         <div className="bg-[#F6F7FB] py-8 px-6 -mx-6 mt-8">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-6">
               {capabilities.map((cap, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <cap.icon className="w-5 h-5 text-[#0D0A2E]" />
+                <div 
+                  key={i} 
+                  className="flex items-start gap-4 p-4 rounded-lg cursor-default transition-all duration-300 ease-out hover:bg-white hover:shadow-md hover:-translate-y-1"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center flex-shrink-0 shadow-sm transition-all duration-300 group-hover:shadow-md">
+                    <cap.icon className="w-5 h-5 text-[#0D0A2E] transition-colors duration-300" />
                   </div>
                   <div>
                     <p 
-                      className="font-semibold text-[#0B0F1A] leading-tight text-base"
+                      className="font-semibold text-[#0B0F1A] leading-tight text-base transition-colors duration-300"
                       style={{fontFamily: "'IBM Plex Sans', sans-serif"}}
                     >
                       {cap.title}
