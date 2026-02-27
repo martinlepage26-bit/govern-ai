@@ -82,6 +82,7 @@ Rebuild a professional AI Governance consulting website from provided images. Mu
 - **Deployment Fix**: Added `dnspython==2.8.0` for MongoDB Atlas support
 - Deployment agent scan: PASS - Application is deployment-ready
 - **Hero Tagline Refinement** (Feb 27): Finalized elegant, stacked tagline design without diamonds; matching rectangular button styles with uppercase tracking
+- **Header/Footer Updates** (Feb 27): Added French translation for header subtitle ("Consultant, Gouvernance de l'IA"); simplified footer to just "© 2026 Martin Lepage, PhD."
 
 ## Backlog
 - P2: Migrate static JSON content (Cases, Research) to database - DEFERRED
