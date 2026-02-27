@@ -21,134 +21,148 @@ const Home = () => {
           
           {/* Left: Logo with AI GOVERNANCE treatment */}
           <div className="flex-1 flex flex-col items-center">
-            {/* AI GOVERNANCE title at top */}
+            {/* AI GOVERNANCE title - elegant small caps */}
             <h1 
-              className="text-3xl md:text-4xl font-semibold text-[#1a1a1a] leading-none tracking-tight text-center" 
+              className="text-2xl md:text-3xl text-[#0B0F1A] leading-none tracking-widest text-center" 
               style={{
                 fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
-                fontVariant: 'small-caps', 
-                letterSpacing: '-0.01em'
+                fontVariant: 'small-caps',
+                fontWeight: 500,
+                letterSpacing: '0.15em'
               }}
             >
               {t.home.title}
             </h1>
             
-            {/* Top decorative line */}
-            <div className="flex items-center my-2" style={{width: '220px'}}>
-              <svg viewBox="0 0 100 3" className="flex-1" style={{height: '3px'}} preserveAspectRatio="none">
-                <polygon points="0,1.5 100,0 100,3" fill="#0B0F1A" />
-              </svg>
-              <div style={{
-                width: '6px',
-                height: '12px',
-                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                clipPath: 'polygon(50% 100%, 100% 30%, 50% 0%, 0% 30%)',
-                flexShrink: 0,
-                marginTop: '-1px'
-              }}></div>
-              <svg viewBox="0 0 100 3" className="flex-1" style={{height: '3px'}} preserveAspectRatio="none">
-                <polygon points="0,0 100,1.5 0,3" fill="#0B0F1A" />
-              </svg>
+            {/* Top decorative line - more elegant */}
+            <div className="flex items-center my-3" style={{width: '240px'}}>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#0B0F1A]/40 to-[#0B0F1A]"></div>
+              <div 
+                className="mx-2"
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  background: 'linear-gradient(135deg, #2D2380 0%, #7b2cbf 100%)',
+                  transform: 'rotate(45deg)',
+                  flexShrink: 0
+                }}
+              ></div>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#0B0F1A]/40 to-[#0B0F1A]"></div>
             </div>
             
             {/* Logo Eye image */}
-            <div className="my-6">
+            <div className="my-5">
               <img 
                 src="/images/logo-eye.png" 
                 alt="AI Governance Logo" 
-                className="w-36 md:w-44 h-auto"
+                className="w-32 md:w-40 h-auto"
               />
             </div>
             
-            {/* Bottom: Strategies ◆ Oversight ◆ Research */}
-            <div className="flex items-center gap-2 text-[#1a1a1a]/50 text-sm mb-2" style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}>
+            {/* Bottom: Strategies ◆ Oversight ◆ Research - more elegant */}
+            <div 
+              className="flex items-center gap-3 text-[#0B0F1A]/50 text-xs tracking-wider mb-2" 
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
+            >
               <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
-              <span className="text-[#2D2380]">◆</span>
+              <span className="text-[#7b2cbf]/60 text-[8px]">◆</span>
               <span>{language === 'fr' ? 'Supervision' : 'Oversight'}</span>
-              <span className="text-[#2D2380]">◆</span>
+              <span className="text-[#7b2cbf]/60 text-[8px]">◆</span>
               <span>{language === 'fr' ? 'Recherche' : 'Research'}</span>
             </div>
             
-            {/* Bottom decorative line */}
-            <div className="flex items-center mb-2" style={{width: '200px'}}>
-              <svg viewBox="0 0 100 2" className="flex-1" style={{height: '2px'}} preserveAspectRatio="none">
-                <polygon points="0,1 100,0 100,2" fill="#0B0F1A" opacity="0.3" />
-              </svg>
-              <div style={{
-                width: '4px',
-                height: '8px',
-                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
-                clipPath: 'polygon(50% 100%, 100% 30%, 50% 0%, 0% 30%)',
-                flexShrink: 0
-              }}></div>
-              <svg viewBox="0 0 100 2" className="flex-1" style={{height: '2px'}} preserveAspectRatio="none">
-                <polygon points="0,0 100,1 0,2" fill="#0B0F1A" opacity="0.3" />
-              </svg>
+            {/* Bottom decorative line - elegant */}
+            <div className="flex items-center mb-2" style={{width: '180px'}}>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#0B0F1A]/20"></div>
+              <div 
+                className="mx-1.5"
+                style={{
+                  width: '5px',
+                  height: '5px',
+                  background: 'linear-gradient(135deg, #2D2380 0%, #7b2cbf 100%)',
+                  transform: 'rotate(45deg)',
+                  flexShrink: 0,
+                  opacity: 0.5
+                }}
+              ></div>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#0B0F1A]/20"></div>
             </div>
             
-            {/* Martin Lepage PhD */}
-            <p className="text-[#1a1a1a]/40 text-xs tracking-wider uppercase" style={{fontFamily: "'Lato', sans-serif"}}>
+            {/* Martin Lepage PhD - regular caps */}
+            <p 
+              className="text-[#0B0F1A]/35 text-xs tracking-wide" 
+              style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400}}
+            >
               Martin Lepage PhD
             </p>
           </div>
 
           {/* Right: Tagline + Bullets + Buttons - centered, stacked */}
           <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
-            {/* Main tagline - bigger, stacked */}
-            <div className="mb-8">
+            {/* Main tagline - decreased font size */}
+            <div className="mb-6">
               <p 
-                className="text-2xl md:text-3xl font-semibold text-[#0B0F1A]/70 mb-3"
-                style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+                className="text-lg md:text-xl text-[#0B0F1A]/65 mb-2"
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
               </p>
-              <p className="text-[#2D2380] text-xl mb-3">◆</p>
+              <p className="text-[#7b2cbf]/50 text-sm mb-2">◆</p>
               <p 
-                className="text-2xl md:text-3xl font-semibold text-[#0B0F1A]/70 mb-3"
-                style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+                className="text-lg md:text-xl text-[#0B0F1A]/65 mb-2"
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
               </p>
-              <p className="text-[#2D2380] text-xl mb-3">◆</p>
+              <p className="text-[#7b2cbf]/50 text-sm mb-2">◆</p>
               <p 
-                className="text-2xl md:text-3xl font-semibold text-[#0B0F1A]/70"
-                style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+                className="text-lg md:text-xl text-[#0B0F1A]/65"
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500, fontStyle: 'italic'}}
               >
                 {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
               </p>
             </div>
             
-            {/* Bullet points - aligned */}
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#0B0F1A]/60 mb-8">
-              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="text-[#2D2380] mr-2">◆</span>
+            {/* Bullet points - more elegant */}
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[#0B0F1A]/50 mb-6">
+              <span 
+                className="inline-flex items-center text-xs tracking-wide" 
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+              >
+                <span className="text-[#7b2cbf]/50 text-[8px] mr-1.5">◆</span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
               </span>
-              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="text-[#2D2380] mr-2">◆</span>
+              <span 
+                className="inline-flex items-center text-xs tracking-wide" 
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+              >
+                <span className="text-[#7b2cbf]/50 text-[8px] mr-1.5">◆</span>
                 {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
               </span>
-              <span className="inline-flex items-center text-sm" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="text-[#2D2380] mr-2">◆</span>
+              <span 
+                className="inline-flex items-center text-xs tracking-wide" 
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
+              >
+                <span className="text-[#7b2cbf]/50 text-[8px] mr-1.5">◆</span>
                 {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
               </span>
             </div>
             
-            {/* Stylish Buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
+            {/* Smaller Buttons */}
+            <div className="flex flex-wrap justify-center gap-3">
               <Link 
                 to="/services" 
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#0D0A2E] to-[#2D2380] text-white text-sm font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" 
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#0D0A2E] to-[#2D2380] text-white text-xs font-medium rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" 
                 data-testid="view-services-btn"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
               >
-                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
+                {t.home.viewServices} <ArrowRight className="w-3 h-3" />
               </Link>
               <Link 
                 to="/connect" 
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-[#0D0A2E]/20 text-[#0D0A2E] text-sm font-medium rounded-full shadow-md hover:border-[#2D2380] hover:shadow-lg hover:scale-105 transition-all duration-300" 
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-[#0D0A2E]/15 text-[#0D0A2E] text-xs font-medium rounded-full shadow-sm hover:border-[#2D2380]/40 hover:shadow-md hover:scale-105 transition-all duration-300" 
                 data-testid="book-consultation-btn"
-                style={{fontFamily: "'Lato', sans-serif"}}
+                style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif"}}
               >
                 {t.home.bookDebrief}
               </Link>
