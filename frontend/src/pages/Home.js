@@ -33,30 +33,30 @@ const Home = () => {
             </h1>
             
             {/* Decorative: L-shape + horizontal line with diamond */}
-            <div className="relative mt-2 mb-1">
+            <div className="relative mt-2 mb-1" style={{minHeight: '70px'}}>
               {/* Thick L-shape on the left */}
               <div 
                 className="absolute bg-[#0B0F1A]" 
                 style={{
                   left: 0,
                   top: 0,
-                  width: '12px',
-                  height: '50px'
+                  width: '10px',
+                  height: '55px'
                 }}
               ></div>
               <div 
                 className="absolute bg-[#0B0F1A]" 
                 style={{
                   left: 0,
-                  top: '38px',
-                  width: '80px',
-                  height: '12px'
+                  top: '45px',
+                  width: '70px',
+                  height: '10px'
                 }}
               ></div>
               
               {/* Horizontal line with diamond - spanning right */}
-              <div className="flex items-center pl-16" style={{paddingTop: '6px'}}>
-                <svg viewBox="0 0 150 6" className="h-1.5" style={{width: '120px'}} preserveAspectRatio="none">
+              <div className="flex items-center" style={{paddingLeft: '80px', paddingTop: '4px'}}>
+                <svg viewBox="0 0 150 6" className="h-1.5" style={{width: '100px'}} preserveAspectRatio="none">
                   <polygon points="0,3 150,0 150,6" fill="#0B0F1A" />
                 </svg>
                 <div style={{
@@ -73,8 +73,9 @@ const Home = () => {
               
               {/* Subtitle - positioned below line, to the right of L */}
               <p 
-                className="pl-16 mt-1 text-lg text-[#1a1a1a]/50" 
+                className="mt-2 text-lg text-[#1a1a1a]/50" 
                 style={{
+                  paddingLeft: '80px',
                   fontFamily: "'Source Serif 4', Georgia, serif", 
                   fontStyle: 'italic', 
                   fontWeight: 400
