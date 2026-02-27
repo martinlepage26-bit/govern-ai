@@ -14,15 +14,16 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white" data-testid="home-page">
-      <div className="max-w-4xl mx-auto px-6 py-16">
+      <div className="max-w-5xl mx-auto px-6 py-16">
         
         {/* Hero Section - Two columns */}
-        <div className="flex flex-col md:flex-row md:items-start md:gap-12 mb-16">
+        <div className="flex flex-col md:flex-row md:items-center md:gap-16 mb-16">
           
-          {/* Left: Text content */}
-          <div className="flex-1">
+          {/* Left: Logo with AI GOVERNANCE treatment */}
+          <div className="flex-1 flex flex-col items-center">
+            {/* AI GOVERNANCE title at top */}
             <h1 
-              className="text-4xl md:text-5xl font-semibold text-[#1a1a1a] leading-none tracking-tight" 
+              className="text-3xl md:text-4xl font-semibold text-[#1a1a1a] leading-none tracking-tight text-center" 
               style={{
                 fontFamily: "'IBM Plex Sans', system-ui, sans-serif", 
                 fontVariant: 'small-caps', 
@@ -32,8 +33,8 @@ const Home = () => {
               {t.home.title}
             </h1>
             
-            {/* Decorative line with diamond - thinner, more elegant */}
-            <div className="flex items-center my-2" style={{width: '280px'}}>
+            {/* Top decorative line */}
+            <div className="flex items-center my-2" style={{width: '220px'}}>
               <svg viewBox="0 0 100 3" className="flex-1" style={{height: '3px'}} preserveAspectRatio="none">
                 <polygon points="0,1.5 100,0 100,3" fill="#0B0F1A" />
               </svg>
@@ -50,95 +51,108 @@ const Home = () => {
               </svg>
             </div>
             
-            {/* Subtitle - & aligned with diamond center */}
-            <p 
-              className="text-lg text-[#1a1a1a]/40 mb-4 text-center" 
-              style={{
-                fontFamily: "'Source Serif 4', Georgia, serif", 
-                fontStyle: 'italic', 
-                fontWeight: 400,
-                width: '280px'
-              }}
-            >
-              {t.home.subtitle}
-            </p>
+            {/* Logo image (just the eye/geometric part) */}
+            <div className="my-4">
+              <img 
+                src="/images/logo-home-new.png" 
+                alt="AI Governance Logo" 
+                className="w-40 md:w-48 h-auto"
+              />
+            </div>
             
-            {/* Bullet points - smaller font */}
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-4">
+            {/* Bottom: Strategies ◆ Oversight ◆ Research */}
+            <div className="flex items-center gap-2 text-[#1a1a1a]/50 text-sm mb-1" style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}>
+              <span>{language === 'fr' ? 'Stratégies' : 'Strategies'}</span>
+              <span className="text-[#2D2380]">◆</span>
+              <span>{language === 'fr' ? 'Supervision' : 'Oversight'}</span>
+              <span className="text-[#2D2380]">◆</span>
+              <span>{language === 'fr' ? 'Recherche' : 'Research'}</span>
+            </div>
+            
+            {/* Bottom decorative line */}
+            <div className="flex items-center mb-2" style={{width: '200px'}}>
+              <svg viewBox="0 0 100 2" className="flex-1" style={{height: '2px'}} preserveAspectRatio="none">
+                <polygon points="0,1 100,0 100,2" fill="#0B0F1A" opacity="0.3" />
+              </svg>
+              <div style={{
+                width: '4px',
+                height: '8px',
+                background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
+                clipPath: 'polygon(50% 100%, 100% 30%, 50% 0%, 0% 30%)',
+                flexShrink: 0
+              }}></div>
+              <svg viewBox="0 0 100 2" className="flex-1" style={{height: '2px'}} preserveAspectRatio="none">
+                <polygon points="0,0 100,1 0,2" fill="#0B0F1A" opacity="0.3" />
+              </svg>
+            </div>
+            
+            {/* Martin Lepage PhD */}
+            <p className="text-[#1a1a1a]/40 text-xs tracking-wide" style={{fontFamily: "'Lato', sans-serif"}}>
+              Martin Lepage PhD
+            </p>
+          </div>
+
+          {/* Right: Tagline + Bullets + Buttons - centered, stacked */}
+          <div className="flex-1 flex flex-col items-center text-center mt-10 md:mt-0">
+            {/* Main tagline - bigger, stacked */}
+            <div className="mb-6">
+              <p 
+                className="text-xl md:text-2xl font-semibold text-[#0B0F1A]/70 mb-2"
+                style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+              >
+                {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
+              </p>
+              <p className="text-[#2D2380] text-lg mb-2">◆</p>
+              <p 
+                className="text-xl md:text-2xl font-semibold text-[#0B0F1A]/70 mb-2"
+                style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+              >
+                {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
+              </p>
+              <p className="text-[#2D2380] text-lg mb-2">◆</p>
+              <p 
+                className="text-xl md:text-2xl font-semibold text-[#0B0F1A]/70"
+                style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
+              >
+                {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
+              </p>
+            </div>
+            
+            {/* Bullet points - aligned */}
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[#0B0F1A]/60 mb-6">
               <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                <span className="text-[#2D2380] mr-1.5">◆</span>
                 {language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}
               </span>
               <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                <span className="text-[#2D2380] mr-1.5">◆</span>
                 {language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}
               </span>
               <span className="inline-flex items-center text-xs" style={{fontFamily: "'Lato', sans-serif"}}>
-                <span className="w-1.5 h-1.5 mr-1.5 bg-[#2D2380] rotate-45"></span>
+                <span className="text-[#2D2380] mr-1.5">◆</span>
                 {language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}
               </span>
             </div>
             
-            {/* Buttons - smaller */}
-            <div className="flex flex-wrap gap-2">
+            {/* Stylish Buttons */}
+            <div className="flex flex-wrap justify-center gap-3">
               <Link 
                 to="/services" 
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1a1a] text-white text-xs font-medium rounded-sm hover:bg-[#333] transition-colors" 
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#0D0A2E] to-[#2D2380] text-white text-sm font-medium rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" 
                 data-testid="view-services-btn"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
-                {t.home.viewServices} <ArrowRight className="w-3 h-3" />
+                {t.home.viewServices} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link 
                 to="/connect" 
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-[#1a1a1a]/20 text-[#1a1a1a] text-xs font-medium rounded-sm hover:border-[#1a1a1a]/40 transition-colors" 
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-[#0D0A2E]/20 text-[#0D0A2E] text-sm font-medium rounded-full shadow-md hover:border-[#2D2380] hover:shadow-lg hover:scale-105 transition-all duration-300" 
                 data-testid="book-consultation-btn"
                 style={{fontFamily: "'Lato', sans-serif"}}
               >
                 {t.home.bookDebrief}
               </Link>
             </div>
-          </div>
-
-          {/* Right: Logo - bigger */}
-          <div className="flex-shrink-0 mt-6 md:mt-0">
-            <img 
-              src="/images/logo-home-new.png" 
-              alt="AI Governance" 
-              className="w-56 md:w-72 h-auto"
-            />
-          </div>
-        </div>
-        
-        {/* Tagline - styled with lavender backdrop */}
-        <div className="flex justify-center mb-16">
-          <div 
-            className="inline-flex items-center gap-4 px-8 py-4 rounded-full"
-            style={{
-              background: 'linear-gradient(135deg, rgba(123,44,191,0.06) 0%, rgba(45,35,128,0.08) 100%)',
-              boxShadow: 'inset 0 0 20px rgba(123,44,191,0.05)'
-            }}
-          >
-            <span 
-              className="text-[#0B0F1A]/60 text-base font-semibold"
-              style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
-            >
-              {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
-            </span>
-            <span className="text-[#7b2cbf]/30 text-lg">|</span>
-            <span 
-              className="text-[#0B0F1A]/60 text-base font-semibold"
-              style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
-            >
-              {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
-            </span>
-            <span className="text-[#7b2cbf]/30 text-lg">|</span>
-            <span 
-              className="text-[#0B0F1A]/60 text-base font-semibold"
-              style={{fontFamily: "'Source Serif 4', Georgia, serif", fontStyle: 'italic'}}
-            >
-              {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
-            </span>
           </div>
         </div>
 
