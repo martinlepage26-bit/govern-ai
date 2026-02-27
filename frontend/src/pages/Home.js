@@ -32,21 +32,21 @@ const Home = () => {
               {t.home.title}
             </h1>
             
-            {/* Decorative line with diamond - same width as title */}
-            <div className="flex items-start my-2" style={{width: '280px'}}>
-              <svg viewBox="0 0 100 6" className="flex-1" style={{height: '6px'}} preserveAspectRatio="none">
-                <polygon points="0,3 100,0 100,6" fill="#0B0F1A" />
+            {/* Decorative line with diamond - thinner, more elegant */}
+            <div className="flex items-center my-2" style={{width: '280px'}}>
+              <svg viewBox="0 0 100 3" className="flex-1" style={{height: '3px'}} preserveAspectRatio="none">
+                <polygon points="0,1.5 100,0 100,3" fill="#0B0F1A" />
               </svg>
               <div style={{
-                width: '8px',
-                height: '16px',
+                width: '6px',
+                height: '12px',
                 background: 'linear-gradient(180deg, #2D2380 0%, #1a1555 100%)',
                 clipPath: 'polygon(50% 100%, 100% 30%, 50% 0%, 0% 30%)',
                 flexShrink: 0,
-                marginTop: '-2px'
+                marginTop: '-1px'
               }}></div>
-              <svg viewBox="0 0 100 6" className="flex-1" style={{height: '6px'}} preserveAspectRatio="none">
-                <polygon points="0,0 100,3 0,6" fill="#0B0F1A" />
+              <svg viewBox="0 0 100 3" className="flex-1" style={{height: '3px'}} preserveAspectRatio="none">
+                <polygon points="0,0 100,1.5 0,3" fill="#0B0F1A" />
               </svg>
             </div>
             
