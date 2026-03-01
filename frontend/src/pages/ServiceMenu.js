@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, FileText, RefreshCw, ArrowRight, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { formatAdminTextForDisplay } from '../lib/textFormat';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -128,7 +127,7 @@ const ServiceMenu = () => {
                   </div>
                   
                   <p className="text-gray-600 mb-6 whitespace-pre-line">
-                    <span className="font-semibold text-[#0B0F1A]">Best for</span> {formatAdminTextForDisplay(pkg.bestFor)}
+                    <span className="font-semibold text-[#0B0F1A]">Best for</span> {pkg.bestFor}
                   </p>
 
                   <div className="grid md:grid-cols-2 gap-6">
@@ -141,7 +140,7 @@ const ServiceMenu = () => {
                         {pkg.deliverables.map((item, i) => (
                           <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
                             <ChevronRight className="w-4 h-4 text-[#0D0A2E]/40 flex-shrink-0 mt-0.5" />
-                            {formatAdminTextForDisplay(item)}
+                            {item}
                           </li>
                         ))}
                       </ul>
@@ -155,7 +154,7 @@ const ServiceMenu = () => {
                         {pkg.produces.map((item, i) => (
                           <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
                             <ChevronRight className="w-4 h-4 text-[#0D0A2E]/40 flex-shrink-0 mt-0.5" />
-                            {formatAdminTextForDisplay(item)}
+                            {item}
                           </li>
                         ))}
                       </ul>
