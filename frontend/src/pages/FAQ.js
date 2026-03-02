@@ -1,3 +1,4 @@
+﻿/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp } from 'lucide-react';
@@ -181,7 +182,7 @@ const FAQ = () => {
           Common questions about AI governance, evidence requirements, and working together.
         </p>
         <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-12">
-          DEFINITIONS · EVIDENCE · ENGAGEMENTS
+          DEFINITIONS Â· EVIDENCE Â· ENGAGEMENTS
         </p>
 
         {renderFAQSection('Definitions', definitionsFAQ, 'definitions')}
@@ -202,4 +203,5 @@ const FAQ = () => {
 };
 
 export default FAQ;
+
 
