@@ -1,12 +1,12 @@
 ﻿// Utility functions for UI components
 
 // Class name merger
-export function cn(...classes) {
+export function cn(...classes: (string | undefined | null | false)[]): string {
     return classes.filter(Boolean).join(' ');
 }
 
 // Format date
-export function formatDate(date) {
+export function formatDate(date: Date | string): string {
     return new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -15,14 +15,17 @@ export function formatDate(date) {
 }
 
 // Generate unique ID
-export function generateId() {
+export function generateId(): string {
     return Math.random().toString(36).substring(2, 10);
 }
 
 // Debounce function
-export function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
+export function debounce<T extends (...args: any[]) => any>(
+    func: T,
+    wait: number
+): (...args: Parameters<T>) => void {
+    let timeout: NodeJS.Timeout;
+    return function executedFunction(...args: Parameters<T>) {
         const later = () => {
             clearTimeout(timeout);
             func(...args);
@@ -32,27 +35,28 @@ export function debounce(func, wait) {
     };
 }
 
-// Check if string is empty
-export function isEmpty(value) {
+// Check if value is empty
+export function isEmpty(value: any): boolean {
     return value == null || value === '';
 }
 
 // Capitalize first letter
-export function capitalize(str) {
+export function capitalize(str: string): string {
     if (!str || typeof str !== 'string') return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Truncate text
-export function truncate(str, length) {
+export function truncate(str: string, length: number): string {
     if (!str || typeof str !== 'string') return '';
     return str.length > length ? str.substring(0, length) + '...' : str;
 }
 
-// Wait for a specified time
-export const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// Wait for specified time
+export const wait = (ms: number): Promise<void> => 
+    new Promise(resolve => setTimeout(resolve, ms));
 
-// Default export for convenience
+// Default export
 const utils = {
     cn,
     formatDate,

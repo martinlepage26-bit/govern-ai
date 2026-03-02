@@ -1,4 +1,4 @@
-import "@/App.css";
+﻿import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 
@@ -56,3 +56,4 @@ function App() {
 }
 
 export default App;
+
