@@ -9,6 +9,7 @@ const Portfolio = () => {
   const [publications, setPublications] = useState([]);
   const [workingPapers, setWorkingPapers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedEngagements, setExpandedEngagements] = useState({});
 
   useEffect(() => {
     fetch(`${API_URL}/api/publications`)
@@ -45,7 +46,7 @@ const Portfolio = () => {
           <p className="text-xs tracking-widest text-gray-400 uppercase mt-4">PUBLICATIONS · FRAMEWORKS · ENGAGEMENTS</p>
         </div>
 
-        <section className="mb-12">
+        <section id="insights" className="mb-12">
           <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
             <BookOpen className="w-6 h-6 text-[#0D0A2E]" /> Publications & Frameworks
           </h2>
@@ -67,7 +68,7 @@ const Portfolio = () => {
                         <h3 className="font-serif text-lg font-semibold text-[#0B0F1A] mb-2 group-hover:text-[#0D0A2E] transition-colors">{pub.title}</h3>
                         <p className="text-gray-600 text-sm whitespace-pre-line">{formatAdminTextForDisplay(pub.description)}</p>
                       </div>
-                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] flex-shrink-0" />
+                      {(pub.link || "").includes("/services") && <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] flex-shrink-0" />}
                     </div>
                   </Link>
                 ) : (
@@ -83,7 +84,7 @@ const Portfolio = () => {
                         {pub.venue && <p className="text-gray-500 text-sm mb-1">{pub.venue}</p>}
                         <p className="text-gray-600 text-sm whitespace-pre-line">{formatAdminTextForDisplay(pub.description)}</p>
                       </div>
-                      <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] flex-shrink-0" />
+                      {(pub.link || "").includes("/services") && <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-[#0D0A2E] flex-shrink-0" />}
                     </div>
                   </a>
                 )
@@ -93,7 +94,7 @@ const Portfolio = () => {
         </section>
 
         {workingPapers.length > 0 && (
-          <section className="mb-12">
+          <section id="papers" className="mb-12">
             <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A] mb-6 flex items-center gap-3">
               <FileText className="w-6 h-6 text-[#0D0A2E]" /> Working Papers
             </h2>
@@ -126,13 +127,26 @@ const Portfolio = () => {
                       <span className="text-gray-300">·</span>
                       <span className="text-xs text-gray-500">{eng.clients}</span>
                     </div>
-                    <h3 className="font-semibold text-[#0B0F1A] mb-1">{eng.scope}</h3>
-                    <p className="text-gray-600 text-sm mb-3">{eng.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {eng.outcomes.map((outcome, j) => (
-                        <span key={j} className="text-xs px-2 py-1 bg-[#F6F7FB] rounded-full text-gray-600">{outcome}</span>
-                      ))}
+                    <div className="flex items-center justify-between mb-1 gap-3">
+                      <h3 className="font-semibold text-[#0B0F1A]">{eng.scope}</h3>
+                      <button
+                        type="button"
+                        onClick={() => setExpandedEngagements(prev => ({ ...prev, [eng.scope]: !prev[eng.scope] }))}
+                        className="text-xs text-[#0D0A2E] hover:underline"
+                      >
+                        {expandedEngagements[eng.scope] ? 'Collapse article fields' : 'Expand article fields'}
+                      </button>
                     </div>
+                    {expandedEngagements[eng.scope] && (
+                      <>
+                        <p className="text-gray-600 text-sm mb-3">{eng.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {eng.outcomes.map((outcome, j) => (
+                            <span key={j} className="text-xs px-2 py-1 bg-[#F6F7FB] rounded-full text-gray-600">{outcome}</span>
+                          ))}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

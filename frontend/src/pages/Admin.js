@@ -4,6 +4,23 @@ import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, Calenda
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
+const PUBLICATION_TYPES = ['', 'Insight', 'Paper', 'Briefing', 'Protocol', 'Working Paper', 'Article', 'Service'];
+const PUBLICATION_VENUES = ['', 'Govern AI', 'LinkedIn', 'Substack', 'Medium', 'Conference', 'Journal', 'Client Deliverable'];
+const PUBLICATION_LINK_TARGETS = [
+  { value: '', label: 'None' },
+  { value: '/portfolio#insights', label: 'Portfolio → Insights section' },
+  { value: '/portfolio#papers', label: 'Portfolio → Papers section' },
+  { value: '/services/menu', label: 'Service Offers page' },
+];
+
+const getDefaultPublicationLink = (publicationType) => {
+  const normalizedType = (publicationType || '').trim().toLowerCase();
+  if (normalizedType.includes('insight')) return '/portfolio#insights';
+  if (normalizedType.includes('paper')) return '/portfolio#papers';
+  return '';
+};
+
+const isPresetPublicationLink = (linkValue) => PUBLICATION_LINK_TARGETS.some((target) => target.value === linkValue);
 
 const Admin = () => {
   const { t } = useLanguage();
@@ -16,6 +33,9 @@ const Admin = () => {
   const [editingPub, setEditingPub] = useState(null);
   const [showPubForm, setShowPubForm] = useState(false);
   const [pubForm, setPubForm] = useState({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' });
+  const [pubLinkTarget, setPubLinkTarget] = useState('');
+  const [pubCustomLink, setPubCustomLink] = useState('');
+  const [expandedPubIds, setExpandedPubIds] = useState({});
 
   // Bookings state
   const [bookings, setBookings] = useState([]);
@@ -86,22 +106,28 @@ const Admin = () => {
   const handlePubSubmit = async (e) => {
     e.preventDefault();
     try {
+      const inferredLink = getDefaultPublicationLink(pubForm.type);
+      const resolvedLink = (pubCustomLink || pubLinkTarget || inferredLink).trim();
+      const payload = { ...pubForm, link: resolvedLink, internal: resolvedLink.startsWith('/') || pubForm.internal };
+
       if (editingPub) {
         await fetch(`${API_URL}/api/publications/${editingPub.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(pubForm)
+          body: JSON.stringify(payload)
         });
       } else {
         await fetch(`${API_URL}/api/publications`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(pubForm)
+          body: JSON.stringify(payload)
         });
       }
       setShowPubForm(false);
       setEditingPub(null);
       setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' });
+      setPubLinkTarget('');
+      setPubCustomLink('');
       loadPublications();
     } catch (e) { /* silent */ }
   };
@@ -109,6 +135,14 @@ const Admin = () => {
   const handleEditPub = (pub) => {
     setEditingPub(pub);
     setPubForm({ type: pub.type, title: pub.title, venue: pub.venue, year: pub.year, description: pub.description, link: pub.link, internal: pub.internal, status: pub.status, abstract: pub.abstract || '' });
+    const existingLink = (pub.link || '').trim();
+    if (isPresetPublicationLink(existingLink)) {
+      setPubLinkTarget(existingLink);
+      setPubCustomLink('');
+    } else {
+      setPubLinkTarget('');
+      setPubCustomLink(existingLink);
+    }
     setShowPubForm(true);
   };
 
@@ -116,6 +150,10 @@ const Admin = () => {
     if (!window.confirm(t.admin.deleteConfirm)) return;
     await fetch(`${API_URL}/api/publications/${id}`, { method: 'DELETE' });
     loadPublications();
+  };
+
+  const insertTextToken = (field, token) => {
+    setPubForm(prev => ({ ...prev, [field]: `${prev[field] || ''}${token}` }));
   };
 
   // Booking handlers
@@ -284,7 +322,7 @@ const Admin = () => {
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">{t.admin.publications}</h2>
-              <button onClick={() => { setShowPubForm(true); setEditingPub(null); setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' }); }} className="btn-primary flex items-center gap-2 text-sm" data-testid="add-publication-btn">
+              <button onClick={() => { setShowPubForm(true); setEditingPub(null); setPubForm({ type: '', title: '', venue: '', year: '', description: '', link: '', internal: false, status: 'published', abstract: '' }); setPubLinkTarget(''); setPubCustomLink(''); }} className="btn-primary flex items-center gap-2 text-sm" data-testid="add-publication-btn">
                 <Plus className="w-4 h-4" /> {t.admin.addPublication}
               </button>
             </div>
@@ -293,7 +331,7 @@ const Admin = () => {
               <div className="card mb-6 border-l-4 border-[#0D0A2E]" data-testid="publication-form">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="font-semibold text-[#0B0F1A]">{editingPub ? t.admin.editPublication : t.admin.addPublication}</h3>
-                  <button onClick={() => { setShowPubForm(false); setEditingPub(null); }} className="p-1 hover:bg-gray-100 rounded"><X className="w-4 h-4 text-gray-500" /></button>
+                  <button onClick={() => { setShowPubForm(false); setEditingPub(null); setPubLinkTarget(''); setPubCustomLink(''); }} className="p-1 hover:bg-gray-100 rounded"><X className="w-4 h-4 text-gray-500" /></button>
                 </div>
                 <form onSubmit={handlePubSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -303,13 +341,21 @@ const Admin = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.type}</label>
-                      <input type="text" value={pubForm.type} onChange={e => setPubForm(p => ({ ...p, type: e.target.value }))} placeholder="Protocol, Briefing, Working Paper..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" />
+                      <select value={pubForm.type} onChange={e => setPubForm(p => ({ ...p, type: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
+                        {PUBLICATION_TYPES.map(option => (
+                          <option key={option || 'empty-type'} value={option}>{option || 'Select type'}</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.venue}</label>
-                      <input type="text" value={pubForm.venue} onChange={e => setPubForm(p => ({ ...p, venue: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" />
+                      <select value={pubForm.venue} onChange={e => setPubForm(p => ({ ...p, venue: e.target.value }))} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
+                        {PUBLICATION_VENUES.map(option => (
+                          <option key={option || 'empty-venue'} value={option}>{option || 'Select venue'}</option>
+                        ))}
+                      </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.year}</label>
@@ -326,12 +372,21 @@ const Admin = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.description}</label>
-                    <textarea value={pubForm.description} onChange={e => setPubForm(p => ({ ...p, description: e.target.value }))} rows={2} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm resize-none" />
+                    <div className="flex items-center gap-2 mb-2">
+                      <button type="button" onClick={() => insertTextToken('description', '\n')} className="px-2 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50">+ Line break</button>
+                      <button type="button" onClick={() => insertTextToken('description', '\n\n')} className="px-2 py-1 text-xs border border-gray-200 rounded-md hover:bg-gray-50">+ Paragraph</button>
+                    </div>
+                    <textarea value={pubForm.description} onChange={e => setPubForm(p => ({ ...p, description: e.target.value }))} rows={4} className="w-full min-h-[110px] max-h-[360px] px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm resize-y" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t.admin.link}</label>
-                      <input type="text" value={pubForm.link} onChange={e => setPubForm(p => ({ ...p, link: e.target.value }))} placeholder="/sealed-card or https://..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" />
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Link target</label>
+                      <select value={pubLinkTarget} onChange={e => setPubLinkTarget(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm">
+                        {PUBLICATION_LINK_TARGETS.map(target => (
+                          <option key={target.value || 'empty-link'} value={target.value}>{target.label}</option>
+                        ))}
+                      </select>
+                      <p className="text-[11px] text-gray-500 mt-1">If empty, Insight/Paper entries automatically link to Portfolio sections.</p>
                     </div>
                     <div className="flex items-end pb-1">
                       <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
@@ -340,9 +395,13 @@ const Admin = () => {
                       </label>
                     </div>
                   </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">Optional custom URL</label>
+                    <input type="text" value={pubCustomLink} onChange={e => setPubCustomLink(e.target.value)} placeholder="/portfolio#insights, /services/menu or https://..." className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-[#0D0A2E] focus:outline-none text-sm" />
+                  </div>
                   <div className="flex gap-3 pt-2">
                     <button type="submit" className="btn-primary text-sm" data-testid="pub-save-btn">{t.admin.save}</button>
-                    <button type="button" onClick={() => { setShowPubForm(false); setEditingPub(null); }} className="btn-ghost text-sm">{t.admin.cancel}</button>
+                    <button type="button" onClick={() => { setShowPubForm(false); setEditingPub(null); setPubLinkTarget(''); setPubCustomLink(''); }} className="btn-ghost text-sm">{t.admin.cancel}</button>
                   </div>
                 </form>
               </div>
@@ -353,7 +412,8 @@ const Admin = () => {
             ) : (
               <div className="space-y-3">
                 {publications.map((pub) => (
-                  <div key={pub.id} className="card flex items-start justify-between gap-4" data-testid={`admin-pub-${pub.id}`}>
+                  <div key={pub.id} className="card" data-testid={`admin-pub-${pub.id}`}>
+                    <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         {pub.type && <span className="text-xs font-medium text-[#0D0A2E] uppercase tracking-wide">{pub.type}</span>}
@@ -363,7 +423,20 @@ const Admin = () => {
                         {pub.year && <span className="text-xs text-gray-400">{pub.year}</span>}
                       </div>
                       <h3 className="font-medium text-[#0B0F1A] text-sm truncate">{pub.title}</h3>
-                      {pub.description && <p className="text-gray-500 text-xs mt-1 line-clamp-1 whitespace-pre-line">{pub.description}</p>}
+                      {pub.description && (
+                        <p className={`text-gray-500 text-xs mt-1 whitespace-pre-line ${expandedPubIds[pub.id] ? '' : 'line-clamp-1'}`}>
+                          {pub.description}
+                        </p>
+                      )}
+                      {pub.description && (
+                        <button
+                          type="button"
+                          onClick={() => setExpandedPubIds((prev) => ({ ...prev, [pub.id]: !prev[pub.id] }))}
+                          className="mt-1 text-[11px] text-[#0D0A2E] hover:underline"
+                        >
+                          {expandedPubIds[pub.id] ? 'Collapse article fields' : 'Expand article fields'}
+                        </button>
+                      )}
                     </div>
                     <div className="flex gap-1 flex-shrink-0">
                       <button onClick={() => handleEditPub(pub)} className="p-2 hover:bg-[#0D0A2E]/10 rounded-lg transition-colors" data-testid={`edit-pub-${pub.id}`}>
@@ -372,6 +445,7 @@ const Admin = () => {
                       <button onClick={() => handleDeletePub(pub.id)} className="p-2 hover:bg-red-50 rounded-lg transition-colors" data-testid={`delete-pub-${pub.id}`}>
                         <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />
                       </button>
+                    </div>
                     </div>
                   </div>
                 ))}

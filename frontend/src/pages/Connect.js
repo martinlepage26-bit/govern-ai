@@ -104,13 +104,13 @@ const Connect = () => {
   const availableSlots = getAvailableSlots();
 
   return (
-    <div className="min-h-screen bg-[#F6F7FB] py-12 px-6 md:px-12" data-testid="connect-page">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,#ede9fe_0%,#F6F7FB_38%,#F6F7FB_100%)] py-12 px-6 md:px-12" data-testid="connect-page">
       <div className="max-w-5xl mx-auto">
-        <h1 className="page-title mb-4">{t.connect.title}</h1>
+        <h1 className="page-title mb-4 text-[#0B0F1A]">{t.connect.title}</h1>
         <p className="text-gray-600 mb-2 max-w-2xl">{t.connect.description}</p>
         <p className="text-xs tracking-widest text-[#7b2cbf] uppercase mb-8">{t.connect.keywords}</p>
 
-        <div className="flex gap-2 mb-8">
+        <div className="flex gap-2 mb-8 bg-white/70 backdrop-blur-sm p-2 rounded-2xl border border-white shadow-sm w-fit">
           <button onClick={() => { setActiveTab('message'); setBookingSubmitted(false); }} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTab === 'message' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`} data-testid="tab-message">
             <Mail className="w-4 h-4 inline mr-2" />{t.connect.tabs.message}
           </button>
@@ -122,7 +122,7 @@ const Connect = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             {activeTab === 'message' ? (
-              <div className="card">
+              <div className="card border border-white shadow-[0_10px_30px_rgba(13,10,46,0.07)]">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-[#0D0A2E]/10 flex items-center justify-center"><Mail className="w-5 h-5 text-[#0D0A2E]" /></div>
                   <div>
@@ -290,7 +290,7 @@ const Connect = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4">
+          <div className="space-y-4 sticky top-24">
             <h3 className="font-serif text-lg font-semibold text-[#0B0F1A]">{t.connect.resources.title}</h3>
             {resources.map((resource, index) => (
               <div key={index} className="card card-hover" data-testid={`resource-${index}`}>

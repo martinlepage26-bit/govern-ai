@@ -67,10 +67,16 @@ const About = () => {
           <p 
             className="text-lg text-[#0B0F1A]/70 max-w-3xl leading-relaxed"
             style={{fontFamily: "'Source Serif 4', serif", fontStyle: 'italic'}}
+            aria-describedby="about-intro-context"
           >
             {language === 'fr' 
               ? "La gouvernance de l'IA comme science du pouvoir, de la transparence et de la responsabilité."
               : "AI governance as a science of power, transparency, and accountability."}
+          </p>
+          <p id="about-intro-context" className="sr-only">
+            {language === 'fr'
+              ? "Introduction de la page À propos : vue d’ensemble de la gouvernance de l’IA."
+              : 'About page introduction context: high-level overview of AI governance.'}
           </p>
         </div>
 
