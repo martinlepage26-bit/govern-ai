@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, CheckCircle, Clock, XCircle, BookOpen, CalendarDays, HelpCircle, Briefcase, ChevronUp, ChevronDown, Monitor, ExternalLink } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const ADMIN_PASSPHRASE = process.env.REACT_APP_ADMIN_PASSPHRASE || 'AIG-ctrl-2026!';
@@ -27,6 +27,7 @@ const Admin = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [passphrase, setPassphrase] = useState('');
   const [activeTab, setActiveTab] = useState('publications');
+  const [selectedPreviewRoute, setSelectedPreviewRoute] = useState('/');
 
   // Publications state
   const [publications, setPublications] = useState([]);
@@ -276,6 +277,34 @@ const Admin = () => {
   const statusColors = { pending: 'bg-yellow-100 text-yellow-700', confirmed: 'bg-green-100 text-green-700', cancelled: 'bg-red-100 text-red-700' };
   const statusIcons = { pending: Clock, confirmed: CheckCircle, cancelled: XCircle };
   const sectionLabels = { definitions: 'Definitions', evidence: 'Evidence', engagements: 'Engagements' };
+  const previewSections = [
+    {
+      title: 'Core Pages',
+      pages: [
+        { label: 'Home', route: '/' },
+        { label: 'About', route: '/about' },
+        { label: 'Services', route: '/services' },
+        { label: 'Service Menu', route: '/services/menu' },
+      ]
+    },
+    {
+      title: 'Content + Proof',
+      pages: [
+        { label: 'Portfolio', route: '/portfolio' },
+        { label: 'Research', route: '/research' },
+        { label: 'Library', route: '/library' },
+        { label: 'FAQ', route: '/faq' },
+      ]
+    },
+    {
+      title: 'Engagement',
+      pages: [
+        { label: 'Connect', route: '/connect' },
+        { label: 'Tool', route: '/tool' },
+        { label: 'Sealed Card', route: '/sealed-card' },
+      ]
+    }
+  ];
 
   if (!authenticated) {
     return (
@@ -314,6 +343,10 @@ const Admin = () => {
           <button onClick={() => setActiveTab('services')} data-testid="admin-tab-services"
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'services' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
             <Briefcase className="w-4 h-4" /> Services
+          </button>
+          <button onClick={() => setActiveTab('previews')} data-testid="admin-tab-previews"
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${activeTab === 'previews' ? 'bg-[#0D0A2E] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-[#0D0A2E]'}`}>
+            <Monitor className="w-4 h-4" /> Preview Lab
           </button>
         </div>
 
@@ -597,6 +630,51 @@ const Admin = () => {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Preview Lab Tab */}
+        {activeTab === 'previews' && (
+          <div>
+            <div className="mb-6">
+              <h2 className="font-serif text-2xl font-semibold text-[#0B0F1A]">Page Preview Lab</h2>
+              <p className="text-sm text-gray-500 mt-1">Preview in-progress pages from one place while you edit copy, layouts, and components.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              {previewSections.map((section) => (
+                <div key={section.title} className="card">
+                  <h3 className="text-sm font-semibold text-[#7b2cbf] uppercase tracking-wide mb-3">{section.title}</h3>
+                  <div className="space-y-2">
+                    {section.pages.map((page) => (
+                      <div key={page.route} className="flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => setSelectedPreviewRoute(page.route)}
+                          className={`text-left text-sm px-3 py-2 rounded-lg border w-full transition-colors ${selectedPreviewRoute === page.route ? 'border-[#0D0A2E] bg-[#0D0A2E] text-white' : 'border-gray-200 hover:border-[#0D0A2E] text-gray-700 bg-white'}`}
+                        >
+                          {page.label}
+                        </button>
+                        <a href={page.route} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-gray-200 hover:border-[#0D0A2E] text-gray-500 hover:text-[#0D0A2E]" title="Open page in new tab">
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="card border-l-4 border-[#0D0A2E]" data-testid="admin-preview-frame">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-[#0B0F1A]">Live Page Preview</h3>
+                <code className="text-xs bg-gray-100 px-2 py-1 rounded">{selectedPreviewRoute}</code>
+              </div>
+              <iframe
+                title="Page preview"
+                src={selectedPreviewRoute}
+                className="w-full h-[700px] rounded-lg border border-gray-200 bg-white"
+              />
+            </div>
           </div>
         )}
 
