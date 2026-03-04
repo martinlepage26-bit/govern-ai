@@ -88,14 +88,23 @@ const Home = () => {
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#2a2a2a]/30"></div>
             </div>
             
-            {/* Martin Lepage PhD - more readable */}
-            <p 
-              className="text-[#2a2a2a]/60 text-sm tracking-wide" 
+            {}
+            <div 
+              className="flex flex-col items-center text-[#2a2a2a]/50 text-xs tracking-wide" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
-              Martin Lepage PhD
-            </p>
-          </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+                <span>{language === 'fr' ? 'Conforme aux' : 'Compliant with'}</span>
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+              </div>
+              <div className="flex items-center gap-1.5 mt-1">
+                <span>{language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}</span>
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+                <span>{language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}</span>
+                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
+                <span>{language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}</span>
+              </div>
 
           {/* Right: Tagline + Buttons - centered, stacked */}
           <div className="flex-1 flex flex-col items-center text-center mt-8 md:mt-0">
@@ -105,19 +114,19 @@ const Home = () => {
                 className="text-xl md:text-2xl text-[#2a2a2a]/80 tracking-wide"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400, fontStyle: 'italic'}}
               >
-                {language === 'fr' ? 'Pouvoir lisible' : 'Legible Power'}
+                {language === 'fr' ? 'Contrôles clairs' : 'Legible Controls.'}
               </span>
               <span 
                 className="text-xl md:text-2xl text-[#2a2a2a]/80 tracking-wide"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400, fontStyle: 'italic'}}
               >
-                {language === 'fr' ? 'Décisions révisables' : 'Reviewable Decisions'}
+                {language === 'fr' ? 'Preuves revues' : 'Evidence Reviewed.'}
               </span>
               <span 
                 className="text-xl md:text-2xl text-[#2a2a2a]/80 tracking-wide"
                 style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 400, fontStyle: 'italic'}}
               >
-                {language === 'fr' ? 'Avenirs vivables' : 'Livable Futures'}
+                {language === 'fr' ? 'Décisions solides' : 'Decisions That Stand.'}
               </span>
             </div>
             
@@ -143,22 +152,13 @@ const Home = () => {
             </div>
             
             {/* Compliance text - under buttons */}
-            <div 
-              className="flex flex-col items-center text-[#2a2a2a]/50 text-xs tracking-wide" 
+           <p 
+              className="text-[#2a2a2a]/60 text-sm tracking-wide" 
               style={{fontFamily: "'IBM Plex Sans', system-ui, sans-serif", fontWeight: 500}}
             >
-              <div className="flex items-center gap-1.5">
-                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
-                <span>{language === 'fr' ? 'Conforme aux' : 'Compliant with'}</span>
-                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
-              </div>
-              <div className="flex items-center gap-1.5 mt-1">
-                <span>{language === 'fr' ? 'Directives du Conseil du Trésor' : 'Treasury Board directives'}</span>
-                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
-                <span>{language === 'fr' ? 'Loi 25 du Québec' : "Quebec's Law 25"}</span>
-                <span className="text-[#7b2cbf]/50 text-[8px]">◆</span>
-                <span>{language === 'fr' ? 'Obligations LIAD émergentes' : 'Emerging AIDA obligations'}</span>
-              </div>
+              Martin Lepage PhD
+            </p>
+          </div>
             </div>
           </div>
         </div>
