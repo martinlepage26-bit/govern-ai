@@ -351,7 +351,20 @@ export const fr = {
       request: 'Demander \u2192',
       directContact: 'Contact direct',
       notSure: 'Pas certain par o\u00f9 commencer\u00a0?',
-      takeSnapshot: "Prendre l\u2019instantan\u00e9 de pr\u00e9paration \u2192"
+      takeSnapshot: "Prendre l\u2019instantan\u00e9 de pr\u00e9paration \u2192",
+      openLink: 'Open preview →',
+      aurorAITitle: 'AurorAI — Legibility Layer (document-to-evidence)',
+      aurorAIDesc: 'Sorts messy client documents into legible, governable outputs.',
+      aurorAIPurpose: 'Purpose: document-to-evidence sorting for governance work.',
+      aurorAIOutputs: 'Outputs: draft inventory, evidence map, and control/evidence crosswalks.',
+      aurorAIPromise: 'Promise: reduces document chaos and increases traceability.',
+      aurorAINoClaim: 'Does not claim: compliance certification, legal advice, or automated approvals.',
+      compassAITitle: 'CompassAI — Governance Engine + Deliverable Maker',
+      compassAIDesc: 'Turns governance method into repeatable routing and delivery artifacts.',
+      compassAIPurpose: 'Purpose: classify → obligations → gates → artifacts → monitoring.',
+      compassAIOutputs: 'Outputs: risk decisions/rationale, deliverable bundles, inspection-ready packets.',
+      compassAIPromise: 'Promise: standardizes governance logic and deliverables.',
+      compassAINoClaim: 'Does not claim: replaces accountable humans, sets risk appetite, or guarantees compliance.',
     }
   },
 

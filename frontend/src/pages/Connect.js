@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Send, FileText, Calendar as CalendarIcon, CheckCircle, Clock } from 'lucide-react';
+import { Mail, Send, FileText, Calendar as CalendarIcon, CheckCircle, Clock, Sparkles, Compass } from 'lucide-react';
 import { Calendar } from '../components/ui/calendar';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -92,7 +92,31 @@ const Connect = () => {
   const resources = [
     { title: t.connect.resources.auditChecklist, description: t.connect.resources.auditChecklistDesc, icon: FileText },
     { title: t.connect.resources.riskFramework, description: t.connect.resources.riskFrameworkDesc, icon: FileText },
-    { title: t.connect.resources.vendorQuestions, description: t.connect.resources.vendorQuestionsDesc, icon: FileText }
+    { title: t.connect.resources.vendorQuestions, description: t.connect.resources.vendorQuestionsDesc, icon: FileText },
+    {
+      title: t.connect.resources.aurorAITitle,
+      description: t.connect.resources.aurorAIDesc,
+      icon: Sparkles,
+      href: 'https://aurorai.govern-ai.ca',
+      bullets: [
+        t.connect.resources.aurorAIPurpose,
+        t.connect.resources.aurorAIOutputs,
+        t.connect.resources.aurorAIPromise,
+        t.connect.resources.aurorAINoClaim
+      ]
+    },
+    {
+      title: t.connect.resources.compassAITitle,
+      description: t.connect.resources.compassAIDesc,
+      icon: Compass,
+      href: 'https://compassai.govern-ai.ca',
+      bullets: [
+        t.connect.resources.compassAIPurpose,
+        t.connect.resources.compassAIOutputs,
+        t.connect.resources.compassAIPromise,
+        t.connect.resources.compassAINoClaim
+      ]
+    }
   ];
 
   const handleResourceRequest = (resourceName) => {
@@ -299,7 +323,18 @@ const Connect = () => {
                   <div>
                     <h4 className="font-medium text-[#0B0F1A] text-sm mb-1">{resource.title}</h4>
                     <p className="text-gray-500 text-xs mb-2">{resource.description}</p>
-                    <button onClick={() => handleResourceRequest(resource.title)} className="text-[#0D0A2E] font-medium text-xs hover:underline">{t.connect.resources.request}</button>
+                    {resource.href ? (
+                      <a href={resource.href} target="_blank" rel="noopener noreferrer" className="text-[#0D0A2E] font-medium text-xs hover:underline">{t.connect.resources.openLink}</a>
+                    ) : (
+                      <button onClick={() => handleResourceRequest(resource.title)} className="text-[#0D0A2E] font-medium text-xs hover:underline">{t.connect.resources.request}</button>
+                    )}
+                    {resource.bullets && (
+                      <ul className="mt-2 space-y-1 text-[11px] text-gray-500 list-disc pl-4">
+                        {resource.bullets.map((bullet, bulletIndex) => (
+                          <li key={`${resource.title}-bullet-${bulletIndex}`}>{bullet}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
               </div>
