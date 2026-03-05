@@ -392,6 +392,22 @@ def get_db():
     from server import db
     return db
 
+# ============ AUTH HELPERS ============
+
+async def get_current_user_optional(request: Request):
+    """Get current user if authenticated, None otherwise"""
+    from auth import get_current_user
+    return await get_current_user(request)
+
+async def get_tenant_filter(request: Request) -> Dict[str, Any]:
+    """Get filter for multi-tenant queries. Admin sees all, clients see only their own."""
+    user = await get_current_user_optional(request)
+    if not user:
+        return {}  # No auth - return empty (will be handled by route protection)
+    if user.role == "admin":
+        return {}  # Admin sees all
+    return {"user_id": user.user_id}  # Client sees only their own
+
 # ============ API ENDPOINTS ============
 
 @router.get("/health")
@@ -400,21 +416,27 @@ async def compass_health():
 
 # Use Cases
 @router.post("/usecases", response_model=UseCase)
-async def create_usecase(data: UseCaseCreate):
+async def create_usecase(data: UseCaseCreate, request: Request):
     db = get_db()
+    user = await get_current_user_optional(request)
+    
     usecase = UseCase(**data.model_dump())
+    usecase.user_id = user.user_id if user else None
     doc = usecase.model_dump()
     await db.compass_usecases.insert_one(doc)
     return usecase
 
 @router.get("/usecases", response_model=List[UseCase])
 async def list_usecases(
+    request: Request,
     status: Optional[UseCaseStatus] = None,
     risk_tier: Optional[RiskTier] = None,
     limit: int = 100
 ):
     db = get_db()
-    query = {}
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {**tenant_filter}
     if status:
         query["status"] = status.value
     if risk_tier:
@@ -424,19 +446,27 @@ async def list_usecases(
     return usecases
 
 @router.get("/usecases/{usecase_id}", response_model=UseCase)
-async def get_usecase(usecase_id: str):
+async def get_usecase(usecase_id: str, request: Request):
     db = get_db()
-    usecase = await db.compass_usecases.find_one({"id": usecase_id}, {"_id": 0})
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {"id": usecase_id, **tenant_filter}
+    usecase = await db.compass_usecases.find_one(query, {"_id": 0})
     if not usecase:
         raise HTTPException(status_code=404, detail="Use case not found")
     return usecase
 
 @router.patch("/usecases/{usecase_id}")
-async def update_usecase(usecase_id: str, updates: Dict[str, Any]):
+async def update_usecase(usecase_id: str, updates: Dict[str, Any], request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
+    
     updates["updated_at"] = datetime.now(timezone.utc).isoformat()
+    # Don't allow updating user_id
+    updates.pop("user_id", None)
+    
     result = await db.compass_usecases.update_one(
-        {"id": usecase_id},
+        {"id": usecase_id, **tenant_filter},
         {"$set": updates}
     )
     if result.matched_count == 0:
@@ -445,11 +475,13 @@ async def update_usecase(usecase_id: str, updates: Dict[str, Any]):
 
 # Evidence
 @router.post("/evidence", response_model=EvidencePack)
-async def ingest_evidence(data: EvidencePackCreate):
+async def ingest_evidence(data: EvidencePackCreate, request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    # Verify use case exists
-    usecase = await db.compass_usecases.find_one({"id": data.usecase_id})
+    # Verify use case exists and belongs to user
+    query = {"id": data.usecase_id, **tenant_filter}
+    usecase = await db.compass_usecases.find_one(query)
     if not usecase:
         raise HTTPException(status_code=404, detail="Use case not found")
     
@@ -459,13 +491,16 @@ async def ingest_evidence(data: EvidencePackCreate):
     evidence.hash = f"sha256:{hashlib.sha256(payload_str.encode()).hexdigest()}"
     
     doc = evidence.model_dump()
+    doc["user_id"] = usecase.get("user_id")  # Inherit from use case
     await db.compass_evidence.insert_one(doc)
     return evidence
 
 @router.get("/evidence", response_model=List[EvidencePack])
-async def list_evidence(usecase_id: Optional[str] = None, artifact_type: Optional[str] = None):
+async def list_evidence(request: Request, usecase_id: Optional[str] = None, artifact_type: Optional[str] = None):
     db = get_db()
-    query = {}
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {**tenant_filter}
     if usecase_id:
         query["usecase_id"] = usecase_id
     if artifact_type:
@@ -476,11 +511,13 @@ async def list_evidence(usecase_id: Optional[str] = None, artifact_type: Optiona
 
 # Risk Assessment
 @router.post("/risk/assess", response_model=RiskAssessment)
-async def assess_risk(usecase_id: str, context: Optional[Dict[str, str]] = None):
+async def assess_risk(usecase_id: str, request: Request, context: Optional[Dict[str, str]] = None):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    # Get use case
-    usecase_doc = await db.compass_usecases.find_one({"id": usecase_id}, {"_id": 0})
+    # Get use case with tenant filter
+    query = {"id": usecase_id, **tenant_filter}
+    usecase_doc = await db.compass_usecases.find_one(query, {"_id": 0})
     if not usecase_doc:
         raise HTTPException(status_code=404, detail="Use case not found")
     
@@ -492,8 +529,9 @@ async def assess_risk(usecase_id: str, context: Optional[Dict[str, str]] = None)
     # Calculate risk
     assessment = calculate_risk_tier(usecase, evidence_count)
     
-    # Save assessment
+    # Save assessment with user_id
     doc = assessment.model_dump()
+    doc["user_id"] = usecase_doc.get("user_id")
     await db.compass_risk_assessments.insert_one(doc)
     
     # Update use case with risk tier
@@ -505,8 +543,16 @@ async def assess_risk(usecase_id: str, context: Optional[Dict[str, str]] = None)
     return assessment
 
 @router.get("/risk/assessments/{usecase_id}", response_model=List[RiskAssessment])
-async def get_risk_assessments(usecase_id: str):
+async def get_risk_assessments(usecase_id: str, request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
+    
+    # Verify user has access to this use case
+    uc_query = {"id": usecase_id, **tenant_filter}
+    usecase = await db.compass_usecases.find_one(uc_query)
+    if not usecase:
+        raise HTTPException(status_code=404, detail="Use case not found")
+    
     assessments = await db.compass_risk_assessments.find(
         {"usecase_id": usecase_id}, 
         {"_id": 0}
@@ -529,16 +575,19 @@ async def list_policies(active_only: bool = True):
 
 # Approvals
 @router.post("/approvals", response_model=Approval)
-async def create_approval(data: ApprovalCreate):
+async def create_approval(data: ApprovalCreate, request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    # Verify use case
-    usecase = await db.compass_usecases.find_one({"id": data.usecase_id})
+    # Verify use case with tenant filter
+    query = {"id": data.usecase_id, **tenant_filter}
+    usecase = await db.compass_usecases.find_one(query)
     if not usecase:
         raise HTTPException(status_code=404, detail="Use case not found")
     
     approval = Approval(**data.model_dump())
     doc = approval.model_dump()
+    doc["user_id"] = usecase.get("user_id")
     await db.compass_approvals.insert_one(doc)
     
     # Update use case status based on decision
@@ -556,9 +605,11 @@ async def create_approval(data: ApprovalCreate):
     return approval
 
 @router.get("/approvals", response_model=List[Approval])
-async def list_approvals(usecase_id: Optional[str] = None):
+async def list_approvals(request: Request, usecase_id: Optional[str] = None):
     db = get_db()
-    query = {}
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {**tenant_filter}
     if usecase_id:
         query["usecase_id"] = usecase_id
     approvals = await db.compass_approvals.find(query, {"_id": 0}).to_list(500)
@@ -566,11 +617,13 @@ async def list_approvals(usecase_id: Optional[str] = None):
 
 # Deliverables
 @router.post("/deliverables/generate/{usecase_id}")
-async def generate_deliverables(usecase_id: str, deliverable_types: Optional[List[str]] = None):
+async def generate_deliverables(usecase_id: str, request: Request, deliverable_types: Optional[List[str]] = None):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    # Get use case
-    usecase_doc = await db.compass_usecases.find_one({"id": usecase_id}, {"_id": 0})
+    # Get use case with tenant filter
+    query = {"id": usecase_id, **tenant_filter}
+    usecase_doc = await db.compass_usecases.find_one(query, {"_id": 0})
     if not usecase_doc:
         raise HTTPException(status_code=404, detail="Use case not found")
     
@@ -619,15 +672,18 @@ async def generate_deliverables(usecase_id: str, deliverable_types: Optional[Lis
         )
         
         doc = deliverable.model_dump()
+        doc["user_id"] = usecase_doc.get("user_id")
         await db.compass_deliverables.insert_one(doc)
         generated.append(deliverable)
     
     return {"generated": len(generated), "deliverables": generated}
 
 @router.get("/deliverables", response_model=List[Deliverable])
-async def list_deliverables(usecase_id: Optional[str] = None, dtype: Optional[str] = None):
+async def list_deliverables(request: Request, usecase_id: Optional[str] = None, dtype: Optional[str] = None):
     db = get_db()
-    query = {}
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {**tenant_filter}
     if usecase_id:
         query["usecase_id"] = usecase_id
     if dtype:
@@ -636,20 +692,25 @@ async def list_deliverables(usecase_id: Optional[str] = None, dtype: Optional[st
     return deliverables
 
 @router.get("/deliverables/{deliverable_id}")
-async def get_deliverable(deliverable_id: str):
+async def get_deliverable(deliverable_id: str, request: Request):
     db = get_db()
-    deliverable = await db.compass_deliverables.find_one({"id": deliverable_id}, {"_id": 0})
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {"id": deliverable_id, **tenant_filter}
+    deliverable = await db.compass_deliverables.find_one(query, {"_id": 0})
     if not deliverable:
         raise HTTPException(status_code=404, detail="Deliverable not found")
     return deliverable
 
 # Audit Export
 @router.get("/audit/export/{usecase_id}")
-async def export_audit_bundle(usecase_id: str):
+async def export_audit_bundle(usecase_id: str, request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    # Gather all data for audit
-    usecase = await db.compass_usecases.find_one({"id": usecase_id}, {"_id": 0})
+    # Gather all data for audit with tenant filter
+    query = {"id": usecase_id, **tenant_filter}
+    usecase = await db.compass_usecases.find_one(query, {"_id": 0})
     if not usecase:
         raise HTTPException(status_code=404, detail="Use case not found")
     
@@ -675,19 +736,20 @@ async def export_audit_bundle(usecase_id: str):
 
 # Dashboard Stats
 @router.get("/dashboard/stats")
-async def get_dashboard_stats():
+async def get_dashboard_stats(request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    total = await db.compass_usecases.count_documents({})
+    total = await db.compass_usecases.count_documents(tenant_filter)
     by_status = {}
     for status in UseCaseStatus:
-        by_status[status.value] = await db.compass_usecases.count_documents({"status": status.value})
+        by_status[status.value] = await db.compass_usecases.count_documents({**tenant_filter, "status": status.value})
     
     by_tier = {}
     for tier in RiskTier:
-        by_tier[tier.value] = await db.compass_usecases.count_documents({"risk_tier": tier.value})
+        by_tier[tier.value] = await db.compass_usecases.count_documents({**tenant_filter, "risk_tier": tier.value})
     
-    pending_approvals = await db.compass_usecases.count_documents({"status": UseCaseStatus.IN_REVIEW.value})
+    pending_approvals = await db.compass_usecases.count_documents({**tenant_filter, "status": UseCaseStatus.IN_REVIEW.value})
     
     return {
         "total_usecases": total,

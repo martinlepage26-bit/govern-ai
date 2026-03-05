@@ -28,7 +28,14 @@ import {
   Lock,
   LogOut,
   User,
-  Users
+  Users,
+  Plus,
+  Edit2,
+  Trash2,
+  Tag,
+  Calendar,
+  ArrowLeft,
+  Save
 } from "lucide-react";
 import CompassAIApp from "./CompassAI";
 import AurorAIApp from "./AurorAI";
@@ -947,80 +954,446 @@ const Portfolio = () => {
   );
 };
 
-// Publications Page
+// Publications Page - Blog Section
 const Publications = () => {
   const [pubs, setPubs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedTag, setSelectedTag] = useState(null);
+  const [allTags, setAllTags] = useState([]);
+  const [selectedPub, setSelectedPub] = useState(null);
+  const [showEditor, setShowEditor] = useState(false);
+  const [editingPub, setEditingPub] = useState(null);
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
 
   useEffect(() => {
-    const fetchPubs = async () => {
-      try {
-        const res = await axios.get(`${API}/publications`);
-        setPubs(res.data);
-      } catch (e) {
-        console.error("Failed to fetch publications", e);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchPubs();
-  }, []);
+    fetchTags();
+  }, [selectedTag]);
+
+  const fetchPubs = async () => {
+    try {
+      const params = selectedTag ? `?tag=${encodeURIComponent(selectedTag)}` : '';
+      const res = await axios.get(`${API}/publications${params}`);
+      setPubs(res.data);
+    } catch (e) {
+      console.error("Failed to fetch publications", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchTags = async () => {
+    try {
+      const res = await axios.get(`${API}/publications/tags/all`);
+      setAllTags(res.data);
+    } catch (e) {
+      console.error("Failed to fetch tags", e);
+    }
+  };
+
+  const handleDelete = async (pubId) => {
+    if (!window.confirm('Are you sure you want to delete this publication?')) return;
+    try {
+      await axios.delete(`${API}/publications/${pubId}`, { withCredentials: true });
+      fetchPubs();
+    } catch (e) {
+      console.error("Failed to delete publication", e);
+    }
+  };
+
+  const handleEdit = (pub) => {
+    setEditingPub(pub);
+    setShowEditor(true);
+  };
+
+  const handleCreate = () => {
+    setEditingPub(null);
+    setShowEditor(true);
+  };
+
+  const handleViewArticle = async (pub) => {
+    try {
+      const res = await axios.get(`${API}/publications/${pub.id}`);
+      setSelectedPub(res.data);
+    } catch (e) {
+      setSelectedPub(pub);
+    }
+  };
+
+  // Article Modal View
+  if (selectedPub) {
+    return (
+      <div className="min-h-screen pt-20">
+        <section className="py-12 lg:py-20">
+          <div className="max-w-4xl mx-auto px-6 lg:px-12">
+            <button 
+              onClick={() => setSelectedPub(null)}
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-8 transition-colors"
+              data-testid="back-to-publications"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to Publications
+            </button>
+            <motion.article
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <span className="font-mono text-sm text-violet-900">{selectedPub.date}</span>
+                {selectedPub.tags?.map(tag => (
+                  <span key={tag} className="px-2 py-1 bg-slate-100 text-slate-500 text-xs font-mono">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h1 className="font-heading font-black text-3xl lg:text-4xl text-slate-900 mb-6">
+                {selectedPub.title}
+              </h1>
+              <p className="text-slate-600 text-lg leading-relaxed mb-8 border-l-4 border-violet-200 pl-4">
+                {selectedPub.abstract}
+              </p>
+              {selectedPub.content ? (
+                <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-h1:text-2xl prose-h2:text-xl prose-p:text-slate-600 prose-li:text-slate-600 prose-a:text-violet-900">
+                  {selectedPub.content.split('\n').map((line, i) => {
+                    if (line.startsWith('# ')) return <h1 key={i} className="text-2xl font-bold mt-8 mb-4">{line.slice(2)}</h1>;
+                    if (line.startsWith('## ')) return <h2 key={i} className="text-xl font-bold mt-6 mb-3">{line.slice(3)}</h2>;
+                    if (line.startsWith('- ')) return <li key={i} className="ml-6 mb-2">{line.slice(2)}</li>;
+                    if (line.startsWith('**') && line.endsWith('**')) return <p key={i} className="font-bold mb-2">{line.slice(2, -2)}</p>;
+                    if (line.trim() === '') return <br key={i} />;
+                    return <p key={i} className="mb-4">{line}</p>;
+                  })}
+                </div>
+              ) : (
+                <p className="text-slate-500 italic">Full article content not available.</p>
+              )}
+              {selectedPub.link && (
+                <div className="mt-12 pt-8 border-t border-slate-200">
+                  <a 
+                    href={selectedPub.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn-secondary"
+                  >
+                    <ExternalLink className="w-4 h-4" /> View on LinkedIn
+                  </a>
+                </div>
+              )}
+            </motion.article>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // Editor Modal
+  if (showEditor) {
+    return (
+      <PublicationEditor 
+        publication={editingPub}
+        onClose={() => { setShowEditor(false); setEditingPub(null); }}
+        onSave={() => { setShowEditor(false); setEditingPub(null); fetchPubs(); }}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen pt-20">
       <section className="py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <p className="text-violet-900 font-mono text-sm mb-4 tracking-wide">PUBLICATIONS</p>
-          <h1 className="font-heading font-black text-4xl lg:text-5xl text-slate-900 mb-6">
-            Research & Writing
-          </h1>
-          <p className="text-slate-600 text-lg max-w-2xl mb-12">
-            Thoughts on AI governance, decision machinery, and building defensible systems.
-          </p>
+          <div className="flex items-start justify-between gap-4 mb-8">
+            <div>
+              <p className="text-violet-900 font-mono text-sm mb-4 tracking-wide">PUBLICATIONS</p>
+              <h1 className="font-heading font-black text-4xl lg:text-5xl text-slate-900 mb-6">
+                Research & Writing
+              </h1>
+              <p className="text-slate-600 text-lg max-w-2xl">
+                Thoughts on AI governance, decision machinery, and building defensible systems.
+              </p>
+            </div>
+            {isAdmin && (
+              <button
+                onClick={handleCreate}
+                className="btn-primary flex-shrink-0"
+                data-testid="create-publication-btn"
+              >
+                <Plus className="w-4 h-4" /> New Publication
+              </button>
+            )}
+          </div>
+
+          {/* Tag Filter */}
+          {allTags.length > 0 && (
+            <div className="mb-8 flex flex-wrap gap-2 items-center">
+              <Tag className="w-4 h-4 text-slate-400" />
+              <button
+                onClick={() => setSelectedTag(null)}
+                className={`px-3 py-1.5 text-sm font-mono transition-colors ${
+                  selectedTag === null 
+                    ? 'bg-violet-900 text-white' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+                data-testid="filter-all"
+              >
+                All
+              </button>
+              {allTags.map(tag => (
+                <button
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  className={`px-3 py-1.5 text-sm font-mono transition-colors ${
+                    selectedTag === tag 
+                      ? 'bg-violet-900 text-white' 
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                  data-testid={`filter-${tag.toLowerCase().replace(/\s/g, '-')}`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
 
           {loading ? (
             <div className="text-center py-12 text-slate-500">Loading publications...</div>
+          ) : pubs.length === 0 ? (
+            <div className="text-center py-12 text-slate-500">
+              {selectedTag ? `No publications found with tag "${selectedTag}"` : 'No publications yet.'}
+            </div>
           ) : (
             <div className="space-y-6">
               {pubs.map((pub, i) => (
                 <motion.div 
                   key={pub.id}
-                  className="card group"
+                  className="card group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   data-testid={`publication-${pub.id}`}
+                  onClick={() => handleViewArticle(pub)}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <p className="font-mono text-sm text-slate-400 mb-2">{pub.date}</p>
+                      <div className="flex items-center gap-3 mb-2">
+                        <Calendar className="w-4 h-4 text-slate-400" />
+                        <span className="font-mono text-sm text-slate-400">{pub.date}</span>
+                      </div>
                       <h3 className="font-heading font-bold text-xl mb-3 group-hover:text-violet-900 transition-colors">
                         {pub.title}
                       </h3>
                       <p className="text-slate-600 mb-4">{pub.abstract}</p>
                       <div className="flex flex-wrap gap-2">
-                        {pub.tags.map(tag => (
-                          <span key={tag} className="px-2 py-1 bg-slate-100 text-slate-500 text-xs font-mono">
+                        {pub.tags?.map(tag => (
+                          <span 
+                            key={tag} 
+                            className="px-2 py-1 bg-slate-100 text-slate-500 text-xs font-mono"
+                            onClick={(e) => { e.stopPropagation(); setSelectedTag(tag); }}
+                          >
                             {tag}
                           </span>
                         ))}
                       </div>
                     </div>
-                    {pub.link && (
-                      <a 
-                        href={pub.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 p-3 border border-slate-200 hover:border-violet-900 transition-colors"
-                      >
-                        <ExternalLink className="w-5 h-5 text-slate-400" />
-                      </a>
-                    )}
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {isAdmin && (
+                        <>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleEdit(pub); }}
+                            className="p-2 border border-slate-200 hover:border-violet-900 hover:bg-violet-50 transition-colors"
+                            data-testid={`edit-${pub.id}`}
+                          >
+                            <Edit2 className="w-4 h-4 text-slate-400" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleDelete(pub.id); }}
+                            className="p-2 border border-slate-200 hover:border-red-500 hover:bg-red-50 transition-colors"
+                            data-testid={`delete-${pub.id}`}
+                          >
+                            <Trash2 className="w-4 h-4 text-slate-400" />
+                          </button>
+                        </>
+                      )}
+                      <div className="p-2 border border-slate-200 group-hover:border-violet-900 transition-colors">
+                        <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-violet-900" />
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               ))}
             </div>
           )}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Publication Editor Component
+const PublicationEditor = ({ publication, onClose, onSave }) => {
+  const [form, setForm] = useState({
+    title: publication?.title || '',
+    abstract: publication?.abstract || '',
+    content: publication?.content || '',
+    date: publication?.date || new Date().toISOString().slice(0, 7),
+    link: publication?.link || '',
+    tags: publication?.tags?.join(', ') || '',
+    published: publication?.published !== false
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const data = {
+        ...form,
+        tags: form.tags.split(',').map(t => t.trim()).filter(Boolean)
+      };
+
+      if (publication) {
+        await axios.put(`${API}/publications/${publication.id}`, data, { withCredentials: true });
+      } else {
+        await axios.post(`${API}/publications`, data, { withCredentials: true });
+      }
+      onSave();
+    } catch (e) {
+      setError(e.response?.data?.detail || 'Failed to save publication');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen pt-20">
+      <section className="py-12 lg:py-20">
+        <div className="max-w-4xl mx-auto px-6 lg:px-12">
+          <button 
+            onClick={onClose}
+            className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-8 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" /> Cancel
+          </button>
+          
+          <h1 className="font-heading font-black text-3xl text-slate-900 mb-8">
+            {publication ? 'Edit Publication' : 'New Publication'}
+          </h1>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Title *</label>
+              <input
+                type="text"
+                required
+                value={form.title}
+                onChange={e => setForm(prev => ({ ...prev, title: e.target.value }))}
+                className="input-field"
+                placeholder="Publication title"
+                data-testid="pub-title"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Abstract *</label>
+              <textarea
+                required
+                rows={3}
+                value={form.abstract}
+                onChange={e => setForm(prev => ({ ...prev, abstract: e.target.value }))}
+                className="input-field resize-none"
+                placeholder="Brief summary of the publication"
+                data-testid="pub-abstract"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Content (Markdown)</label>
+              <textarea
+                rows={15}
+                value={form.content}
+                onChange={e => setForm(prev => ({ ...prev, content: e.target.value }))}
+                className="input-field resize-none font-mono text-sm"
+                placeholder="# Main Heading&#10;&#10;## Section&#10;&#10;Content goes here..."
+                data-testid="pub-content"
+              />
+              <p className="text-xs text-slate-400 mt-1">Supports basic Markdown: # headings, ## subheadings, - lists, **bold**</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Date *</label>
+                <input
+                  type="text"
+                  required
+                  value={form.date}
+                  onChange={e => setForm(prev => ({ ...prev, date: e.target.value }))}
+                  className="input-field"
+                  placeholder="YYYY-MM"
+                  data-testid="pub-date"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">External Link</label>
+                <input
+                  type="url"
+                  value={form.link}
+                  onChange={e => setForm(prev => ({ ...prev, link: e.target.value }))}
+                  className="input-field"
+                  placeholder="https://..."
+                  data-testid="pub-link"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Tags</label>
+              <input
+                type="text"
+                value={form.tags}
+                onChange={e => setForm(prev => ({ ...prev, tags: e.target.value }))}
+                className="input-field"
+                placeholder="AI Governance, Controls, Audit (comma-separated)"
+                data-testid="pub-tags"
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="published"
+                checked={form.published}
+                onChange={e => setForm(prev => ({ ...prev, published: e.target.checked }))}
+                className="w-4 h-4"
+                data-testid="pub-published"
+              />
+              <label htmlFor="published" className="text-sm text-slate-700">Published (visible to public)</label>
+            </div>
+
+            {error && (
+              <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm">
+                {error}
+              </div>
+            )}
+
+            <div className="flex gap-4">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn-primary disabled:opacity-50"
+                data-testid="save-publication"
+              >
+                {submitting ? 'Saving...' : <><Save className="w-4 h-4" /> Save Publication</>}
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="btn-secondary"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </section>
     </div>

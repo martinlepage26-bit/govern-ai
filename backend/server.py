@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Request
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -53,12 +53,14 @@ class ContactResponse(BaseModel):
 
 class Publication(BaseModel):
     model_config = ConfigDict(extra="ignore")
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory=lambda: f"pub-{str(uuid.uuid4())[:8]}")
     title: str
     abstract: str
+    content: Optional[str] = None
     date: str
     link: Optional[str] = None
     tags: List[str] = []
+    published: bool = True
 
 class CaseStudy(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -277,39 +279,240 @@ async def submit_contact(request: ContactRequest):
         message="Thank you for reaching out. I'll respond within 24-48 hours."
     )
 
-# Publications
+# Publications - CRUD with Admin access
+class PublicationCreate(BaseModel):
+    title: str
+    abstract: str
+    content: Optional[str] = None
+    date: str
+    link: Optional[str] = None
+    tags: List[str] = []
+    published: bool = True
+
+class PublicationUpdate(BaseModel):
+    title: Optional[str] = None
+    abstract: Optional[str] = None
+    content: Optional[str] = None
+    date: Optional[str] = None
+    link: Optional[str] = None
+    tags: Optional[List[str]] = None
+    published: Optional[bool] = None
+
+# Seed publications data
+SEED_PUBLICATIONS = [
+    {
+        "id": "pub-1",
+        "title": "Governance as Decision Machinery: Beyond Observability Theater",
+        "abstract": "This paper argues that effective AI governance must be embedded in workflow gates, not bolted on as monitoring. We present a framework for converting leadership intent into operational constraints.",
+        "content": """# Governance as Decision Machinery
+
+## The Problem with Observability Theater
+
+Many organizations treat AI governance as an afterthought—a dashboard that shows what happened after the fact. This is observability theater: it looks like governance but provides no actual control.
+
+## What Real Governance Looks Like
+
+Real governance embeds constraints into the workflow itself:
+- **Intake gates** that require system boundary documentation before any model work begins
+- **Risk tiering** that determines which controls apply based on actual risk factors
+- **Pre-deployment approvals** that can't be bypassed without explicit exception protocols
+- **Evidence collection** that happens automatically as decisions are made
+
+## The Framework
+
+1. **Intent Capture**: What does leadership actually want to prevent?
+2. **Constraint Design**: How do we encode those intentions into enforceable rules?
+3. **Gate Implementation**: Where in the workflow do these rules execute?
+4. **Evidence Architecture**: What gets recorded to prove compliance?
+
+## Conclusion
+
+Governance isn't monitoring. It's the decision machinery that makes shipping decisions defensible before they're made, not just reviewable after.""",
+        "date": "2025-12",
+        "link": "https://linkedin.com/in/martin-lepage-ai",
+        "tags": ["AI Governance", "Decision Systems", "Controls"],
+        "published": True
+    },
+    {
+        "id": "pub-2",
+        "title": "Agentic AI Governance: Permissions, Boundaries, and Accountability",
+        "abstract": "When AI systems act autonomously, governance shifts from output quality to delegated authority. This paper presents a permissions model for agentic systems.",
+        "content": """# Agentic AI Governance
+
+## The Shift from Prediction to Action
+
+Traditional AI governance focused on model quality: Is the output accurate? Is it biased? These questions remain important, but agentic systems introduce a new risk surface: **delegated authority**.
+
+## What Makes Agentic Different
+
+An agentic system:
+- Plans multi-step actions
+- Calls external tools and APIs
+- Modifies data and systems
+- Acts under delegated authority
+
+The risk isn't just "bad prediction"—it's "unauthorized action."
+
+## The Permissions Model
+
+Every agentic system needs explicit answers to:
+1. **What can it do?** (Allowed actions)
+2. **What can't it do?** (Prohibited actions)
+3. **What requires escalation?** (Human-in-the-loop thresholds)
+4. **What triggers a stop?** (Kill switches)
+
+## Implementation
+
+- Define agency boundaries before deployment
+- Implement tool-level permissions
+- Log every action with reconstruction capability
+- Design containment for when things go wrong
+
+## Conclusion
+
+Agentic governance is about making delegated authority legible, bounded, and accountable.""",
+        "date": "2025-10",
+        "link": "https://linkedin.com/in/martin-lepage-ai",
+        "tags": ["Agentic AI", "Permissions", "Accountability"],
+        "published": True
+    },
+    {
+        "id": "pub-3",
+        "title": "Evidence Artifacts for Audit-Grade AI Narratives",
+        "abstract": "How to design evidence collection that survives procurement scrutiny, incident reviews, and regulatory examination.",
+        "content": """# Evidence Artifacts for Audit-Grade AI
+
+## Why Evidence Architecture Matters
+
+When regulators, auditors, or incident reviewers examine your AI systems, they ask: "Show me how you made this decision." If you can't reconstruct the answer, you have a governance gap.
+
+## The Evidence Pyramid
+
+1. **Decision Records**: Who decided what, when, and why
+2. **Test Evidence**: What testing was done, with what results
+3. **Change History**: What changed, who approved it
+4. **Monitoring Data**: What happened after deployment
+
+## Design Principles
+
+- **Immutable**: Evidence can't be modified after creation
+- **Complete**: All material decisions are captured
+- **Retrievable**: You can reconstruct any past state
+- **Interpretable**: Non-technical reviewers can understand it
+
+## Practical Implementation
+
+- Embed logging into workflow gates
+- Version all artifacts (models, prompts, configs)
+- Create evidence packs that bundle related artifacts
+- Design for the audit scenario before you need it
+
+## Conclusion
+
+Evidence architecture isn't documentation—it's the proof that your governance actually happened.""",
+        "date": "2025-08",
+        "link": "https://linkedin.com/in/martin-lepage-ai",
+        "tags": ["Audit", "Evidence", "Compliance"],
+        "published": True
+    }
+]
+
 @api_router.get("/publications", response_model=List[Publication])
-async def get_publications():
-    publications = await db.publications.find({}, {"_id": 0}).to_list(100)
+async def get_publications(tag: Optional[str] = None, published_only: bool = True):
+    query = {}
+    if published_only:
+        query["published"] = {"$ne": False}  # Include docs without published field or with True
+    if tag:
+        query["tags"] = tag
+    
+    publications = await db.publications.find(query, {"_id": 0}).sort("date", -1).to_list(100)
     if not publications:
-        # Return seed data if empty
-        return [
-            Publication(
-                id="pub-1",
-                title="Governance as Decision Machinery: Beyond Observability Theater",
-                abstract="This paper argues that effective AI governance must be embedded in workflow gates, not bolted on as monitoring. We present a framework for converting leadership intent into operational constraints.",
-                date="2025-12",
-                link="https://linkedin.com/in/martin-lepage-ai",
-                tags=["AI Governance", "Decision Systems", "Controls"]
-            ),
-            Publication(
-                id="pub-2",
-                title="Agentic AI Governance: Permissions, Boundaries, and Accountability",
-                abstract="When AI systems act autonomously, governance shifts from output quality to delegated authority. This paper presents a permissions model for agentic systems.",
-                date="2025-10",
-                link="https://linkedin.com/in/martin-lepage-ai",
-                tags=["Agentic AI", "Permissions", "Accountability"]
-            ),
-            Publication(
-                id="pub-3",
-                title="Evidence Artifacts for Audit-Grade AI Narratives",
-                abstract="How to design evidence collection that survives procurement scrutiny, incident reviews, and regulatory examination.",
-                date="2025-08",
-                link="https://linkedin.com/in/martin-lepage-ai",
-                tags=["Audit", "Evidence", "Compliance"]
-            )
-        ]
+        # Return seed data if empty, optionally filtered
+        seed = SEED_PUBLICATIONS
+        if tag:
+            seed = [p for p in seed if tag in p.get("tags", [])]
+        return [Publication(**p) for p in seed]
     return publications
+
+@api_router.get("/publications/{pub_id}")
+async def get_publication(pub_id: str):
+    publication = await db.publications.find_one({"id": pub_id}, {"_id": 0})
+    if not publication:
+        # Check seed data
+        seed_pub = next((p for p in SEED_PUBLICATIONS if p["id"] == pub_id), None)
+        if seed_pub:
+            return seed_pub
+        raise HTTPException(status_code=404, detail="Publication not found")
+    return publication
+
+@api_router.post("/publications", response_model=Publication)
+async def create_publication(data: PublicationCreate, request: Request):
+    from auth import require_admin
+    await require_admin(request)
+    
+    publication = Publication(
+        title=data.title,
+        abstract=data.abstract,
+        date=data.date,
+        link=data.link,
+        tags=data.tags
+    )
+    doc = publication.model_dump()
+    doc["content"] = data.content
+    doc["published"] = data.published
+    doc["created_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.publications.insert_one(doc)
+    return publication
+
+@api_router.put("/publications/{pub_id}")
+async def update_publication(pub_id: str, data: PublicationUpdate, request: Request):
+    from auth import require_admin
+    await require_admin(request)
+    
+    updates = {k: v for k, v in data.model_dump().items() if v is not None}
+    if not updates:
+        raise HTTPException(status_code=400, detail="No updates provided")
+    
+    updates["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    result = await db.publications.update_one(
+        {"id": pub_id},
+        {"$set": updates}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Publication not found")
+    
+    return {"status": "updated", "id": pub_id}
+
+@api_router.delete("/publications/{pub_id}")
+async def delete_publication(pub_id: str, request: Request):
+    from auth import require_admin
+    await require_admin(request)
+    
+    result = await db.publications.delete_one({"id": pub_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Publication not found")
+    
+    return {"status": "deleted", "id": pub_id}
+
+@api_router.get("/publications/tags/all")
+async def get_all_tags():
+    """Get all unique tags from publications"""
+    publications = await db.publications.find({}, {"tags": 1, "_id": 0}).to_list(1000)
+    if not publications:
+        # Get from seed data
+        all_tags = set()
+        for p in SEED_PUBLICATIONS:
+            all_tags.update(p.get("tags", []))
+        return sorted(list(all_tags))
+    
+    all_tags = set()
+    for pub in publications:
+        all_tags.update(pub.get("tags", []))
+    return sorted(list(all_tags))
 
 # Case Studies
 @api_router.get("/portfolio", response_model=List[CaseStudy])
