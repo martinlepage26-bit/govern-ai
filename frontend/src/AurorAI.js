@@ -129,19 +129,23 @@ const UploadZone = ({ onUpload, uploading }) => {
 
   return (
     <div
-      className={`border-2 border-dashed p-12 text-center transition-colors ${
-        dragOver ? 'border-violet-500 bg-violet-50' : 'border-slate-300 hover:border-slate-400'
+      className={`border-2 border-dashed p-12 text-center transition-all duration-300 ${
+        dragOver ? 'border-blue-500 bg-blue-50 scale-[1.02]' : 'border-slate-300 hover:border-blue-400 hover:bg-slate-50'
       }`}
       onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
       onDragLeave={() => setDragOver(false)}
       onDrop={handleDrop}
     >
-      <Upload className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-      <p className="text-slate-600 mb-2">
+      <div className={`w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full transition-colors ${
+        dragOver ? 'bg-blue-100' : 'bg-slate-100'
+      }`}>
+        <Upload className={`w-8 h-8 transition-colors ${dragOver ? 'text-blue-600' : 'text-slate-400'}`} />
+      </div>
+      <p className="text-slate-600 mb-2 font-medium">
         {uploading ? 'Uploading...' : 'Drag and drop a document here'}
       </p>
-      <p className="text-slate-400 text-sm mb-4">PDF, DOC, DOCX, images supported</p>
-      <label className="btn-primary cursor-pointer">
+      <p className="text-slate-400 text-sm mb-6">PDF, DOC, DOCX, images supported</p>
+      <label className="btn-royal cursor-pointer inline-flex">
         <input
           type="file"
           className="hidden"
@@ -149,7 +153,7 @@ const UploadZone = ({ onUpload, uploading }) => {
           accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.tiff"
           disabled={uploading}
         />
-        Select File
+        <Upload className="w-4 h-4" /> Select File
       </label>
     </div>
   );
@@ -332,24 +336,24 @@ const DocumentDetail = ({ document, onBack, onUpdate }) => {
 
       {/* Action buttons based on status */}
       {document.status === 'uploaded' && (
-        <div className="card bg-blue-50 border-blue-200 flex items-center justify-between">
+        <div className="card bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 flex items-center justify-between">
           <div>
             <h4 className="font-medium text-blue-900">Ready for Classification</h4>
             <p className="text-sm text-blue-700">Run classification to identify document type</p>
           </div>
-          <button onClick={runClassification} disabled={loading} className="btn-primary">
+          <button onClick={runClassification} disabled={loading} className="btn-royal">
             {loading ? 'Processing...' : 'Classify Document'}
           </button>
         </div>
       )}
 
       {document.status === 'classified' && (
-        <div className="card bg-indigo-50 border-indigo-200 flex items-center justify-between">
+        <div className="card bg-gradient-to-r from-indigo-50 to-violet-50 border-indigo-200 flex items-center justify-between">
           <div>
             <h4 className="font-medium text-indigo-900">Ready for Extraction</h4>
             <p className="text-sm text-indigo-700">Extract structured fields from document</p>
           </div>
-          <button onClick={runExtraction} disabled={loading} className="btn-primary">
+          <button onClick={runExtraction} disabled={loading} className="btn-gradient">
             {loading ? 'Processing...' : 'Extract Fields'}
           </button>
         </div>

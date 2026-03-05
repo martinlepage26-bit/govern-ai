@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { InlineWidget } from "react-calendly";
 import axios from "axios";
@@ -24,7 +24,11 @@ import {
   Briefcase,
   ClipboardCheck,
   LayoutDashboard,
-  TrendingUp
+  TrendingUp,
+  Lock,
+  LogOut,
+  User,
+  Users
 } from "lucide-react";
 import CompassAIApp from "./CompassAI";
 import AurorAIApp from "./AurorAI";
@@ -32,92 +36,152 @@ import AurorAIApp from "./AurorAI";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Governance Maturity Indicator
-const GovernanceIndicator = () => {
-  const [stats, setStats] = useState(null);
+// ============ AUTH CONTEXT ============
+const AuthContext = createContext(null);
+
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await axios.get(`${API}/governance/stats`);
-        setStats(res.data);
-      } catch (e) {
-        console.error("Failed to fetch governance stats", e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStats();
+    // CRITICAL: If returning from OAuth callback, skip the /me check
+    // AuthCallback will exchange the session_id and establish the session first
+    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+    if (window.location.hash?.includes('session_id=')) {
+      setLoading(false);
+      return;
+    }
+    checkAuth();
   }, []);
 
-  if (loading || !stats) return null;
+  const checkAuth = async () => {
+    try {
+      const res = await axios.get(`${API}/auth/me`, { withCredentials: true });
+      setUser(res.data);
+    } catch (e) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const login = () => {
+    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+    const redirectUrl = window.location.origin + '/auth/callback';
+    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
+  };
+
+  const logout = async () => {
+    try {
+      await axios.post(`${API}/auth/logout`, {}, { withCredentials: true });
+    } catch (e) {
+      console.error("Logout error", e);
+    }
+    setUser(null);
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5 }}
-      className="fixed bottom-6 right-6 z-40"
-      data-testid="governance-indicator"
-    >
-      <div className="bg-slate-900 text-white p-4 shadow-xl max-w-xs">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-          <span className="text-xs font-mono text-slate-400">LIVE GOVERNANCE</span>
-        </div>
-        <div className="space-y-2 text-sm">
-          <div className="flex items-center justify-between">
-            <span className="text-slate-400">Controls cataloged</span>
-            <span className="font-mono font-bold">{stats.compass.controls_cataloged}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-slate-400">Active policies</span>
-            <span className="font-mono font-bold">{stats.compass.policies_active}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-slate-400">Risk tiering</span>
-            <span className="font-mono font-bold text-violet-400">{stats.compass.risk_tiers}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-slate-400">Schemas available</span>
-            <span className="font-mono font-bold">{stats.aurora.schemas_available}</span>
-          </div>
-        </div>
-        {stats.combined.total_governed_items > 0 && (
-          <div className="mt-3 pt-3 border-t border-slate-700">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Items governed</span>
-              <span className="font-mono font-bold text-emerald-400">{stats.combined.total_governed_items}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-slate-400">Audit-ready</span>
-              <span className="font-mono font-bold text-emerald-400">{stats.combined.audit_ready_percentage}%</span>
-            </div>
-          </div>
-        )}
-        <Link 
-          to="/compass" 
-          className="mt-3 flex items-center gap-1 text-xs text-violet-400 hover:text-violet-300 transition-colors"
-        >
-          Explore CompassAI <ChevronRight className="w-3 h-3" />
-        </Link>
-      </div>
-    </motion.div>
+    <AuthContext.Provider value={{ user, loading, login, logout, checkAuth, setUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
+const useAuth = () => useContext(AuthContext);
+
+// Auth Callback Component
+const AuthCallback = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const hasProcessed = React.useRef(false);
+
+  useEffect(() => {
+    if (hasProcessed.current) return;
+    hasProcessed.current = true;
+
+    const processAuth = async () => {
+      const hash = window.location.hash;
+      const sessionId = hash.split('session_id=')[1]?.split('&')[0];
+      
+      if (!sessionId) {
+        navigate('/');
+        return;
+      }
+
+      try {
+        const res = await axios.post(`${API}/auth/session`, 
+          { session_id: sessionId },
+          { withCredentials: true }
+        );
+        setUser(res.data);
+        // Redirect based on role
+        if (res.data.role === 'admin') {
+          navigate('/admin');
+        } else if (res.data.approved) {
+          navigate('/dashboard');
+        } else {
+          navigate('/pending-approval');
+        }
+      } catch (e) {
+        console.error("Auth error", e);
+        navigate('/');
+      }
+    };
+
+    processAuth();
+  }, [navigate, setUser]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-slate-500">Authenticating...</p>
+    </div>
+  );
+};
+
+// Protected Route
+const ProtectedRoute = ({ children, requireAdmin = false, requireApproved = false }) => {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center pt-20">
+        <p className="text-slate-500">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (requireAdmin && user.role !== 'admin') {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  if (requireApproved && !user.approved && user.role !== 'admin') {
+    return <Navigate to="/pending-approval" replace />;
+  }
+
+  return children;
+};
+
 // Logo Components
-const NeedleLogo = ({ className = "w-10 h-10", removeBackground = false }) => (
-  <img 
-    src="https://customer-assets.emergentagent.com/job_landing-guide-8/artifacts/4azal0zf_needle.png" 
-    alt="Govern-AI" 
-    className={className}
-    style={{ 
-      filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
-      mixBlendMode: removeBackground ? 'multiply' : 'normal'
-    }}
-  />
+const NeedleLogo = ({ className = "w-10 h-10", withCircle = false }) => (
+  <div className={`relative ${withCircle ? 'flex items-center justify-center' : ''}`}>
+    {withCircle && (
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-200/60 to-indigo-100/40 rounded-full blur-sm" />
+    )}
+    <img 
+      src="https://customer-assets.emergentagent.com/job_landing-guide-8/artifacts/4azal0zf_needle.png" 
+      alt="Govern-AI" 
+      className={`relative ${className}`}
+      style={{ 
+        filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
+        mixBlendMode: 'multiply'
+      }}
+    />
+  </div>
 );
 
 const MonogramLogo = ({ className = "w-10 h-10" }) => (
@@ -140,6 +204,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { user, login, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -147,15 +212,13 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  const publicLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
     { path: "/services", label: "Services" },
     { path: "/portfolio", label: "Portfolio" },
     { path: "/publications", label: "Publications" },
     { path: "/assessment", label: "Assessment" },
-    { path: "/aurora", label: "AurorAI" },
-    { path: "/compass", label: "CompassAI" },
     { path: "/contact", label: "Contact" }
   ];
 
@@ -169,8 +232,8 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map(link => (
+          <div className="hidden lg:flex items-center gap-6">
+            {publicLinks.map(link => (
               <Link 
                 key={link.path}
                 to={link.path}
@@ -180,6 +243,13 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+            <Link 
+              to="/request-access"
+              className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-1"
+              data-testid="nav-request-access"
+            >
+              <Lock className="w-3.5 h-3.5" /> Client Portal
+            </Link>
             <a 
               href="https://www.linkedin.com/in/martin-lepage-ai/" 
               target="_blank" 
@@ -189,6 +259,19 @@ const Navigation = () => {
             >
               <Linkedin className="w-5 h-5" />
             </a>
+            {user ? (
+              <div className="flex items-center gap-3 ml-2 pl-4 border-l border-slate-200">
+                <Link 
+                  to={user.role === 'admin' ? '/admin' : '/dashboard'}
+                  className="text-sm font-medium text-slate-600 hover:text-slate-900"
+                >
+                  {user.name?.split(' ')[0]}
+                </Link>
+                <button onClick={logout} className="text-slate-400 hover:text-slate-600">
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : null}
           </div>
 
           {/* Mobile Menu Button */}
@@ -212,7 +295,7 @@ const Navigation = () => {
             className="lg:hidden glass border-b border-slate-100"
           >
             <div className="px-6 py-4 space-y-4">
-              {navLinks.map(link => (
+              {publicLinks.map(link => (
                 <Link 
                   key={link.path}
                   to={link.path}
@@ -222,6 +305,13 @@ const Navigation = () => {
                   {link.label}
                 </Link>
               ))}
+              <Link 
+                to="/request-access"
+                className="block text-base font-medium text-blue-600"
+                onClick={() => setIsOpen(false)}
+              >
+                Client Portal
+              </Link>
             </div>
           </motion.div>
         )}
@@ -322,7 +412,10 @@ const Home = () => {
                 className="relative"
               >
                 <div className="w-64 h-64 lg:w-80 lg:h-80 relative flex items-center justify-center">
-                  <NeedleLogo className="w-56 h-56 lg:w-72 lg:h-72" removeBackground={true} />
+                  {/* Lavender translucent circle behind logo */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-violet-200/50 via-indigo-100/40 to-blue-100/30 rounded-full blur-md" />
+                  <div className="absolute inset-4 bg-gradient-to-br from-violet-100/60 to-slate-50/40 rounded-full" />
+                  <NeedleLogo className="relative w-48 h-48 lg:w-64 lg:h-64" />
                 </div>
               </motion.div>
             </div>
@@ -1348,25 +1441,540 @@ const Contact = () => {
   );
 };
 
+// ============ AUTH PAGES ============
+
+// Login Page
+const LoginPage = () => {
+  const { login, user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user) {
+      const from = location.state?.from?.pathname || (user.role === 'admin' ? '/admin' : '/dashboard');
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, location]);
+
+  return (
+    <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="max-w-md w-full mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="card text-center"
+        >
+          <div className="w-16 h-16 bg-slate-900 flex items-center justify-center mx-auto mb-6">
+            <Lock className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="font-heading font-bold text-2xl mb-2">Client Portal</h1>
+          <p className="text-slate-600 mb-8">
+            Sign in to access your governance dashboard
+          </p>
+          <button
+            onClick={login}
+            className="btn-primary w-full justify-center"
+            data-testid="login-google-btn"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Continue with Google
+          </button>
+          <p className="text-xs text-slate-400 mt-6">
+            Don't have access? <Link to="/request-access" className="text-blue-600 hover:underline">Request access</Link>
+          </p>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+// Request Access Page
+const RequestAccessPage = () => {
+  const [form, setForm] = useState({ name: '', email: '', company: '', use_case: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { login } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await axios.post(`${API}/auth/request-access`, form);
+      setSuccess(true);
+    } catch (e) {
+      console.error("Failed to submit request", e);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen pt-20">
+      <section className="py-20">
+        <div className="max-w-2xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <p className="text-blue-600 font-mono text-sm mb-4 tracking-wide">CLIENT PORTAL</p>
+            <h1 className="font-heading font-black text-4xl text-slate-900 mb-4">
+              Request Access
+            </h1>
+            <p className="text-slate-600 text-lg mb-8">
+              Access to AurorAI and CompassAI is by invitation. Submit your request below and I'll review it within 24-48 hours.
+            </p>
+
+            {success ? (
+              <div className="card bg-emerald-50 border-emerald-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <CheckCircle className="w-6 h-6 text-emerald-600" />
+                  <h3 className="font-heading font-bold text-lg text-emerald-900">Request Submitted</h3>
+                </div>
+                <p className="text-emerald-700 mb-4">
+                  Your access request has been received. You'll receive an email once approved.
+                </p>
+                <p className="text-sm text-emerald-600">
+                  Already have access? <button onClick={login} className="underline font-medium">Sign in here</button>
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="card space-y-6" data-testid="request-access-form">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))}
+                      className="input-field"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Email *</label>
+                    <input
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={e => setForm(prev => ({ ...prev, email: e.target.value }))}
+                      className="input-field"
+                      placeholder="work@company.com"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Company</label>
+                  <input
+                    type="text"
+                    value={form.company}
+                    onChange={e => setForm(prev => ({ ...prev, company: e.target.value }))}
+                    className="input-field"
+                    placeholder="Your company"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Use Case *</label>
+                  <select
+                    required
+                    value={form.use_case}
+                    onChange={e => setForm(prev => ({ ...prev, use_case: e.target.value }))}
+                    className="input-field"
+                  >
+                    <option value="">Select your primary use case...</option>
+                    <option value="document_processing">Document Processing (AurorAI)</option>
+                    <option value="governance_tracking">AI Governance Tracking (CompassAI)</option>
+                    <option value="both">Both - Full Governance Suite</option>
+                    <option value="evaluation">Evaluation / Demo</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Additional Context</label>
+                  <textarea
+                    rows={3}
+                    value={form.message}
+                    onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
+                    className="input-field resize-none"
+                    placeholder="Tell me about your governance needs..."
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary w-full justify-center"
+                >
+                  {submitting ? 'Submitting...' : 'Submit Request'} <ArrowRight className="w-4 h-4" />
+                </button>
+                <p className="text-center text-sm text-slate-500">
+                  Already have access? <button type="button" onClick={login} className="text-blue-600 hover:underline">Sign in</button>
+                </p>
+              </form>
+            )}
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Pending Approval Page
+const PendingApprovalPage = () => {
+  const { user, logout } = useAuth();
+
+  return (
+    <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="max-w-md w-full mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="card text-center"
+        >
+          <div className="w-16 h-16 bg-amber-100 flex items-center justify-center mx-auto mb-6 rounded-full">
+            <AlertTriangle className="w-8 h-8 text-amber-600" />
+          </div>
+          <h1 className="font-heading font-bold text-2xl mb-2">Access Pending</h1>
+          <p className="text-slate-600 mb-6">
+            Hi {user?.name?.split(' ')[0]}, your account is awaiting approval. You'll receive an email once access is granted.
+          </p>
+          <div className="p-4 bg-slate-50 text-left mb-6">
+            <p className="text-sm text-slate-500">Signed in as</p>
+            <p className="font-medium">{user?.email}</p>
+          </div>
+          <button onClick={logout} className="btn-secondary w-full justify-center">
+            <LogOut className="w-4 h-4" /> Sign Out
+          </button>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+// Client Dashboard
+const ClientDashboard = () => {
+  const { user } = useAuth();
+
+  return (
+    <div className="min-h-screen pt-20">
+      <section className="py-12 lg:py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="mb-8">
+            <p className="text-blue-600 font-mono text-sm mb-2">WELCOME BACK</p>
+            <h1 className="font-heading font-bold text-3xl">{user?.name}</h1>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* AurorAI Card */}
+            <Link to="/client/aurora" className="card group hover:border-blue-300 transition-colors">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 bg-slate-900 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                  <Activity className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-heading font-bold text-xl">AurorAI</h2>
+                  <p className="text-slate-500 text-sm">Document Processing</p>
+                </div>
+              </div>
+              <p className="text-slate-600 mb-4">
+                Upload documents for intelligent extraction. View your processed files and extraction results.
+              </p>
+              <span className="text-blue-600 font-medium flex items-center gap-2">
+                Open Dashboard <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+
+            {/* CompassAI Card */}
+            <Link to="/client/compass" className="card group hover:border-violet-300 transition-colors">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 bg-violet-900 flex items-center justify-center group-hover:bg-violet-700 transition-colors">
+                  <Compass className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-heading font-bold text-xl">CompassAI</h2>
+                  <p className="text-slate-500 text-sm">Governance Dashboard</p>
+                </div>
+              </div>
+              <p className="text-slate-600 mb-4">
+                View your governance use cases, risk assessments, and generated deliverables.
+              </p>
+              <span className="text-violet-600 font-medium flex items-center gap-2">
+                Open Dashboard <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Admin Dashboard
+const AdminDashboard = () => {
+  const [accessRequests, setAccessRequests] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [activeTab, setActiveTab] = useState("requests");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const [reqRes, userRes] = await Promise.all([
+        axios.get(`${API}/auth/access-requests`, { withCredentials: true }),
+        axios.get(`${API}/auth/users`, { withCredentials: true })
+      ]);
+      setAccessRequests(reqRes.data);
+      setUsers(userRes.data);
+    } catch (e) {
+      console.error("Failed to fetch admin data", e);
+    }
+  };
+
+  const approveRequest = async (id) => {
+    try {
+      await axios.post(`${API}/auth/access-requests/${id}/approve`, {}, { withCredentials: true });
+      fetchData();
+    } catch (e) {
+      console.error("Failed to approve", e);
+    }
+  };
+
+  const rejectRequest = async (id) => {
+    try {
+      await axios.post(`${API}/auth/access-requests/${id}/reject`, {}, { withCredentials: true });
+      fetchData();
+    } catch (e) {
+      console.error("Failed to reject", e);
+    }
+  };
+
+  const toggleUserApproval = async (userId, currentlyApproved) => {
+    try {
+      const endpoint = currentlyApproved ? 'revoke' : 'approve';
+      await axios.post(`${API}/auth/users/${userId}/${endpoint}`, {}, { withCredentials: true });
+      fetchData();
+    } catch (e) {
+      console.error("Failed to update user", e);
+    }
+  };
+
+  const pendingRequests = accessRequests.filter(r => r.status === 'pending');
+
+  return (
+    <div className="min-h-screen pt-20">
+      <section className="py-12 lg:py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <p className="text-blue-600 font-mono text-sm mb-2">ADMIN</p>
+              <h1 className="font-heading font-bold text-3xl">Governance Admin</h1>
+            </div>
+            <div className="flex gap-4">
+              <Link to="/admin/aurora" className="btn-secondary">
+                <Activity className="w-4 h-4" /> AurorAI
+              </Link>
+              <Link to="/admin/compass" className="btn-primary">
+                <Compass className="w-4 h-4" /> CompassAI
+              </Link>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-4 mb-8 border-b border-slate-200">
+            <button
+              onClick={() => setActiveTab("requests")}
+              className={`pb-4 px-2 font-medium border-b-2 transition-colors ${
+                activeTab === "requests" ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500'
+              }`}
+            >
+              Access Requests {pendingRequests.length > 0 && (
+                <span className="ml-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs rounded-full">
+                  {pendingRequests.length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setActiveTab("users")}
+              className={`pb-4 px-2 font-medium border-b-2 transition-colors ${
+                activeTab === "users" ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500'
+              }`}
+            >
+              Users ({users.length})
+            </button>
+          </div>
+
+          {activeTab === "requests" && (
+            <div className="space-y-4">
+              {accessRequests.length === 0 ? (
+                <div className="card text-center py-12 text-slate-500">
+                  No access requests yet.
+                </div>
+              ) : (
+                accessRequests.map(req => (
+                  <div key={req.id} className={`card ${req.status === 'pending' ? 'border-amber-200 bg-amber-50/30' : ''}`}>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-mono text-xs text-slate-400">{req.id}</span>
+                          <span className={`px-2 py-0.5 text-xs ${
+                            req.status === 'pending' ? 'bg-amber-100 text-amber-700' :
+                            req.status === 'approved' ? 'bg-emerald-100 text-emerald-700' :
+                            'bg-red-100 text-red-700'
+                          }`}>
+                            {req.status}
+                          </span>
+                        </div>
+                        <h3 className="font-medium">{req.name}</h3>
+                        <p className="text-sm text-slate-500">{req.email} • {req.company || 'No company'}</p>
+                        <p className="text-sm text-slate-600 mt-2">Use case: {req.use_case}</p>
+                        {req.message && <p className="text-sm text-slate-500 mt-1 italic">"{req.message}"</p>}
+                      </div>
+                      {req.status === 'pending' && (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => approveRequest(req.id)}
+                            className="btn-primary py-2 px-4 text-sm"
+                          >
+                            <CheckCircle className="w-4 h-4" /> Approve
+                          </button>
+                          <button
+                            onClick={() => rejectRequest(req.id)}
+                            className="btn-secondary py-2 px-4 text-sm"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === "users" && (
+            <div className="space-y-4">
+              {users.map(u => (
+                <div key={u.user_id} className="card flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    {u.picture ? (
+                      <img src={u.picture} alt="" className="w-10 h-10 rounded-full" />
+                    ) : (
+                      <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">
+                        <User className="w-5 h-5 text-slate-500" />
+                      </div>
+                    )}
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="font-medium">{u.name}</h3>
+                        <span className={`px-2 py-0.5 text-xs ${
+                          u.role === 'admin' ? 'bg-violet-100 text-violet-700' : 'bg-slate-100 text-slate-600'
+                        }`}>
+                          {u.role}
+                        </span>
+                        {u.role !== 'admin' && (
+                          <span className={`px-2 py-0.5 text-xs ${
+                            u.approved ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                          }`}>
+                            {u.approved ? 'Approved' : 'Pending'}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-500">{u.email}</p>
+                    </div>
+                  </div>
+                  {u.role !== 'admin' && (
+                    <button
+                      onClick={() => toggleUserApproval(u.user_id, u.approved)}
+                      className={u.approved ? 'btn-secondary py-2 px-4 text-sm' : 'btn-primary py-2 px-4 text-sm'}
+                    >
+                      {u.approved ? 'Revoke' : 'Approve'}
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Client Aurora Page
+const ClientAuroraPage = () => (
+  <div className="min-h-screen pt-20">
+    <section className="py-12 lg:py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <AurorAIApp />
+      </div>
+    </section>
+  </div>
+);
+
+// Client Compass Page  
+const ClientCompassPage = () => (
+  <div className="min-h-screen pt-20">
+    <section className="py-12 lg:py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <CompassAIApp />
+      </div>
+    </section>
+  </div>
+);
+
+// App Router (handles session_id detection)
+const AppRouter = () => {
+  const location = useLocation();
+  
+  // Check URL fragment for session_id - must be synchronous during render
+  if (location.hash?.includes('session_id=')) {
+    return <AuthCallback />;
+  }
+
+  return (
+    <Routes>
+      {/* Public Routes */}
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/publications" element={<Publications />} />
+      <Route path="/assessment" element={<Assessment />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/request-access" element={<RequestAccessPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/pending-approval" element={<ProtectedRoute><PendingApprovalPage /></ProtectedRoute>} />
+
+      {/* Client Routes */}
+      <Route path="/dashboard" element={<ProtectedRoute requireApproved><ClientDashboard /></ProtectedRoute>} />
+      <Route path="/client/aurora" element={<ProtectedRoute requireApproved><ClientAuroraPage /></ProtectedRoute>} />
+      <Route path="/client/compass" element={<ProtectedRoute requireApproved><ClientCompassPage /></ProtectedRoute>} />
+
+      {/* Admin Routes */}
+      <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/aurora" element={<ProtectedRoute requireAdmin><ClientAuroraPage /></ProtectedRoute>} />
+      <Route path="/admin/compass" element={<ProtectedRoute requireAdmin><ClientCompassPage /></ProtectedRoute>} />
+    </Routes>
+  );
+};
+
 // Main App
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/publications" element={<Publications />} />
-          <Route path="/assessment" element={<Assessment />} />
-          <Route path="/aurora" element={<AurorAIPage />} />
-          <Route path="/compass" element={<CompassAIPage />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-        <GovernanceIndicator />
+        <AuthProvider>
+          <Navigation />
+          <AppRouter />
+          <Footer />
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );

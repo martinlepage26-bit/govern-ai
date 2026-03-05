@@ -15,6 +15,7 @@
   --accent-purple: #4C1D95;
   --accent-violet: #581C87;
   --accent-blue: #0EA5E9;
+  --accent-royal-blue: #2563EB;
   --success: #10B981;
   --error: #EF4444;
   --warning: #F59E0B;
@@ -157,6 +158,73 @@ body {
 
 .btn-secondary:hover {
   border-color: var(--accent-navy);
+}
+
+/* Royal Blue accent button */
+.btn-royal {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: white;
+  border: none;
+  height: 48px;
+  padding: 0 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-royal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-royal:hover::before {
+  left: 100%;
+}
+
+.btn-royal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
+}
+
+/* Gradient accent button */
+.btn-gradient {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #2563EB 100%);
+  background-size: 200% 100%;
+  color: white;
+  border: none;
+  height: 48px;
+  padding: 0 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-gradient:hover {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
 }
 
 /* Card styles */

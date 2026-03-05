@@ -158,6 +158,46 @@ class GovernAIAPITester:
         
         return success
 
+    # Authentication Tests
+    def test_auth_request_access(self):
+        """Test authentication request access endpoint"""
+        test_request = {
+            "name": f"Test Client {datetime.now().strftime('%H%M%S')}",
+            "email": f"testclient{datetime.now().strftime('%H%M%S')}@example.com",
+            "company": "Test Company",
+            "use_case": "Testing authentication system for governance tools access",
+            "message": "This is a test access request from the automated testing system."
+        }
+
+        success, response = self.run_test(
+            "Auth Request Access", 
+            "POST", 
+            "auth/request-access", 
+            200, 
+            data=test_request
+        )
+        
+        if success:
+            print(f"   Request ID: {response.get('id', 'Unknown')}")
+            print(f"   Status: {response.get('status', 'Unknown')}")
+            print(f"   Message: {response.get('message', 'Unknown')}")
+        
+        return success
+
+    def test_auth_me_unauthorized(self):
+        """Test auth/me endpoint without authentication (should fail)"""
+        success, response = self.run_test(
+            "Auth Me (Unauthorized)", 
+            "GET", 
+            "auth/me", 
+            401  # Expecting unauthorized
+        )
+        
+        if success:
+            print(f"   Correctly returned 401 unauthorized")
+        
+        return success
+
     # CompassAI Tests
     def test_compass_health(self):
         """Test CompassAI health endpoint"""
@@ -425,6 +465,10 @@ def main():
     
     print("\n📋 Testing Contact System...")
     tester.test_contact_submission()
+    
+    print("\n📋 Testing Authentication System...")
+    tester.test_auth_request_access()
+    tester.test_auth_me_unauthorized()
     
     print("\n📋 Testing CompassAI System...")
     tester.test_compass_health()
