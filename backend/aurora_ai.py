@@ -1,8 +1,9 @@
 """
 AurorAI - Intelligent Document Processing Engine
 Handles document ingestion, OCR, classification, extraction, HITL review, and governance evidence
+Multi-tenant: clients see only their own documents, admin sees all
 """
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Request, Depends
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timezone
@@ -90,6 +91,7 @@ class AuditEvent(BaseModel):
 class Document(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: f"DOC-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:6].upper()}")
+    user_id: Optional[str] = None  # Owner of the document
     filename: str
     file_hash: str
     file_size: int
@@ -304,6 +306,22 @@ def get_db():
     from server import db
     return db
 
+# ============ AUTH HELPERS ============
+
+async def get_current_user_optional(request: Request):
+    """Get current user if authenticated, None otherwise"""
+    from auth import get_current_user
+    return await get_current_user(request)
+
+async def get_tenant_filter(request: Request) -> Dict[str, Any]:
+    """Get filter for multi-tenant queries. Admin sees all, clients see only their own."""
+    user = await get_current_user_optional(request)
+    if not user:
+        return {}  # No auth - return empty (will be handled by route protection)
+    if user.role == "admin":
+        return {}  # Admin sees all
+    return {"user_id": user.user_id}  # Client sees only their own
+
 # ============ API ENDPOINTS ============
 
 @router.get("/health")
@@ -313,17 +331,23 @@ async def aurora_health():
 # Document Upload
 @router.post("/documents/upload", response_model=DocumentUploadResponse)
 async def upload_document(
+    request: Request,
     file: UploadFile = File(...),
     metadata: str = Form(default="{}")
 ):
     db = get_db()
     
+    # Get current user
+    user = await get_current_user_optional(request)
+    user_id = user.user_id if user else None
+    
     # Read file content
     content = await file.read()
     file_hash = hashlib.sha256(content).hexdigest()
     
-    # Create document record
+    # Create document record with user_id
     doc = Document(
+        user_id=user_id,
         filename=file.filename,
         file_hash=file_hash,
         file_size=len(content),
@@ -340,7 +364,7 @@ async def upload_document(
     audit = AuditEvent(
         document_id=doc.id,
         event_type="uploaded",
-        actor="api",
+        actor=user_id or "api",
         details={"filename": file.filename, "size": len(content), "hash": file_hash}
     )
     await db.aurora_audit.insert_one(audit.model_dump())
@@ -353,10 +377,12 @@ async def upload_document(
 
 # Classification
 @router.post("/documents/{doc_id}/classify")
-async def classify_document(doc_id: str):
+async def classify_document(doc_id: str, request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    doc = await db.aurora_documents.find_one({"id": doc_id}, {"_id": 0, "file_content": 0})
+    query = {"id": doc_id, **tenant_filter}
+    doc = await db.aurora_documents.find_one(query, {"_id": 0, "file_content": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
     
@@ -386,10 +412,12 @@ async def classify_document(doc_id: str):
 
 # Extraction
 @router.post("/documents/{doc_id}/extract")
-async def extract_document(doc_id: str, schema_id: Optional[str] = None):
+async def extract_document(doc_id: str, request: Request, schema_id: Optional[str] = None):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    doc = await db.aurora_documents.find_one({"id": doc_id}, {"_id": 0, "file_content": 0})
+    query = {"id": doc_id, **tenant_filter}
+    doc = await db.aurora_documents.find_one(query, {"_id": 0, "file_content": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
     
@@ -420,14 +448,16 @@ async def extract_document(doc_id: str, schema_id: Optional[str] = None):
         }}
     )
     
-    # Create review task if needed
+    # Create review task if needed (include user_id for tenant isolation)
     if needs_review:
         low_conf_fields = [k for k, v in extraction.fields.items() if v.confidence < 0.85]
         review_task = ReviewTask(
             document_id=doc_id,
             fields_to_review=low_conf_fields + extraction.missing_or_ambiguous
         )
-        await db.aurora_reviews.insert_one(review_task.model_dump())
+        review_dict = review_task.model_dump()
+        review_dict["user_id"] = doc.get("user_id")
+        await db.aurora_reviews.insert_one(review_dict)
     
     # Log audit event
     audit = AuditEvent(
@@ -451,12 +481,15 @@ async def extract_document(doc_id: str, schema_id: Optional[str] = None):
 # List Documents
 @router.get("/documents")
 async def list_documents(
+    request: Request,
     status: Optional[DocumentStatus] = None,
     category: Optional[DocumentCategory] = None,
     limit: int = 100
 ):
     db = get_db()
-    query = {}
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {**tenant_filter}
     if status:
         query["status"] = status.value
     if category:
@@ -467,32 +500,39 @@ async def list_documents(
 
 # Get Document
 @router.get("/documents/{doc_id}")
-async def get_document(doc_id: str, include_content: bool = False):
+async def get_document(doc_id: str, request: Request, include_content: bool = False):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
+    
     projection = {"_id": 0}
     if not include_content:
         projection["file_content"] = 0
     
-    doc = await db.aurora_documents.find_one({"id": doc_id}, projection)
+    query = {"id": doc_id, **tenant_filter}
+    doc = await db.aurora_documents.find_one(query, projection)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
     return doc
 
 # Review Queue
 @router.get("/reviews")
-async def list_reviews(status: Optional[str] = None):
+async def list_reviews(request: Request, status: Optional[str] = None):
     db = get_db()
-    query = {}
+    tenant_filter = await get_tenant_filter(request)
+    
+    query = {**tenant_filter}
     if status:
         query["status"] = status
     reviews = await db.aurora_reviews.find(query, {"_id": 0}).to_list(100)
     return reviews
 
 @router.patch("/reviews/{task_id}")
-async def submit_review(task_id: str, corrections: Dict[str, Any]):
+async def submit_review(task_id: str, request: Request, corrections: Dict[str, Any]):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    task = await db.aurora_reviews.find_one({"id": task_id})
+    query = {"id": task_id, **tenant_filter}
+    task = await db.aurora_reviews.find_one(query)
     if not task:
         raise HTTPException(status_code=404, detail="Review task not found")
     
@@ -528,10 +568,12 @@ async def submit_review(task_id: str, corrections: Dict[str, Any]):
 
 # Export
 @router.get("/documents/{doc_id}/export")
-async def export_document(doc_id: str, format: str = "json"):
+async def export_document(doc_id: str, request: Request, format: str = "json"):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    doc = await db.aurora_documents.find_one({"id": doc_id}, {"_id": 0, "file_content": 0})
+    query = {"id": doc_id, **tenant_filter}
+    doc = await db.aurora_documents.find_one(query, {"_id": 0, "file_content": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
     
@@ -542,10 +584,11 @@ async def export_document(doc_id: str, format: str = "json"):
     )
     
     # Log audit event
+    user = await get_current_user_optional(request)
     audit = AuditEvent(
         document_id=doc_id,
         event_type="exported",
-        actor="api",
+        actor=user.user_id if user else "api",
         details={"format": format}
     )
     await db.aurora_audit.insert_one(audit.model_dump())
@@ -558,10 +601,12 @@ async def export_document(doc_id: str, format: str = "json"):
 
 # Evidence Pack for CompassAI
 @router.get("/documents/{doc_id}/evidence-pack")
-async def generate_evidence_pack(doc_id: str):
+async def generate_evidence_pack(doc_id: str, request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    doc = await db.aurora_documents.find_one({"id": doc_id}, {"_id": 0, "file_content": 0})
+    query = {"id": doc_id, **tenant_filter}
+    doc = await db.aurora_documents.find_one(query, {"_id": 0, "file_content": 0})
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
     
@@ -612,20 +657,21 @@ async def get_audit_log(doc_id: str):
 
 # Dashboard Stats
 @router.get("/dashboard/stats")
-async def get_dashboard_stats():
+async def get_dashboard_stats(request: Request):
     db = get_db()
+    tenant_filter = await get_tenant_filter(request)
     
-    total = await db.aurora_documents.count_documents({})
+    total = await db.aurora_documents.count_documents(tenant_filter)
     
     by_status = {}
     for status in DocumentStatus:
-        by_status[status.value] = await db.aurora_documents.count_documents({"status": status.value})
+        by_status[status.value] = await db.aurora_documents.count_documents({**tenant_filter, "status": status.value})
     
     by_category = {}
     for cat in DocumentCategory:
-        by_category[cat.value] = await db.aurora_documents.count_documents({"classification.category": cat.value})
+        by_category[cat.value] = await db.aurora_documents.count_documents({**tenant_filter, "classification.category": cat.value})
     
-    needs_review = await db.aurora_reviews.count_documents({"status": "pending"})
+    needs_review = await db.aurora_reviews.count_documents({**tenant_filter, "status": "pending"})
     
     return {
         "total_documents": total,

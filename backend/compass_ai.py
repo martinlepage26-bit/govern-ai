@@ -1,8 +1,9 @@
 """
 CompassAI - AI Governance Engine
 Manages use cases, risk tiering, controls, approvals, and deliverables
+Multi-tenant: clients see only their own use cases, admin sees all
 """
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Request, Depends
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timezone
@@ -53,6 +54,7 @@ class Owner(BaseModel):
 class UseCase(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: f"UC-{datetime.now().year}-{str(uuid.uuid4())[:4].upper()}")
+    user_id: Optional[str] = None  # Owner of the use case (tenant)
     purpose: str
     business_owner: Owner
     model_owner: Optional[Owner] = None
