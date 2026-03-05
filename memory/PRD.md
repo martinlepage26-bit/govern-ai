@@ -21,14 +21,15 @@
 
 ### Landing Page
 - [x] **Homepage** - Hero, value proposition, services preview, updated agentic governance section
-- [x] **About** - NEW - Full bio with your professional copy, connect sidebar, frameworks links
+- [x] **About** - Full bio with professional copy, connect sidebar, frameworks links
 - [x] **Services** - 8 services grid + AurorAI/CompassAI detail sections with "Try CompassAI" CTA
-- [x] **Portfolio** - Mock case studies (Financial Services, Healthcare, E-commerce)
+- [x] **Portfolio** - 5 real case studies (LLM Governance, Clinical Trials, Procurement, Underwriting, Incident Response)
 - [x] **Publications** - Research papers/articles with LinkedIn links
 - [x] **Assessment Tool** - 8-question AI governance assessment with GPT-powered analysis
 - [x] **Contact** - Email form (Resend) + Calendly booking widget
+- [x] **Governance Maturity Indicator** - Live stats widget showing controls, policies, risk tiers, schemas
 
-### CompassAI Governance Engine (NEW)
+### CompassAI Governance Engine
 - [x] **Dashboard** - Stats overview (use cases, tiers, approvals, controls, policies)
 - [x] **Use Case Registry** - CRUD with status tracking (draft → approved)
 - [x] **Risk Engine** - T0-T3 tier calculation based on data sensitivity, automation level, regulated domain
@@ -36,6 +37,17 @@
 - [x] **Policy Engine** - 3 declarative policies for PII/regulated/automated systems
 - [x] **Deliverable Generator** - System Cards, Risk Assessments auto-generated
 - [x] **Audit Export** - JSON bundle with evidence index, decisions, signatures
+
+### AurorAI IDP Engine (NEW)
+- [x] **Dashboard** - Document processing stats by status and category
+- [x] **Document Upload** - Drag-and-drop with multi-format support (PDF, DOC, images)
+- [x] **Classification** - Auto-classify documents by category (financial, legal, HR, etc.) and type
+- [x] **Schema-based Extraction** - 4 schemas (Invoice, Contract, Insurance Claim, ID Card)
+- [x] **Extraction Results** - Field values with confidence scores and evidence (page, snippet, bbox)
+- [x] **HITL Review Queue** - Targeted validation for low-confidence extractions
+- [x] **Audit Trail** - Immutable logging of all document actions
+- [x] **Evidence Pack Generation** - Pipeline version, schema, fields, validation checks for CompassAI
+- [x] **Library** - Searchable document repository with status filters
 
 ### Integrations
 - [x] **Resend** - Contact form emails to martinlepage.ai@gmail.com
@@ -49,17 +61,33 @@
 - **APIs:** Resend, Calendly embed, OpenAI via Emergent
 
 ## P1 Backlog (Next)
-- [ ] **AurorAI Integration** - Pull in AurorAI execution engine
 - [ ] Admin dashboard for managing publications/case studies
 - [ ] Evidence ingestion API for AurorAI → CompassAI flow
 - [ ] Approval workflow with digital signatures
 - [ ] Monitoring engine for drift/violations
+- [ ] Document processing webhooks (document.uploaded, document.extracted, etc.)
 
 ## P2 Backlog
 - [ ] Dark mode toggle
 - [ ] Multi-language support (EN/FR)
 - [ ] Jira/ServiceNow integration for gap tickets
 - [ ] Executive dashboards
+- [ ] DMS connectors (SharePoint, Box)
+
+## AurorAI API Reference
+```
+POST /api/aurora/documents/upload - Upload document (multipart)
+POST /api/aurora/documents/{id}/classify - Classify document
+POST /api/aurora/documents/{id}/extract - Extract fields
+GET  /api/aurora/documents - List documents
+GET  /api/aurora/documents/{id} - Get document
+GET  /api/aurora/documents/{id}/export - Export document
+GET  /api/aurora/documents/{id}/evidence-pack - Generate evidence pack
+GET  /api/aurora/schemas - List extraction schemas
+GET  /api/aurora/reviews - List HITL review tasks
+PATCH /api/aurora/reviews/{id} - Submit review corrections
+GET  /api/aurora/audit/{doc_id} - Get audit log
+```
 
 ## CompassAI API Reference
 ```
