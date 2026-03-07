@@ -8,7 +8,8 @@
 - Custom domains added:
   - `govern-ai.ca`
   - `www.govern-ai.ca`
-- Canonical `www -> apex` redirect is implemented in `frontend/functions/_middleware.js`
+- `frontend/functions/_middleware.js` contains the intended `www -> apex` redirect
+- Live verification still shows `www.govern-ai.ca` serving `200`, so the redirect should be considered pending until Cloudflare completes custom-domain validation or a Bulk Redirect is added
 - Deploy commands:
   - `npm run cf:deploy`
   - `npm run cf:preview`
