@@ -26,7 +26,7 @@ const ShowcaseIndex = () => {
           <span className="showcase-chip">Mission-aligned gallery</span>
           <h1>Test alternate Govern AI directions without losing the real practice.</h1>
           <p>
-            The gallery compares the current production site with five reference-led redesign directions. Each concept is anchored to the same mission: legible AI governance under pressure, evidence before claims, and clear support for procurement, audit, vendor review, and oversight.
+            The gallery compares the current production site with two redesign directions. Each concept is anchored to the same mission: legible AI governance under pressure, evidence before claims, and clear support for procurement, audit, vendor review, and oversight.
           </p>
           <div className="showcase-index__actions">
             <Link to={currentSiteEntry.route} className="showcase-button showcase-button--primary">
@@ -44,14 +44,14 @@ const ShowcaseIndex = () => {
             <LighthouseGlyph className="showcase-index__glyph" title="Govern AI lighthouse mark" />
             <div>
               <p>Govern AI variant navigator</p>
-              <strong>6 linked destinations</strong>
+              <strong>3 linked destinations</strong>
             </div>
           </div>
 
           <div className="showcase-index__hero-stats">
             <article>
               <Layers3 size={18} />
-              <strong>5 redesigns</strong>
+              <strong>2 redesigns</strong>
               <span>same mission, different structures</span>
             </article>
             <article>
@@ -224,7 +224,7 @@ const ShowcaseIndex = () => {
       <section id="variant-grid" className="showcase-index__grid-section">
         <div className="showcase-index__heading">
           <span className="showcase-chip">All versions</span>
-          <h2>Current production plus five mission-aligned concept routes</h2>
+          <h2>Current production plus two mission-aligned concept routes</h2>
         </div>
 
         <div className="showcase-index__grid">

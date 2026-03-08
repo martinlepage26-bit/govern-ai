@@ -4,11 +4,9 @@ import {
   BookOpenText,
   ExternalLink,
   GraduationCap,
-  Landmark,
   MessageSquareText,
   Search,
-  Sparkles,
-  SunMedium
+  Sparkles
 } from 'lucide-react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import LighthouseGlyph from '../components/LighthouseGlyph';
@@ -21,72 +19,11 @@ import {
 } from '../data/showcaseVariants';
 
 const variantIcons = {
-  'pubmed-command': Search,
-  'clubmed-atlas': SunMedium,
   'coursera-campus': GraduationCap,
-  'udem-bulletin': Landmark,
   'perplexity-signal': MessageSquareText
 };
 
 function VariantSurface({ variant }) {
-  if (variant.slug === 'pubmed-command') {
-    return (
-      <div className="showcase-surface showcase-surface--pubmed">
-        <div className="showcase-searchbar">
-          <Search size={16} />
-          <span>Search packets, controls, vendor reviews, or oversight notes</span>
-        </div>
-        <div className="showcase-surface__pills">
-          <span>Questionnaire packet</span>
-          <span>Control register</span>
-          <span>Vendor diligence</span>
-        </div>
-        <div className="showcase-result-list">
-          <article>
-            <strong>Controls and Evidence Pack</strong>
-            <p>11 controls mapped to risk tiers, evidence owners, and review cadence.</p>
-          </article>
-          <article>
-            <strong>Questionnaire response packet</strong>
-            <p>Procurement-ready answers tied to decision rights, monitoring notes, and open gaps.</p>
-          </article>
-          <article>
-            <strong>Vendor review dossier</strong>
-            <p>Diligence criteria, contract language, and reassessment triggers for third-party AI.</p>
-          </article>
-        </div>
-      </div>
-    );
-  }
-
-  if (variant.slug === 'clubmed-atlas') {
-    return (
-      <div className="showcase-surface showcase-surface--clubmed">
-        <div className="showcase-atlas-banner">
-          <span>Guided advisory routes</span>
-          <strong>Choose the real Govern AI track from the pressure in front of you.</strong>
-        </div>
-        <div className="showcase-atlas-grid">
-          <article>
-            <span className="showcase-chip">Foundation</span>
-            <strong>Establish the baseline</strong>
-            <p>Inventory systems, define tiers, and make approval logic explicit.</p>
-          </article>
-          <article>
-            <span className="showcase-chip">Evidence</span>
-            <strong>Package the review response</strong>
-            <p>Turn governance into a packet procurement, audit, or customers can follow.</p>
-          </article>
-          <article>
-            <span className="showcase-chip">Oversight</span>
-            <strong>Keep leadership current</strong>
-            <p>Support committees, executives, and live delivery with ongoing upkeep.</p>
-          </article>
-        </div>
-      </div>
-    );
-  }
-
   if (variant.slug === 'coursera-campus') {
     return (
       <div className="showcase-surface showcase-surface--coursera">
@@ -112,31 +49,6 @@ function VariantSurface({ variant }) {
           <article>
             <strong>Oversight Retainer</strong>
             <p>Keep live systems governable as committees, vendors, and delivery teams keep moving.</p>
-          </article>
-        </div>
-      </div>
-    );
-  }
-
-  if (variant.slug === 'udem-bulletin') {
-    return (
-      <div className="showcase-surface showcase-surface--udem">
-        <div className="showcase-editorial-lead">
-          <span className="showcase-chip">Lead bulletin</span>
-          <strong>Govern AI organizes research, dossiers, and advisory work around governable AI under scrutiny.</strong>
-        </div>
-        <div className="showcase-editorial-grid">
-          <article>
-            <span>Research</span>
-            <strong>Research library for audit, procurement, and oversight questions</strong>
-          </article>
-          <article>
-            <span>Cases</span>
-            <strong>Dossiers that show how governance work holds up in real review contexts</strong>
-          </article>
-          <article>
-            <span>Services</span>
-            <strong>The three delivery tracks framed as a public-facing governance practice</strong>
           </article>
         </div>
       </div>

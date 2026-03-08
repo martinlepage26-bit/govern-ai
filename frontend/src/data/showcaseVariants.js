@@ -58,90 +58,6 @@ export const showcaseCoreUseCases = [
 
 export const showcaseVariants = [
   {
-    slug: 'pubmed-command',
-    label: 'PubMed pattern',
-    title: 'Evidence Index',
-    referenceLabel: 'PubMed',
-    referenceUrl: 'https://pubmed.ncbi.nlm.nih.gov/',
-    summary: 'Search-first governance for procurement, audit, and vendor review with stronger evidence indexing and source cues.',
-    palette: ['Indigo', 'Paper', 'Ochre'],
-    tone: 'Precise, credible, search-led',
-    hero: {
-      eyebrow: 'Evidence navigation',
-      title: 'Find the exact governance answer before the request escalates.',
-      body:
-        'This direction translates PubMed\'s disciplined search hierarchy into Govern AI\'s real practice: review packets, control references, and evidence metadata that help teams answer scrutiny quickly and honestly.',
-      primary: 'Search the packet',
-      secondary: 'Open evidence map'
-    },
-    metrics: [
-      { value: '4', label: 'core pressure routes covered' },
-      { value: '3', label: 'reusable packet types' },
-      { value: '1', label: 'searchable evidence index' }
-    ],
-    modules: [
-      {
-        title: 'Searchable packet registry',
-        text: 'Surface questionnaires, control summaries, and review packets from one evidence-led entry point.'
-      },
-      {
-        title: 'Artifact metadata that carries review weight',
-        text: 'Each record shows owner, review date, evidence strength, and where escalation starts.'
-      },
-      {
-        title: 'Research-grade reading mode',
-        text: 'Useful when buyers, auditors, or internal reviewers need sources and structure more than brand language.'
-      }
-    ],
-    journey: [
-      'Start from the review question.',
-      'Open the matching packet or control record.',
-      'Escalate into a debrief only when the evidence gap is clear.'
-    ]
-  },
-  {
-    slug: 'clubmed-atlas',
-    label: 'Club Med pattern',
-    title: 'Guided Engagement Atlas',
-    referenceLabel: 'Club Med',
-    referenceUrl: 'https://www.clubmed.ca/',
-    summary: 'A warmer, guided route through the three real engagement structures and four core pressure scenarios.',
-    palette: ['Terracotta', 'Ochre', 'Indigo'],
-    tone: 'Warm, premium, advisory',
-    hero: {
-      eyebrow: 'Guided service journey',
-      title: 'Frame governance as a clear route through pressure, not a wall of obligations.',
-      body:
-        'This direction uses guided pacing and premium section breaks to help visitors choose between Governance Foundation, Controls and Evidence Pack, and Oversight Retainer based on the pressure they are facing now.',
-      primary: 'Plan the engagement',
-      secondary: 'See pressure routes'
-    },
-    metrics: [
-      { value: '3', label: 'engagement structures' },
-      { value: '4', label: 'pressure scenarios' },
-      { value: '1', label: 'lead advisor through the cycle' }
-    ],
-    modules: [
-      {
-        title: 'Pressure-led service routes',
-        text: 'Lead with procurement, audit, vendor review, and oversight so visitors can recognize themselves quickly.'
-      },
-      {
-        title: 'Premium advisory rhythm',
-        text: 'Use larger section breaks and calmer pacing to make the practice feel intentional without losing specificity.'
-      },
-      {
-        title: 'Concierge debrief framing',
-        text: 'Keep Martin as the visible guide who translates a pressure moment into the next practical packet or engagement.'
-      }
-    ],
-    journey: [
-      'Choose the pressure source.',
-      'See the matching engagement structure.',
-      'Book a debrief with the right scope already in view.'
-    ]
-  },
-  {
     slug: 'coursera-campus',
     label: 'Coursera pattern',
     title: 'Operational Pathways',
@@ -181,48 +97,6 @@ export const showcaseVariants = [
       'Pick the operating context.',
       'Compare the matching package structure.',
       'Move into the right next step with clearer expectations.'
-    ]
-  },
-  {
-    slug: 'udem-bulletin',
-    label: 'UdeM pattern',
-    title: 'Research and Dossiers Bulletin',
-    referenceLabel: 'Universite de Montreal',
-    referenceUrl: 'https://www.umontreal.ca/',
-    summary: 'An institutional editorial front door that ties research, library, case dossiers, and services into one coherent public mission.',
-    palette: ['Burgundy', 'Ivory', 'Charcoal'],
-    tone: 'Institutional, editorial, rigorous',
-    hero: {
-      eyebrow: 'Institutional framing',
-      title: 'Make the practice feel research-led, public-facing, and structurally serious.',
-      body:
-        'This direction leans into Martin Lepage, PhD, the research library, and editorial hierarchy while keeping the advisory mission clear: usable governance under pressure, not abstract theory.',
-      primary: 'Read the bulletin',
-      secondary: 'Open research'
-    },
-    metrics: [
-      { value: '3', label: 'public pillars: research, practice, dossiers' },
-      { value: '1', label: 'clear institutional front door' },
-      { value: '4', label: 'review contexts carried through' }
-    ],
-    modules: [
-      {
-        title: 'Editorial homepage logic',
-        text: 'Put research, cases, library materials, and services into one front door that feels mission-led and coherent.'
-      },
-      {
-        title: 'Bulletin and dossier structure',
-        text: 'Helpful when public-sector or regulated audiences need to understand the practice before they engage.'
-      },
-      {
-        title: 'Stronger research credibility cues',
-        text: 'Accentuate the research-led identity without confusing public thought leadership with productized claims.'
-      }
-    ],
-    journey: [
-      'Read the lead bulletin or field note.',
-      'Move into research, cases, or the library.',
-      'Connect once the institutional logic feels clear.'
     ]
   },
   {

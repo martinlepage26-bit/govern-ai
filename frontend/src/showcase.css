@@ -507,24 +507,6 @@
   --showcase-shell-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
 }
 
-.showcase-variant[data-variant="pubmed-command"] {
-  --variant-bg: #f5f8fc;
-  --variant-text: #132238;
-  --variant-muted: rgba(19, 34, 56, 0.72);
-  --variant-line: rgba(19, 34, 56, 0.12);
-  --variant-accent: #2563eb;
-  --variant-accent-soft: rgba(37, 99, 235, 0.16);
-}
-
-.showcase-variant[data-variant="clubmed-atlas"] {
-  --variant-bg: #f7efe6;
-  --variant-text: #2a1c16;
-  --variant-muted: rgba(42, 28, 22, 0.72);
-  --variant-line: rgba(42, 28, 22, 0.12);
-  --variant-accent: #d97757;
-  --variant-accent-soft: rgba(217, 119, 87, 0.14);
-}
-
 .showcase-variant[data-variant="coursera-campus"] {
   --variant-bg: #eef4ff;
   --variant-text: #14233d;
@@ -532,15 +514,6 @@
   --variant-line: rgba(20, 35, 61, 0.12);
   --variant-accent: #2a73ff;
   --variant-accent-soft: rgba(42, 115, 255, 0.14);
-}
-
-.showcase-variant[data-variant="udem-bulletin"] {
-  --variant-bg: #f7f2f1;
-  --variant-text: #26151b;
-  --variant-muted: rgba(38, 21, 27, 0.72);
-  --variant-line: rgba(38, 21, 27, 0.1);
-  --variant-accent: #8d2232;
-  --variant-accent-soft: rgba(141, 34, 50, 0.14);
 }
 
 .showcase-variant[data-variant="perplexity-signal"] {
