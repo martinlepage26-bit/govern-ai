@@ -32,6 +32,7 @@ const Tool = () => {
     question: t.tool.questions[key],
     options: questionOptions[i]
   }));
+  const preMortemHref = '/services#pre-mortem-review';
 
   const copy = language === 'fr'
     ? {
@@ -65,7 +66,7 @@ const Tool = () => {
         questionPrompt: 'Repondez selon l etat actuel, pas selon le modele ideal',
         reset: 'Recommencer',
         discuss: 'Discuter du resultat',
-        services: 'Voir les services'
+        services: 'Voir la revue pre-mortem'
       }
     : {
         eyebrow: 'Tool',
@@ -98,7 +99,7 @@ const Tool = () => {
         questionPrompt: 'Answer for the current state, not the ideal one',
         reset: 'Start over',
         discuss: 'Discuss the result',
-        services: 'View services'
+        services: 'View Pre-mortem Review'
       };
 
   const handleSectorSelect = (sectorId) => setSelectedSector(sectorId);
@@ -158,13 +159,13 @@ const Tool = () => {
           <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
           <div className="relative grid gap-8 lg:grid-cols-[1fr_0.96fr] lg:items-start">
             <div>
-              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.eyebrow}
               </p>
-              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.title}
               </h1>
-              <p className="mt-4 max-w-[56ch] text-[14px] leading-[1.7] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Lato', sans-serif" }}>
+              <p className="mt-4 max-w-[56ch] text-[14px] leading-[1.7] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.body}
               </p>
             </div>
@@ -172,18 +173,18 @@ const Tool = () => {
             <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
               <div className="flex items-center gap-4">
                 <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-[18px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
-                  <img src={lighthouseMark} alt="Govern AI lighthouse mark" className="h-10 w-10" />
+                  <img src={lighthouseMark} alt="PHAROS lighthouse mark" className="h-10 w-10" />
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                     {copy.noteLabel}
                   </p>
-                  <p className="mt-1 text-sm" style={{ fontFamily: "'Lato', sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
+                  <p className="mt-1 text-sm" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
                     {copy.noteTitle}
                   </p>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-[1.76] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+              <p className="mt-4 text-sm leading-[1.76] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.noteBody}
               </p>
             </div>
@@ -192,13 +193,13 @@ const Tool = () => {
 
         <section className="mb-8">
           <div className="mb-5 max-w-[860px]">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
               {copy.runLabel}
             </p>
-            <h2 className="mt-2 max-w-[15ch] text-[27px] leading-[1.06] text-[#10162A] md:max-w-none md:text-[38px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+            <h2 className="mt-2 max-w-[15ch] text-[27px] leading-[1.06] text-[#10162A] md:max-w-none md:text-[38px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
               {copy.runTitle}
             </h2>
-            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
               {copy.runBody}
             </p>
           </div>
@@ -209,10 +210,10 @@ const Tool = () => {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl border border-[#B89B5E]/16 bg-[#F2E8D8]">
                   <card.icon className="h-5 w-5 text-[#13254C]" />
                 </div>
-                <h3 className="text-[23px] leading-[1.08] text-[#10162A] md:text-[24px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                <h3 className="text-[23px] leading-[1.08] text-[#10162A] md:text-[24px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                   {card.title}
                 </h3>
-                <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+                <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                   {card.description}
                 </p>
               </article>
@@ -223,10 +224,10 @@ const Tool = () => {
         <section className="brand-panel rounded-[32px] px-6 py-7 md:px-8 md:py-8">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {step === 1 ? copy.sectorPrompt : copy.questionPrompt}
               </p>
-              <div className="mt-3 flex gap-3 text-[11px] uppercase tracking-[0.18em]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+              <div className="mt-3 flex gap-3 text-[11px] uppercase tracking-[0.18em]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 <span className={step >= 1 ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.sector}</span>
                 <span className="text-[#6F5626]">/</span>
                 <span className={step >= 2 ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.readiness}</span>
@@ -237,7 +238,7 @@ const Tool = () => {
             <button
               onClick={handleReset}
               className="rounded-full border border-[#D6CCBB] bg-white px-4 py-2 text-sm text-[#13254C] transition-colors hover:border-[#B89B5E]/34"
-              style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+              style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
               data-testid="reset-btn"
             >
               {copy.reset}
@@ -258,10 +259,10 @@ const Tool = () => {
                         : 'border-[#D6CCBB] bg-[#FFFDF8] hover:border-[#B89B5E]/34'
                     }`}
                   >
-                    <h3 className="text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                    <h3 className="text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                       {t.tool.sectors[key].title}
                     </h3>
-                    <p className="mt-2 text-sm leading-[1.65] text-[#20314F]/68" style={{ fontFamily: "'Lato', sans-serif" }}>
+                    <p className="mt-2 text-sm leading-[1.65] text-[#20314F]/68" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                       {t.tool.sectors[key].description}
                     </p>
                   </button>
@@ -274,7 +275,7 @@ const Tool = () => {
             <div data-testid="step-2-readiness">
               <div className="rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
                 <div className="mb-4 flex items-center justify-between gap-4">
-                  <h3 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                  <h3 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {readinessQuestions.length}
                   </h3>
                   <div className="flex gap-1.5">
@@ -289,7 +290,7 @@ const Tool = () => {
                   </div>
                 </div>
 
-                <p className="text-[18px] leading-[1.6] text-[#10162A]" style={{ fontFamily: "'Lato', sans-serif", fontWeight: 600 }} data-testid={`question-${currentQuestionData.id}`}>
+                <p className="text-[18px] leading-[1.6] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }} data-testid={`question-${currentQuestionData.id}`}>
                   {currentQuestionData.question}
                 </p>
 
@@ -305,7 +306,7 @@ const Tool = () => {
                             ? 'border-[#13254C] bg-[#F2E8D8] text-[#13254C]'
                             : 'border-[#D6CCBB] bg-[#FBF7EF] text-[#20314F] hover:border-[#B89B5E]/34'
                         }`}
-                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                        style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                       >
                         {option.label}
                       </button>
@@ -321,7 +322,7 @@ const Tool = () => {
               <button
                 onClick={handleBack}
                 className="text-sm text-[#20314F] transition-colors hover:text-[#13254C]"
-                style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                 data-testid="back-btn"
               >
                 {t.tool.buttons.back}
@@ -337,7 +338,7 @@ const Tool = () => {
                   ? 'bg-[#13254C] text-[#F6F0E4] hover:bg-[#0F1D37]'
                   : 'bg-[#E8E1D3] text-[#8E8A80] cursor-not-allowed'
               }`}
-              style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+              style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
             >
               {isLastQuestion && step === 2 ? t.tool.buttons.seeResults : t.tool.buttons.next}
               {canProceed && <ArrowRight className="h-4 w-4" />}
@@ -353,10 +354,10 @@ const Tool = () => {
             <div className="border-b border-[#E7DECE] bg-[#0F1D37] p-6 text-white">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                     {t.tool.steps.results}
                   </p>
-                  <h3 className="mt-2 text-[30px]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                  <h3 className="mt-2 text-[30px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {t.tool.results.title}
                   </h3>
                 </div>
@@ -383,18 +384,18 @@ const Tool = () => {
                           className="grid h-[112px] w-[112px] place-items-center rounded-full"
                           style={{ background: `conic-gradient(${tone} ${percentage * 3.6}deg, rgba(8,20,40,0.08) ${percentage * 3.6}deg 360deg)` }}
                         >
-                          <div className="grid h-[82px] w-[82px] place-items-center rounded-full border border-[#D6CCBB] bg-white text-[24px] text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 700 }}>
+                          <div className="grid h-[82px] w-[82px] place-items-center rounded-full border border-[#D6CCBB] bg-white text-[24px] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 700 }}>
                             {percentage}%
                           </div>
                         </div>
                         <div>
-                          <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                          <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                             {sectorTitle}
                           </p>
-                          <p className="mt-2 text-[28px]" style={{ color: tone, fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                          <p className="mt-2 text-[28px]" style={{ color: tone, fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                             {risk}
                           </p>
-                          <p className="mt-2 text-sm leading-[1.75] text-[#20314F]/76" style={{ fontFamily: "'Lato', sans-serif" }}>
+                          <p className="mt-2 text-sm leading-[1.75] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                             {recommendation}
                           </p>
                         </div>
@@ -402,7 +403,7 @@ const Tool = () => {
                     </div>
 
                     <div className="mt-4 rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
-                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {t.tool.results.scoreBreakdown}
                       </h4>
                       <div className="mt-4 space-y-3">
@@ -410,13 +411,13 @@ const Tool = () => {
                           const answer = answers[question.id];
                           return (
                             <div key={question.id} className="flex items-center justify-between gap-3 text-sm">
-                              <span className="min-w-0 flex-1 text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }} title={question.question}>
+                              <span className="min-w-0 flex-1 text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }} title={question.question}>
                                 {question.question}
                               </span>
                               <span
                                 className="rounded-full px-2.5 py-1 text-xs"
                                 style={{
-                                  fontFamily: "'IBM Plex Sans', sans-serif",
+                                  fontFamily: "'Space Grotesk', system-ui, sans-serif",
                                   fontWeight: 700,
                                   backgroundColor: answer?.score === 2 ? '#E7F2E8' : answer?.score === 1 ? '#F4ECD8' : '#F3E0DA',
                                   color: answer?.score === 2 ? '#335D3B' : answer?.score === 1 ? '#7D6230' : '#8A413A'
@@ -428,24 +429,24 @@ const Tool = () => {
                           );
                         })}
                       </div>
-                      <div className="mt-4 flex items-center justify-between border-t border-[#E6DDCD] pt-4 text-sm text-[#10162A]" style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}>
+                      <div className="mt-4 flex items-center justify-between border-t border-[#E6DDCD] pt-4 text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                         <span>{t.tool.results.total}</span>
                         <span>{score}/{total}</span>
                       </div>
                     </div>
 
                     <div className="mt-4 rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
-                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Source Serif 4', serif", fontWeight: 600 }}>
+                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {t.tool.results.recommendedSteps}
                       </h4>
-                      <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Lato', sans-serif" }}>
+                      <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                         {language === 'fr'
                           ? 'Ces suites recommandent un point de depart. Elles ne transforment pas automatiquement un etat partiel en gouvernance complete.'
                           : 'These next steps recommend a starting point. They do not automatically turn a partial state into complete governance.'}
                       </p>
                       <ul className="mt-4 space-y-3">
                         {nextSteps.map((stepItem, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm leading-[1.72] text-[#20314F]/74" style={{ fontFamily: "'Lato', sans-serif" }}>
+                          <li key={index} className="flex items-start gap-2 text-sm leading-[1.72] text-[#20314F]/74" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                             <ArrowRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#13254C]" />
                             <span>{stepItem}</span>
                           </li>
@@ -458,13 +459,13 @@ const Tool = () => {
                         {copy.discuss}
                         <ArrowRight className="h-4 w-4" />
                       </Link>
-                      <Link to="/services" className="brand-button-secondary">
+                      <Link to={preMortemHref} className="brand-button-secondary">
                         {copy.services}
                       </Link>
                       <button
                         onClick={handleReset}
                         className="ml-auto text-sm text-[#20314F] transition-colors hover:text-[#13254C]"
-                        style={{ fontFamily: "'IBM Plex Sans', sans-serif", fontWeight: 600 }}
+                        style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                       >
                         {t.tool.results.retake}
                       </button>

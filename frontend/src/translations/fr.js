@@ -250,20 +250,20 @@ export const fr = {
       total: 'Total',
       recommendedSteps: 'Prochaines \u00e9tapes recommand\u00e9es',
       bookDebrief: 'R\u00e9server un entretien de 30 min',
-      viewServices: 'Voir les services',
+      viewServices: 'Voir la revue pre-mortem',
       retake: 'Reprendre',
       risks: { low: 'Risque faible', moderate: 'Risque mod\u00e9r\u00e9', elevated: 'Risque \u00e9lev\u00e9', high: 'Risque \u00e9lev\u00e9' },
       levels: { strong: 'Solide', developing: 'En d\u00e9veloppement', early: 'D\u00e9butant', beginning: 'Initial' },
       recommendations: {
-        high: "Votre fondation de gouvernance est solide. Consid\u00e9rez le mandat de supervision continue pour maintenir l\u2019\u00e9lan et optimiser la collecte de preuves.",
-        moderate: "Bon progr\u00e8s. Le forfait Contr\u00f4les et preuves peut combler les lacunes critiques et vous pr\u00e9parer \u00e0 l\u2019audit.",
-        elevated: "Commencez par le forfait Fondation de gouvernance pour \u00e9tablir les bases et d\u00e9finir la hi\u00e9rarchisation des risques.",
-        low: "Commencez par un inventaire de base. Le forfait Fondation de gouvernance offre un point de d\u00e9part complet."
+        high: 'Votre base de gouvernance tient deja. Utilisez une revue pre-mortem pour tester les conditions de lancement, les dependances et la preuve avant la prochaine revue.',
+        moderate: 'Bon progres. Une revue pre-mortem peut faire remonter les modes d echec, resserrer les conditions d approbation et fermer les ecarts de preuve avant l examen.',
+        elevated: 'Commencez par une revue pre-mortem pour exposer les controles faibles, les seuils manquants et les ecarts d escalation avant un lancement ou une expansion.',
+        low: 'Commencez par une revue pre-mortem pour identifier les manques d inventaire, de responsabilite et de preuve avant que la pression de revue ne fige les ecarts.'
       },
       nextSteps: {
-        low: ['Commencer avec le forfait Fondation de gouvernance', "Cr\u00e9er un inventaire des cas d\u2019utilisation", 'D\u00e9finir les crit\u00e8res de hi\u00e9rarchisation des risques'],
-        moderate: ['Consid\u00e9rer le forfait Contr\u00f4les et preuves', 'Documenter les droits de d\u00e9cision et les approbations', '\u00c9tablir une cadence r\u00e9currente de gouvernance'],
-        high: ['Explorer le mandat de supervision continue', 'Optimiser la collecte de preuves', "Se pr\u00e9parer aux sc\u00e9narios d\u2019audit avanc\u00e9s"]
+        low: ['Commencer par une revue pre-mortem', 'Cartographier le systeme, le fournisseur et la portee de decision', 'Identifier les ecarts de preuve et les conditions d approbation'],
+        moderate: ['Utiliser une revue pre-mortem pour tester les conditions de lancement', 'Documenter les modes d echec et les points d escalation', 'Attribuer des responsables aux ecarts de preuve avant la revue'],
+        high: ['Lancer une revue pre-mortem ciblee avant le prochain lancement ou la prochaine expansion', 'Tester les dependances et les conditions d approbation', 'Resserer les exigences de preuve pour les prochaines revues']
       }
     }
   },

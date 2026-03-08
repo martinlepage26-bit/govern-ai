@@ -7,9 +7,9 @@ const Footer = () => (
       <div className="footer-top">
         <div className="footer-brand">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-            <LighthouseGlyph className="nav-logo" title="Govern AI footer mark" />
+            <LighthouseGlyph className="nav-logo" title="PHAROS footer mark" />
             <span style={{ fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', fontSize: '0.75rem', color: 'var(--glow-primary)' }}>
-              Govern AI
+              PHAROS
             </span>
           </div>
           <p>Legible governance for real review.</p>
@@ -18,7 +18,6 @@ const Footer = () => (
         <div className="footer-col">
           <h4>Practice</h4>
           <Link to="/services">Services</Link>
-          <Link to="/showcase">Showcase</Link>
           <Link to="/research">Research</Link>
           <Link to="/about">About</Link>
         </div>
@@ -32,7 +31,7 @@ const Footer = () => (
       </div>
 
       <div className="footer-bottom">
-        <span>&copy; 2026 Martin Lepage, PhD &middot; Govern AI</span>
+        <span>&copy; 2026 Martin Lepage, PhD &middot; PHAROS</span>
         <div className="footer-bottom-links">
           <span>Montreal, Quebec, Canada</span>
         </div>

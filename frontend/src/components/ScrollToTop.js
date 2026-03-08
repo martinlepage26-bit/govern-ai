@@ -2,13 +2,28 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const scrollRaf = window.requestAnimationFrame(() => {
+      if (hash) {
+        const targetId = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ block: 'start' });
+          return;
+        }
+      }
+
+      window.scrollTo(0, 0);
+    });
 
     const targets = Array.from(document.querySelectorAll('.reveal'));
-    if (!targets.length) return undefined;
+    if (!targets.length) {
+      return () => {
+        window.cancelAnimationFrame(scrollRaf);
+      };
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -32,11 +47,12 @@ const ScrollToTop = () => {
     }, 1400);
 
     return () => {
+      window.cancelAnimationFrame(scrollRaf);
       window.cancelAnimationFrame(raf);
       window.clearTimeout(timeout);
       observer.disconnect();
     };
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 };

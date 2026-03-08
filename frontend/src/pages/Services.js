@@ -4,51 +4,54 @@ import { ArrowRight, BriefcaseBusiness, Clock3, Radar } from 'lucide-react';
 
 const packages = [
   {
+    id: 'deterministic-governance',
     eyebrow: 'Package 1',
-    title: 'Governance Foundation',
-    description: 'For organizations establishing governance for the first time or consolidating across teams.',
+    title: 'Deterministic Governance',
+    description: 'For organizations that need explicit thresholds, decision rights, and a stable governance baseline before scrutiny compounds ambiguity.',
     deliverables: [
-      'AI use-case and vendor inventory',
-      'Tiering logic with examples',
-      'Decision rights and approval flow',
-      'Governance cadence and upkeep model'
+      'System and vendor inventory with scope boundaries',
+      'Deterministic tiering logic and thresholds',
+      'Decision rights, escalation rules, and approval flow',
+      'Governance cadence with named upkeep owners'
     ],
     outcomes: [
-      'A working governance model teams can use immediately',
-      'Clearer roles for procurement and review',
-      'A defensible baseline for escalation'
+      'A governance baseline teams can execute consistently',
+      'Less ambiguity during procurement, audit, and internal review',
+      'Claims that stay inside what the evidence can support'
     ]
   },
   {
+    id: 'pre-mortem-review',
     eyebrow: 'Package 2',
-    title: 'Controls & Evidence',
-    description: 'For organizations preparing for procurement scrutiny, internal audit, or formal review.',
+    title: 'Pre-mortem Review',
+    description: 'For organizations pressure-testing an AI system before launch, procurement, onboarding, or major expansion.',
     deliverables: [
-      'Control register mapped to risk tiers',
-      'Testing and monitoring expectations',
-      'Vendor review questions and evidence checklist',
-      'Decision log template and review packet outline'
+      'Failure-mode review across system, process, and vendor dependencies',
+      'Launch or approval conditions with evidence requirements',
+      'Vendor and third-party review questions',
+      'Go / no-go summary with open issues and escalation triggers'
     ],
     outcomes: [
-      'Documentation structure ready for procurement',
-      'Evidence expectations that audit teams can follow',
-      'Named owners for controls and upkeep'
+      'Risks surfaced before they become incidents',
+      'Deterministic approval conditions for launch or expansion',
+      'Clear evidence gaps and ownership before scrutiny arrives'
     ]
   },
   {
+    id: 'post-mortem-review',
     eyebrow: 'Package 3',
-    title: 'Oversight Retainer',
-    description: 'For organizations with active AI delivery that want stable oversight as systems evolve.',
+    title: 'Post-mortem Review',
+    description: 'For organizations responding to incidents, failed reviews, audit findings, or governance drift.',
     deliverables: [
-      'Recurring governance and risk review',
-      'Decision log stewardship and evidence cadence',
-      'Control roadmap aligned to delivery',
-      'Targeted support during procurement or audit'
+      'Reconstruction of the event, decision path, and evidence trail',
+      'Gap review across controls, documentation, and accountability',
+      'Remediation priorities with threshold and control updates',
+      'Executive summary and follow-up governance actions'
     ],
     outcomes: [
-      'Stable oversight without slowing delivery',
-      'Documentation that stays legible as systems change',
-      'Usable summaries for leadership and committees'
+      'A defensible record of what happened and why',
+      'Clear remediation ownership and sequencing',
+      'A stronger deterministic governance posture after failure'
     ]
   }
 ];
@@ -59,45 +62,45 @@ const scopingCards = [
     description: 'How many systems, vendors, and data pathways are in scope, and how quickly they change.'
   },
   {
-    title: 'Review expectations',
-    description: 'Questionnaires, audits, contractual obligations, or leadership requests that shape the evidence burden.'
+    title: 'Review burden',
+    description: 'Questionnaires, audits, contractual obligations, and leadership requests determine how much proof the service must produce.'
   },
   {
-    title: 'Decision authority',
-    description: 'The level of autonomy, sensitivity, and impact carried by AI-supported decisions.'
+    title: 'Failure consequence',
+    description: 'The stakes of a wrong decision, broken evidence trail, or weak escalation path determine how deterministic the governance model must be.'
   }
 ];
 
 const pricingCards = [
   {
     icon: BriefcaseBusiness,
-    title: 'Fixed scope',
-    description: 'One-time engagements with a defined deliverable set and a clear end date.'
+    title: 'Targeted review',
+    description: 'A defined deterministic governance, pre-mortem, or post-mortem scope with explicit outputs and a clear end date.'
   },
   {
     icon: Radar,
-    title: 'Retainer',
-    description: 'Ongoing advisory with a monthly cadence, adjusted as systems and review needs evolve.'
+    title: 'Multi-system cycle',
+    description: 'A phased review path when several systems, vendors, or business units need structured work in sequence.'
   },
   {
     icon: Clock3,
-    title: 'Assessment',
-    description: 'A short readiness check that produces a signal about where work should begin.'
+    title: 'Follow-through',
+    description: 'A lighter continuation when remediation, threshold updates, or a second review cycle is needed after the first service.'
   }
 ];
 
 const faqs = [
   {
     question: 'What is the first engagement like?',
-    answer: 'A 30-minute debrief to understand the pressure, the context, and what the review is actually asking for. From there, the engagement is scoped with explicit deliverables and a timeline.'
+    answer: 'A 30-minute review to understand the pressure, the system context, and whether the work belongs in deterministic governance, a pre-mortem, or a post-mortem. From there, the scope is set with explicit deliverables and a timeline.'
   },
   {
     question: 'Do you replace legal counsel or audit firms?',
-    answer: 'No. Govern AI builds the governance structures, documentation, and evidence layers that legal and audit teams review. The work complements counsel; it does not replace it.'
+    answer: 'No. PHAROS builds the governance structures, documentation, and evidence layers that legal and audit teams review. The work complements counsel; it does not replace it.'
   },
   {
     question: 'How long does a typical engagement take?',
-    answer: 'A governance foundation can be delivered in 3 to 6 weeks. Controls and evidence packs usually run 4 to 8 weeks. Retainers are monthly.'
+    answer: 'Deterministic governance usually runs 3 to 6 weeks. Pre-mortem reviews often run 2 to 4 weeks. Post-mortem reviews vary with the incident or finding, but usually run 2 to 6 weeks.'
   },
   {
     question: 'Can you support teams outside Canada?',
@@ -114,9 +117,9 @@ const Services = () => {
         <div className="container">
           <div className="section-header">
             <p className="eyebrow">Services</p>
-            <h1>Packages structured to answer scrutiny</h1>
+            <h1>Services for deterministic governance under pressure</h1>
             <p className="body-lg" style={{ marginTop: '16px' }}>
-              Choose by pressure source, not vocabulary. The right package produces the materials the review will actually ask for and makes clear what still needs judgment or follow-up.
+              Choose by pressure source, not vocabulary. The right service produces deterministic decision paths, explicit thresholds, and the materials a real review will actually ask for.
             </p>
           </div>
         </div>
@@ -126,12 +129,12 @@ const Services = () => {
         <div className="container">
           <div className="section-header reveal">
             <p className="eyebrow">Core offers</p>
-            <h2>Three engagements for legible governance</h2>
+            <h2>Three services for deterministic governance</h2>
           </div>
 
           <div className="grid-3 stagger">
             {packages.map((item) => (
-              <div key={item.title} className="package reveal">
+              <div key={item.title} id={item.id} className="package reveal" style={{ scrollMarginTop: '120px' }}>
                 <div className="package-header">
                   <p className="eyebrow">{item.eyebrow}</p>
                   <h3>{item.title}</h3>
@@ -184,7 +187,7 @@ const Services = () => {
           <p className="eyebrow">Pricing</p>
           <h2>How engagements are priced</h2>
           <p className="body-sm">
-              Every engagement is scoped and priced after an initial debrief. Pricing reflects system count, review depth, evidence condition, and duration.
+              Every engagement is scoped and priced after an initial review. Pricing reflects system count, review depth, evidence condition, and remediation complexity.
           </p>
           </div>
 
@@ -234,12 +237,12 @@ const Services = () => {
         <div className="container">
         <div className="cta-banner reveal">
           <h2>Need help choosing the right entry point?</h2>
-          <p className="body-sm">A short debrief is enough to choose the package, the scope, and the first outputs that matter most.</p>
+          <p className="body-sm">A short review is enough to choose whether the work belongs in deterministic governance, a pre-mortem, or a post-mortem.</p>
             <div className="btn-row">
               <Link to="/connect" className="btn-primary">
-                Book a debrief
-                <ArrowRight />
-              </Link>
+              Book a review
+              <ArrowRight />
+            </Link>
               <Link to="/tool" className="btn-secondary">Assess readiness</Link>
             </div>
           </div>

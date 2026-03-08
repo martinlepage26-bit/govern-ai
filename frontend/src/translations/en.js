@@ -251,20 +251,20 @@ export const en = {
       total: 'Total',
       recommendedSteps: 'Recommended Next Steps',
       bookDebrief: 'Book a 30 min debrief',
-      viewServices: 'View services',
+      viewServices: 'View Pre-mortem Review',
       retake: 'Retake',
       risks: { low: 'Low Risk', moderate: 'Moderate Risk', elevated: 'Elevated Risk', high: 'High Risk' },
       levels: { strong: 'Strong', developing: 'Developing', early: 'Early', beginning: 'Beginning' },
       recommendations: {
-        high: 'Your governance foundation is solid. Consider the Oversight Retainer to maintain momentum and optimize evidence collection.',
-        moderate: 'Good progress. The Controls and Evidence Pack can fill critical gaps and prepare you for audit.',
-        elevated: 'Start with the Governance Foundation package to establish basics and define risk tiering.',
-        low: 'Begin with basic inventory. The Governance Foundation package provides a complete starting point.'
+        high: 'Your governance baseline has real structure. Use a Pre-mortem Review to pressure-test launch conditions, dependencies, and evidence before the next review.',
+        moderate: 'Good progress. A Pre-mortem Review can surface failure modes, tighten approval conditions, and close evidence gaps before scrutiny.',
+        elevated: 'Start with a Pre-mortem Review to expose weak controls, missing thresholds, and escalation gaps before launch or expansion.',
+        low: 'Begin with a Pre-mortem Review to identify missing inventory, ownership, and evidence before review pressure hardens the gaps.'
       },
       nextSteps: {
-        low: ['Start with the Governance Foundation package', 'Create a use case inventory', 'Define risk tiering criteria'],
-        moderate: ['Consider the Controls and Evidence Pack', 'Document decision rights and approvals', 'Establish recurring governance cadence'],
-        high: ['Explore the Oversight Retainer', 'Optimize evidence collection', 'Prepare for advanced audit scenarios']
+        low: ['Start with a Pre-mortem Review', 'Map the system, vendor, and decision scope', 'Identify evidence gaps and approval conditions'],
+        moderate: ['Use a Pre-mortem Review to pressure-test launch conditions', 'Document failure modes and escalation triggers', 'Assign owners for evidence gaps before review'],
+        high: ['Run a focused Pre-mortem Review before the next launch or expansion', 'Stress-test dependencies and approval conditions', 'Tighten evidence requirements for future scrutiny']
       }
     }
   },

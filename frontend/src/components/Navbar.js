@@ -5,7 +5,6 @@ import LighthouseGlyph from './LighthouseGlyph';
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/services', label: 'Services' },
-  { path: '/showcase', label: 'Showcase' },
   { path: '/research', label: 'Research' },
   { path: '/about', label: 'About' },
   { path: '/connect', label: 'Connect' }
@@ -35,9 +34,8 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
-  const isShowcase = location.pathname.startsWith('/showcase');
   const homeHeroVisible = location.pathname === '/' && !scrolled;
-  const navClass = ['nav', scrolled || isShowcase ? 'scrolled' : '', homeHeroVisible ? 'hero-visible' : '', isShowcase ? 'showcase-nav' : '']
+  const navClass = ['nav', scrolled ? 'scrolled' : '', homeHeroVisible ? 'hero-visible' : '']
     .filter(Boolean)
     .join(' ');
 
@@ -45,9 +43,9 @@ const Navbar = () => {
     <>
       <nav className={navClass} data-testid="navbar">
         <div className="nav-inner">
-          <Link to="/" className="nav-brand" aria-label="Govern AI home">
+          <Link to="/" className="nav-brand" aria-label="PHAROS home">
             <LighthouseGlyph className="nav-logo" />
-            <span className="nav-wordmark">Govern AI</span>
+            <span className="nav-wordmark">PHAROS</span>
           </Link>
 
           <div className="nav-right">
@@ -81,7 +79,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className={`mobile-menu${menuOpen ? ' open' : ''}${isShowcase ? ' showcase-menu' : ''}`}>
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
         {navItems.map((item) => (
           <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)}>
             {item.label}
