@@ -13,6 +13,7 @@ import About from './pages/About';
 import Admin from './pages/Admin';
 import Cases from './pages/Cases';
 import Connect from './pages/Connect';
+import ConceptualMethod from './pages/ConceptualMethod';
 import FAQ from './pages/FAQ';
 import Game from './pages/Game';
 import Home from './pages/Home';
@@ -44,6 +45,7 @@ function AppRoutes() {
           <Route path="/research" element={<Research />} />
           <Route path="/cases" element={<Cases />} />
           <Route path="/about" element={<About />} />
+          <Route path="/about/conceptual-method" element={<ConceptualMethod />} />
           <Route path="/connect" element={<Connect />} />
           <Route path="/portal/aurorai" element={<PortalAurorAI />} />
           <Route path="/portal/compassai" element={<PortalCompassAI />} />
