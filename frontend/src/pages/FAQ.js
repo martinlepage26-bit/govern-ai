@@ -40,7 +40,7 @@ const FAQ = () => {
           {
             label: 'Le meilleur prochain pas',
             title: 'S orienter ici, puis cadrer le cas reel',
-            description: 'Utilisez la FAQ pour vous situer, puis passez a un debrief ou a un diagnostic de revisabilite quand les faits deviennent specifiques.'
+            description: 'Utilisez la FAQ pour vous situer, puis passez a un debrief ou a un instantane de preparation quand les faits deviennent specifiques.'
           }
         ],
         closingLabel: 'Suite',
@@ -48,7 +48,7 @@ const FAQ = () => {
         closingBody: 'Le meilleur prochain pas est un debrief court avec le contexte, la source de pression et le niveau de preuve que la situation exigera.',
         actions: {
           connect: 'Reserver un debrief',
-          tool: 'Diagnostic de revisabilite',
+          tool: 'Evaluer la preparation',
           services: 'Voir les services'
         },
         sections: [
@@ -108,7 +108,7 @@ const FAQ = () => {
               },
               {
                 q: 'Comment commencer sans lancer un projet trop lourd?',
-                a: <>Le plus simple est de passer par le <Link to="/tool" className="text-[#13254C] underline-offset-4 hover:underline">diagnostic de revisabilite</Link>, puis par un <Link to="/connect" className="text-[#13254C] underline-offset-4 hover:underline">debrief</Link> court. Cela permet de choisir le bon point d entree avant d ouvrir un mandat plus large.</>
+                a: <>Le plus simple est de passer par l <Link to="/tool" className="text-[#13254C] underline-offset-4 hover:underline">instantane de preparation</Link>, puis par un <Link to="/connect" className="text-[#13254C] underline-offset-4 hover:underline">debrief</Link> court. Cela permet de choisir le bon point d entree avant d ouvrir un mandat plus large.</>
               }
             ]
           }
@@ -139,7 +139,7 @@ const FAQ = () => {
           {
             label: 'Best next move',
             title: 'Orient here, then scope the real case',
-            description: 'Use the FAQ to get oriented, then move to a debrief or revisability diagnostic when the facts become specific.'
+            description: 'Use the FAQ to get oriented, then move to a debrief or readiness snapshot when the facts become specific.'
           }
         ],
         closingLabel: 'Next step',
@@ -147,7 +147,7 @@ const FAQ = () => {
         closingBody: 'The best next move is a short debrief with the context, the pressure source, and the evidence burden you are likely to face.',
         actions: {
           connect: 'Book a debrief',
-          tool: 'Revisability diagnostic',
+          tool: 'Assess readiness',
           services: 'View services'
         },
         sections: [
@@ -207,7 +207,7 @@ const FAQ = () => {
               },
               {
                 q: 'How do we start without opening a heavyweight project?',
-                a: <>The lightest entry point is the <Link to="/tool" className="text-[#13254C] underline-offset-4 hover:underline">revisability diagnostic</Link>, followed by a short <Link to="/connect" className="text-[#13254C] underline-offset-4 hover:underline">debrief</Link>. That gives you the right entry point before you commit to a larger engagement.</>
+                a: <>The lightest entry point is the <Link to="/tool" className="text-[#13254C] underline-offset-4 hover:underline">readiness snapshot</Link>, followed by a short <Link to="/connect" className="text-[#13254C] underline-offset-4 hover:underline">debrief</Link>. That gives you the right entry point before you commit to a larger engagement.</>
               }
             ]
           }

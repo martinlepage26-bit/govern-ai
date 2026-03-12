@@ -39,7 +39,7 @@ const Navbar = () => {
     {
       title: language === 'fr' ? 'Entrées' : 'Entry points',
       links: [
-        { path: '/tool', label: language === 'fr' ? 'Diagnostic de révisabilité' : 'Revisability diagnostic', note: language === 'fr' ? 'Le premier point d interruption' : 'The first interruption point', featured: true },
+        { path: '/tool', label: language === 'fr' ? 'Instantané de préparation' : 'Readiness snapshot', note: language === 'fr' ? 'L’outil de départ' : 'The starting tool', featured: true },
         { path: '/connect', label: t.nav.connect, note: language === 'fr' ? 'Réserver une revue' : 'Book a review' },
         { path: '/services/menu', label: language === 'fr' ? 'Menu des services' : 'Service menu', note: language === 'fr' ? 'Choisir le bon parcours' : 'Choose the right route' },
         { path: '/faq', label: t.nav.faq, note: language === 'fr' ? 'Réponses rapides' : 'Quick answers' }
@@ -50,8 +50,7 @@ const Navbar = () => {
       links: [
         { path: '/library', label: t.nav.library, note: language === 'fr' ? 'Cadres et sources' : 'Frameworks and sources' },
         { path: '/cases', label: t.nav.cases, note: language === 'fr' ? 'Exemples de pression et de réponse' : 'Examples of pressure and response' },
-        { path: '/about/conceptual-method', label: language === 'fr' ? 'Méthode conceptuelle' : 'Conceptual method', note: language === 'fr' ? 'Logique de la pratique' : 'Method logic' },
-        { path: '/ai-governance-statement', label: language === 'fr' ? 'Énoncé de gouvernance IA' : 'AI governance statement', note: language === 'fr' ? 'Comment nous utilisons l IA' : 'How we use AI ourselves' }
+        { path: '/about/conceptual-method', label: language === 'fr' ? 'Méthode conceptuelle' : 'Conceptual method', note: language === 'fr' ? 'Logique de la pratique' : 'Method logic' }
       ]
     }
   ];

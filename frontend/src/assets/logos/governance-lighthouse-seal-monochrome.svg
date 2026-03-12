@@ -1,12 +1,18 @@
 <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12.6 53.4C22.58 39.56 34.44 32.65 48 32.65C61.56 32.65 73.42 39.56 83.4 53.4C73.42 67.24 61.56 74.15 48 74.15C34.44 74.15 22.58 67.24 12.6 53.4Z" stroke="currentColor" stroke-width="3.8" opacity="0.94" />
-  <path d="M24.3 53.4C31.35 44.79 39.25 40.48 48 40.48C56.75 40.48 64.65 44.79 71.7 53.4C64.65 62.01 56.75 66.32 48 66.32C39.25 66.32 31.35 62.01 24.3 53.4Z" stroke="currentColor" stroke-width="2.45" opacity="0.24" />
-  <path d="M42.07 21.95L48 16.4L53.93 21.95" stroke="currentColor" stroke-width="3.35" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M40.65 21.95H55.35L53.92 29.22H42.08L40.65 21.95Z" stroke="currentColor" stroke-width="3.1" stroke-linejoin="round" fill="currentColor" fill-opacity="0.04" />
-  <path d="M40.2 29.22H55.8V36.72H40.2V29.22Z" stroke="currentColor" stroke-width="3.1" stroke-linejoin="round" fill="currentColor" fill-opacity="0.04" />
-  <path d="M45.23 29.22V36.72" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" opacity="0.3" />
-  <path d="M50.77 29.22V36.72" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" opacity="0.3" />
-  <path d="M41.78 36.72H54.22L55.64 42.32H40.36L41.78 36.72Z" stroke="currentColor" stroke-width="3.1" stroke-linejoin="round" fill="currentColor" fill-opacity="0.04" />
-  <path d="M48 42.55C40.36 42.55 34.17 48.74 34.17 56.38C34.17 59.91 35.5 63.14 37.71 65.59L35.37 79.34H60.63L58.29 65.59C60.5 63.14 61.83 59.91 61.83 56.38C61.83 48.74 55.64 42.55 48 42.55Z" stroke="currentColor" stroke-width="3.9" stroke-linejoin="round" fill="currentColor" fill-opacity="0.04" />
-  <path d="M48 48.25C52.51 48.25 56.17 51.9 56.17 56.4C56.17 58.92 55.03 61.18 53.24 62.68L52.24 63.52L53.77 72.46H42.23L43.76 63.52L42.76 62.68C40.97 61.18 39.83 58.92 39.83 56.4C39.83 51.9 43.49 48.25 48 48.25Z" fill="currentColor" fill-opacity="0.14" />
+  <rect x="14.1" y="14.1" width="67.8" height="67.8" rx="7" transform="rotate(45 14.1 14.1)" stroke="currentColor" stroke-width="3.2" opacity="0.84" />
+  <path d="M15 48C24.73 34.32 35.72 27.48 48 27.48C60.28 27.48 71.27 34.32 81 48C71.27 61.68 60.28 68.52 48 68.52C35.72 68.52 24.73 61.68 15 48Z" stroke="currentColor" stroke-width="3.1" opacity="0.94" />
+  <path d="M25.95 48C32.96 38.82 40.31 34.23 48 34.23C55.69 34.23 63.04 38.82 70.05 48C63.04 57.18 55.69 61.77 48 61.77C40.31 61.77 32.96 57.18 25.95 48Z" stroke="currentColor" stroke-width="1.9" opacity="0.22" />
+  <circle cx="48" cy="48" r="8.9" stroke="currentColor" stroke-width="2.2" opacity="0.18" />
+  <path d="M47.9 17.4V28.2" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" opacity="0.7" />
+  <path d="M36.4 33.2L24.6 28.3" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" opacity="0.26" />
+  <path d="M59.6 33.2L71.4 28.3" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" opacity="0.26" />
+  <path d="M34.7 42.5L22.45 41.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.18" />
+  <path d="M61.3 42.5L73.55 41.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.18" />
+  <path d="M43.65 36.95L48 30.2L52.35 36.95" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="currentColor" fill-opacity="0.04" />
+  <path d="M42.9 36.95H53.1L55.5 65.35H40.5L42.9 36.95Z" stroke="currentColor" stroke-width="2.5" fill="currentColor" fill-opacity="0.04" />
+  <path d="M41.45 65.35H54.55" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M39.45 70.3H56.55" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M48 36.95V65.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.18" />
+  <path d="M48 29.1L51.6 32.8L48 36.95L44.4 32.8L48 29.1Z" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="0.9" />
+  <path d="M48 40.5L49.45 42L48 43.5L46.55 42L48 40.5Z" fill="currentColor" fill-opacity="0.56" />
 </svg>
