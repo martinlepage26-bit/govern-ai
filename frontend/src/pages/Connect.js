@@ -1,16 +1,22 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import SignalStrip from '../components/SignalStrip';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL || '';
+
 const initialForm = {
   name: '',
   email: '',
   organization: '',
+  date: '',
+  time: '',
   topic: '',
   context: ''
 };
+
+const BOOKING_SLOTS = ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00'];
 
 const CONNECT_COPY = {
   en: {
@@ -35,7 +41,7 @@ const CONNECT_COPY = {
       }
     ],
     formTitle: 'Book a review',
-    formBody: 'Fill in the basics. Martin will follow up with a scoped next step rather than a generic pitch.',
+    formBody: 'Request a 30-minute review online. Martin will confirm the slot or suggest an adjacent option rather than sending a generic pitch.',
     prepLabel: 'Before you submit',
     prepTitle: 'The fastest way to make the first review useful',
     prepItems: [
@@ -49,14 +55,21 @@ const CONNECT_COPY = {
     emailPlaceholder: 'you@company.com',
     organization: 'Organization',
     organizationPlaceholder: 'Company or institution',
+    date: 'Preferred date *',
+    datePlaceholder: 'Choose a date',
+    time: 'Preferred time *',
+    timePlaceholder: 'Select a time',
+    noSlotsAvailable: 'No open request slots remain for this date.',
+    loadingSlots: 'Loading current availability...',
     topic: 'What brings you here?',
     topicPlaceholder: 'Select a topic',
     context: 'Current state (optional)',
     contextPlaceholder: "Briefly describe your current governance setup, the pressure you're facing, or what triggered this outreach.",
-    submit: 'Submit request',
-    submitted: 'Your mail app should open with the draft ready to send. If it does not, write to consult@govern-ai.ca.',
+    submit: 'Request this time slot',
+    submitting: 'Submitting...',
+    submitted: 'Booking request submitted. Confirmation or rescheduling will follow within 24 hours.',
     directContact: 'Direct contact',
-    directBody: 'If email is easier, send the same basics directly.',
+    directBody: 'If the online request flow is not the right fit, email directly instead.',
     sendEmail: 'Send an email',
     linkedin: 'Connect on LinkedIn',
     internalModules: 'Internal modules',
@@ -122,7 +135,7 @@ const CONNECT_COPY = {
       }
     ],
     formTitle: 'Réserver un échange',
-    formBody: 'Donnez l’essentiel. Martin fera un suivi avec une prochaine étape cadrée plutôt qu’un discours générique.',
+    formBody: 'Demandez un échange de 30 minutes en ligne. Martin confirmera le créneau ou proposera une option voisine plutôt qu’un discours générique.',
     prepLabel: 'Avant l’envoi',
     prepTitle: 'La façon la plus rapide de rendre le premier échange utile',
     prepItems: [
@@ -136,14 +149,21 @@ const CONNECT_COPY = {
     emailPlaceholder: 'vous@organisation.ca',
     organization: 'Organisation',
     organizationPlaceholder: 'Entreprise ou institution',
+    date: 'Date souhaitée *',
+    datePlaceholder: 'Choisir une date',
+    time: 'Heure souhaitée *',
+    timePlaceholder: 'Sélectionner une heure',
+    noSlotsAvailable: 'Aucun créneau de demande ouvert ne reste pour cette date.',
+    loadingSlots: 'Chargement de la disponibilité actuelle...',
     topic: 'Quel est votre besoin ?',
     topicPlaceholder: 'Choisir un sujet',
     context: 'Contexte actuel (facultatif)',
     contextPlaceholder: 'Décrivez brièvement votre dispositif actuel de gouvernance, la pression à laquelle vous faites face ou ce qui a déclenché la prise de contact.',
-    submit: 'Envoyer la demande',
-    submitted: 'Votre application de courriel devrait s’ouvrir avec le brouillon prêt à envoyer. Sinon, écrivez à consult@govern-ai.ca.',
+    submit: 'Demander ce créneau',
+    submitting: 'Envoi en cours...',
+    submitted: 'Demande de réservation envoyée. Une confirmation ou une proposition de replanification suivra dans les 24 heures.',
     directContact: 'Contact direct',
-    directBody: 'Si le courriel est plus simple, envoyez directement les mêmes éléments.',
+    directBody: 'Si le parcours de réservation en ligne ne convient pas, écrivez directement.',
     sendEmail: 'Envoyer un courriel',
     linkedin: 'Écrire sur LinkedIn',
     internalModules: 'Modules internes',
@@ -193,22 +213,100 @@ const Connect = () => {
   const { language } = useLanguage();
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [slotsLoading, setSlotsLoading] = useState(true);
 
   const copy = useMemo(() => CONNECT_COPY[language], [language]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadBookedSlots = async () => {
+      try {
+        setSlotsLoading(true);
+        const response = await fetch(`${API_URL}/api/bookings/booked-slots`);
+        if (!response.ok) {
+          throw new Error(`Availability request failed with ${response.status}`);
+        }
+        const payload = await response.json();
+        if (!cancelled) {
+          setBookedSlots(Array.isArray(payload) ? payload : []);
+        }
+      } catch (_error) {
+        if (!cancelled) {
+          setBookedSlots([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setSlotsLoading(false);
+        }
+      }
+    };
+
+    loadBookedSlots();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const selectedDateBookedSlots = bookedSlots
+    .filter((slot) => slot.date === form.date)
+    .map((slot) => slot.time);
+
+  const availableSlots = BOOKING_SLOTS.filter((slot) => !selectedDateBookedSlots.includes(slot));
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent(`${copy.subject}: ${form.topic || copy.generalInquiry}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nOrganization: ${form.organization}\nTopic: ${form.topic || copy.generalInquiry}\n\n${copy.currentState}\n${form.context || copy.noContext}`
-    );
-    window.location.href = `mailto:consult@govern-ai.ca?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setSubmitError('');
+
+    try {
+      setSubmitting(true);
+      const response = await fetch(`${API_URL}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          organization: form.organization,
+          date: form.date,
+          time: form.time,
+          topic: form.topic || copy.generalInquiry,
+          current_state: form.context || copy.noContext
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Booking request failed with ${response.status}`);
+      }
+
+      setSubmitted(true);
+      setForm((current) => ({
+        ...initialForm,
+        name: current.name,
+        email: current.email,
+        organization: current.organization
+      }));
+
+      const refreshed = await fetch(`${API_URL}/api/bookings/booked-slots`);
+      if (refreshed.ok) {
+        const payload = await refreshed.json();
+        setBookedSlots(Array.isArray(payload) ? payload : []);
+      }
+    } catch (_error) {
+      setSubmitError(language === 'fr'
+        ? "La demande de réservation n’a pas pu être envoyée. Veuillez réessayer ou écrire à pharos@govern-ai.ca."
+        : 'Booking request could not be sent. Please try again or email pharos@govern-ai.ca.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -260,6 +358,34 @@ const Connect = () => {
                   </div>
 
                   <div className="form-field">
+                    <label htmlFor="date">{copy.date}</label>
+                    <input
+                      id="date"
+                      name="date"
+                      type="date"
+                      value={form.date}
+                      onChange={handleChange}
+                      min={new Date().toISOString().split('T')[0]}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-field">
+                    <label htmlFor="time">{copy.time}</label>
+                    <select id="time" name="time" value={form.time} onChange={handleChange} required disabled={!form.date}>
+                      <option value="">{copy.timePlaceholder}</option>
+                      {availableSlots.map((item) => (
+                        <option key={item} value={item}>{item} ET</option>
+                      ))}
+                    </select>
+                    {slotsLoading ? (
+                      <p className="body-sm" style={{ marginTop: '8px' }}>{copy.loadingSlots}</p>
+                    ) : form.date && availableSlots.length === 0 ? (
+                      <p className="body-sm" style={{ marginTop: '8px' }}>{copy.noSlotsAvailable}</p>
+                    ) : null}
+                  </div>
+
+                  <div className="form-field">
                     <label htmlFor="topic">{copy.topic}</label>
                     <select id="topic" name="topic" value={form.topic} onChange={handleChange}>
                       <option value="">{copy.topicPlaceholder}</option>
@@ -280,18 +406,25 @@ const Connect = () => {
                     />
                   </div>
 
-                  <button type="submit" className="btn-dark" style={{ width: '100%', justifyContent: 'center' }}>
-                    {copy.submit}
+                  <button
+                    type="submit"
+                    className="btn-dark"
+                    style={{ width: '100%', justifyContent: 'center' }}
+                    disabled={submitting || !form.date || !form.time}
+                  >
+                    {submitting ? copy.submitting : copy.submit}
                     <ArrowRight />
                   </button>
                 </form>
 
-                {submitted ? (
-                  <p className="body-sm" style={{ marginTop: '20px' }}>
-                    {copy.submitted.split('consult@govern-ai.ca')[0]}
-                    <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
-                    {copy.submitted.split('consult@govern-ai.ca')[1]}
+                {submitError ? (
+                  <p className="body-sm" style={{ marginTop: '20px', color: '#b42318' }}>
+                    {submitError}
                   </p>
+                ) : null}
+
+                {submitted ? (
+                  <p className="body-sm" style={{ marginTop: '20px' }}>{copy.submitted}</p>
                 ) : null}
               </div>
             </div>
@@ -303,10 +436,10 @@ const Connect = () => {
                   {copy.directBody}
                 </p>
                 <p style={{ fontSize: '1.125rem', fontWeight: 500, marginBottom: '4px' }}>
-                  <a href="mailto:consult@govern-ai.ca">consult@govern-ai.ca</a>
+                  <a href="mailto:pharos@govern-ai.ca">pharos@govern-ai.ca</a>
                 </p>
                 <p style={{ fontSize: '0.875rem', color: 'rgba(245,245,240,0.78)', marginBottom: '20px' }}>{copy.location}</p>
-                <a href="mailto:consult@govern-ai.ca" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                <a href="mailto:pharos@govern-ai.ca" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
                   {copy.sendEmail}
                 </a>
                 <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: '12px', fontSize: '0.875rem', color: 'rgba(245,245,240,0.82)' }}>
