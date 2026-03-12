@@ -152,68 +152,68 @@ const Tool = () => {
   const isLastQuestion = currentQuestion === readinessQuestions.length - 1;
 
   return (
-    <div className="min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="tool-page">
-      <div className="mx-auto max-w-[1240px]">
-        <section className="brand-panel-dark brand-top-rule relative mb-8 overflow-hidden rounded-[34px] px-6 py-8 text-white md:px-8 md:py-10">
+    <div className="min-h-screen bg-transparent px-5 pb-8 pt-[92px] md:px-8 md:pb-10 md:pt-[108px]" data-testid="tool-page">
+      <div className="mx-auto max-w-[1160px]">
+        <section className="brand-panel-dark brand-top-rule relative mb-6 overflow-hidden rounded-[30px] px-5 py-6 text-white md:px-7 md:py-7">
           <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />
           <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
-          <div className="relative grid gap-8 lg:grid-cols-[1fr_0.96fr] lg:items-start">
+          <div className="relative grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
             <div>
-              <p className="mb-4 text-[11px] uppercase tracking-[0.22em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+              <p className="mb-3 text-[10px] uppercase tracking-[0.2em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.eyebrow}
               </p>
-              <h1 className="max-w-[17ch] text-[28px] leading-[1.05] tracking-[-0.05em] text-[#F6F0E4] sm:text-[31px] md:max-w-[12ch] md:text-[56px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+              <h1 className="max-w-[16ch] text-[26px] leading-[1.03] tracking-[-0.05em] text-[#F6F0E4] sm:text-[30px] md:max-w-[12ch] md:text-[48px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {copy.title}
               </h1>
-              <p className="mt-4 max-w-[56ch] text-[14px] leading-[1.7] text-white/82 md:mt-5 md:max-w-[62ch] md:text-[17px] md:leading-[1.78]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+              <p className="mt-3 max-w-[54ch] text-[13px] leading-[1.65] text-white/82 md:mt-4 md:max-w-[60ch] md:text-[15px] md:leading-[1.72]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.body}
               </p>
             </div>
 
-            <div className="rounded-[30px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-5 shadow-[0_22px_42px_rgba(8,20,40,0.18)]">
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-[18px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
-                  <img src={lighthouseMark} alt="PHAROS lighthouse mark" className="h-10 w-10" />
+            <div className="rounded-[26px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-4 shadow-[0_18px_34px_rgba(8,20,40,0.16)]">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[16px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
+                  <img src={lighthouseMark} alt="PHAROS lighthouse mark" className="h-8 w-8" />
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                  <p className="text-[10px] uppercase tracking-[0.14em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                     {copy.noteLabel}
                   </p>
-                  <p className="mt-1 text-sm" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
+                  <p className="mt-1 text-[13px] leading-[1.4]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", color: 'rgba(16, 22, 42, 0.78)' }}>
                     {copy.noteTitle}
                   </p>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-[1.76] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+              <p className="mt-3 text-[13px] leading-[1.65] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                 {copy.noteBody}
               </p>
             </div>
           </div>
         </section>
 
-        <section className="mb-8">
-          <div className="mb-5 max-w-[860px]">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+        <section className="mb-6">
+          <div className="mb-4 max-w-[780px]">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
               {copy.runLabel}
             </p>
-            <h2 className="mt-2 max-w-[15ch] text-[27px] leading-[1.06] text-[#10162A] md:max-w-none md:text-[38px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+            <h2 className="mt-1.5 max-w-[15ch] text-[24px] leading-[1.04] text-[#10162A] md:max-w-none md:text-[34px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
               {copy.runTitle}
             </h2>
-            <p className="mt-3 text-sm leading-[1.8] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+            <p className="mt-2 text-[13px] leading-[1.68] text-[#20314F]/72 md:text-[14px]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
               {copy.runBody}
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-3">
             {copy.noteCards.map((card) => (
-              <article key={card.title} className="rounded-[24px] border border-[#D6CCBB] bg-[#FBF7EF]/92 p-5 shadow-[0_12px_24px_rgba(8,20,40,0.05)]">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl border border-[#B89B5E]/16 bg-[#F2E8D8]">
-                  <card.icon className="h-5 w-5 text-[#13254C]" />
+              <article key={card.title} className="rounded-[20px] border border-[#D6CCBB] bg-[#FBF7EF]/92 p-4 shadow-[0_10px_18px_rgba(8,20,40,0.04)]">
+                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-[14px] border border-[#B89B5E]/16 bg-[#F2E8D8]">
+                  <card.icon className="h-4.5 w-4.5 text-[#13254C]" />
                 </div>
-                <h3 className="text-[23px] leading-[1.08] text-[#10162A] md:text-[24px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+                <h3 className="text-[20px] leading-[1.05] text-[#10162A] md:text-[22px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                   {card.title}
                 </h3>
-                <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                <p className="mt-2 text-[13px] leading-[1.62] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                   {card.description}
                 </p>
               </article>
@@ -221,13 +221,13 @@ const Tool = () => {
           </div>
         </section>
 
-        <section className="brand-panel rounded-[32px] px-6 py-7 md:px-8 md:py-8">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <section className="brand-panel rounded-[28px] px-5 py-5 md:px-6 md:py-6">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 {step === 1 ? copy.sectorPrompt : copy.questionPrompt}
               </p>
-              <div className="mt-3 flex gap-3 text-[11px] uppercase tracking-[0.18em]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+              <div className="mt-2.5 flex gap-2.5 text-[10px] uppercase tracking-[0.16em]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                 <span className={step >= 1 ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.sector}</span>
                 <span className="text-[#6F5626]">/</span>
                 <span className={step >= 2 ? 'text-[#13254C]' : 'text-[#20314F]/38'}>{t.tool.steps.readiness}</span>
@@ -237,7 +237,7 @@ const Tool = () => {
             </div>
             <button
               onClick={handleReset}
-              className="rounded-full border border-[#D6CCBB] bg-white px-4 py-2 text-sm text-[#13254C] transition-colors hover:border-[#B89B5E]/34"
+              className="rounded-full border border-[#D6CCBB] bg-white px-3.5 py-1.5 text-[13px] text-[#13254C] transition-colors hover:border-[#B89B5E]/34"
               style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
               data-testid="reset-btn"
             >
@@ -247,22 +247,22 @@ const Tool = () => {
 
           {step === 1 && (
             <div data-testid="step-1-sector">
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3">
                 {sectorKeys.map((key, i) => (
                   <button
                     key={key}
                     onClick={() => handleSectorSelect(sectorIds[i])}
                     data-testid={`sector-${sectorIds[i]}`}
-                    className={`rounded-[22px] border p-4 text-left transition-colors ${
+                    className={`rounded-[18px] border p-3.5 text-left transition-colors ${
                       selectedSector === sectorIds[i]
                         ? 'border-[#13254C] bg-[#F2E8D8] shadow-[0_12px_24px_rgba(8,20,40,0.08)]'
                         : 'border-[#D6CCBB] bg-[#FFFDF8] hover:border-[#B89B5E]/34'
                     }`}
                   >
-                    <h3 className="text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                    <h3 className="text-[13px] leading-[1.35] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                       {t.tool.sectors[key].title}
                     </h3>
-                    <p className="mt-2 text-sm leading-[1.65] text-[#20314F]/68" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                    <p className="mt-1.5 text-[12px] leading-[1.55] text-[#20314F]/68" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                       {t.tool.sectors[key].description}
                     </p>
                   </button>
@@ -273,9 +273,9 @@ const Tool = () => {
 
           {step === 2 && (
             <div data-testid="step-2-readiness">
-              <div className="rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
-                <div className="mb-4 flex items-center justify-between gap-4">
-                  <h3 className="text-[26px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+              <div className="rounded-[20px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                <div className="mb-3 flex items-center justify-between gap-4">
+                  <h3 className="text-[22px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {readinessQuestions.length}
                   </h3>
                   <div className="flex gap-1.5">
@@ -290,18 +290,18 @@ const Tool = () => {
                   </div>
                 </div>
 
-                <p className="text-[18px] leading-[1.6] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }} data-testid={`question-${currentQuestionData.id}`}>
+                <p className="text-[16px] leading-[1.55] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }} data-testid={`question-${currentQuestionData.id}`}>
                   {currentQuestionData.question}
                 </p>
 
-                <div className="mt-5 grid gap-3 md:grid-cols-3">
+                <div className="mt-4 grid gap-2.5 md:grid-cols-3">
                   {currentQuestionData.options.map((option) => {
                     const isSelected = answers[currentQuestionData.id]?.value === option.value;
                     return (
                       <button
                         key={option.value}
                         onClick={() => handleAnswer(currentQuestionData.id, option.value, option.score)}
-                        className={`rounded-[18px] border px-4 py-4 text-sm transition-colors ${
+                        className={`rounded-[16px] border px-3 py-3 text-[13px] transition-colors ${
                           isSelected
                             ? 'border-[#13254C] bg-[#F2E8D8] text-[#13254C]'
                             : 'border-[#D6CCBB] bg-[#FBF7EF] text-[#20314F] hover:border-[#B89B5E]/34'
@@ -317,11 +317,11 @@ const Tool = () => {
             </div>
           )}
 
-          <div className="mt-6 flex items-center gap-3 border-t border-[#E6DDCD] pt-5">
+          <div className="mt-5 flex items-center gap-3 border-t border-[#E6DDCD] pt-4">
             {(step > 1 || (step === 2 && currentQuestion > 0)) && (
               <button
                 onClick={handleBack}
-                className="text-sm text-[#20314F] transition-colors hover:text-[#13254C]"
+                className="text-[13px] text-[#20314F] transition-colors hover:text-[#13254C]"
                 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                 data-testid="back-btn"
               >
@@ -333,7 +333,7 @@ const Tool = () => {
               onClick={handleNext}
               disabled={!canProceed}
               data-testid="next-btn"
-              className={`ml-auto inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm transition-colors ${
+              className={`ml-auto inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[13px] transition-colors ${
                 canProceed
                   ? 'bg-[#13254C] text-[#F6F0E4] hover:bg-[#0F1D37]'
                   : 'bg-[#E8E1D3] text-[#8E8A80] cursor-not-allowed'
@@ -351,13 +351,13 @@ const Tool = () => {
         <>
           <div className="fixed inset-0 z-[4000] bg-[#081428]/40 backdrop-blur-sm" onClick={() => setDrawerOpen(false)} data-testid="drawer-backdrop" />
           <div className="fixed right-0 top-0 z-[4500] flex h-screen w-full flex-col overflow-hidden border-l border-[#D6CCBB] bg-[#FFFDF8] shadow-2xl md:w-[520px]" data-testid="results-drawer">
-            <div className="border-b border-[#E7DECE] bg-[#0F1D37] p-6 text-white">
+            <div className="border-b border-[#E7DECE] bg-[#0F1D37] p-5 text-white">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-[#D8C08A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                     {t.tool.steps.results}
                   </p>
-                  <h3 className="mt-2 text-[30px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+                  <h3 className="mt-1.5 text-[28px]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {t.tool.results.title}
                   </h3>
                 </div>
@@ -367,7 +367,7 @@ const Tool = () => {
               </div>
             </div>
 
-            <div className="flex-1 overflow-auto p-6">
+            <div className="flex-1 overflow-auto p-5">
               {(() => {
                 const { score, total, percentage } = calculateScore();
                 const { risk, recommendation } = getReadinessLevel(percentage);
@@ -378,39 +378,39 @@ const Tool = () => {
 
                 return (
                   <>
-                    <div className="rounded-[26px] border border-[#D6CCBB] bg-[#FBF7EF] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
-                      <div className="grid grid-cols-[112px_1fr] gap-4 items-center">
+                    <div className="rounded-[22px] border border-[#D6CCBB] bg-[#FBF7EF] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                      <div className="grid grid-cols-[100px_1fr] gap-4 items-center">
                         <div
-                          className="grid h-[112px] w-[112px] place-items-center rounded-full"
+                          className="grid h-[100px] w-[100px] place-items-center rounded-full"
                           style={{ background: `conic-gradient(${tone} ${percentage * 3.6}deg, rgba(8,20,40,0.08) ${percentage * 3.6}deg 360deg)` }}
                         >
-                          <div className="grid h-[82px] w-[82px] place-items-center rounded-full border border-[#D6CCBB] bg-white text-[24px] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 700 }}>
+                          <div className="grid h-[74px] w-[74px] place-items-center rounded-full border border-[#D6CCBB] bg-white text-[22px] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 700 }}>
                             {percentage}%
                           </div>
                         </div>
                         <div>
-                          <p className="text-[11px] uppercase tracking-[0.18em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                          <p className="text-[10px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                             {sectorTitle}
                           </p>
-                          <p className="mt-2 text-[28px]" style={{ color: tone, fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+                          <p className="mt-1.5 text-[26px]" style={{ color: tone, fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                             {risk}
                           </p>
-                          <p className="mt-2 text-sm leading-[1.75] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                          <p className="mt-1.5 text-[13px] leading-[1.65] text-[#20314F]/76" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                             {recommendation}
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-4 rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
-                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+                    <div className="mt-4 rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                      <h4 className="text-[22px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {t.tool.results.scoreBreakdown}
                       </h4>
-                      <div className="mt-4 space-y-3">
+                      <div className="mt-3 space-y-2.5">
                         {readinessQuestions.map((question) => {
                           const answer = answers[question.id];
                           return (
-                            <div key={question.id} className="flex items-center justify-between gap-3 text-sm">
+                            <div key={question.id} className="flex items-center justify-between gap-3 text-[13px]">
                               <span className="min-w-0 flex-1 text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }} title={question.question}>
                                 {question.question}
                               </span>
@@ -429,24 +429,24 @@ const Tool = () => {
                           );
                         })}
                       </div>
-                      <div className="mt-4 flex items-center justify-between border-t border-[#E6DDCD] pt-4 text-sm text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
+                      <div className="mt-3 flex items-center justify-between border-t border-[#E6DDCD] pt-3 text-[13px] text-[#10162A]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
                         <span>{t.tool.results.total}</span>
                         <span>{score}/{total}</span>
                       </div>
                     </div>
 
-                    <div className="mt-4 rounded-[24px] border border-[#D6CCBB] bg-[#FFFDF8] p-5 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
-                      <h4 className="text-[24px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
+                    <div className="mt-4 rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                      <h4 className="text-[22px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {t.tool.results.recommendedSteps}
                       </h4>
-                      <p className="mt-3 text-sm leading-[1.72] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                      <p className="mt-2.5 text-[13px] leading-[1.65] text-[#20314F]/72" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                         {language === 'fr'
                           ? 'Ces suites recommandent un point de depart. Elles ne transforment pas automatiquement un etat partiel en gouvernance complete.'
                           : 'These next steps recommend a starting point. They do not automatically turn a partial state into complete governance.'}
                       </p>
-                      <ul className="mt-4 space-y-3">
+                      <ul className="mt-3 space-y-2.5">
                         {nextSteps.map((stepItem, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm leading-[1.72] text-[#20314F]/74" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                          <li key={index} className="flex items-start gap-2 text-[13px] leading-[1.62] text-[#20314F]/74" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
                             <ArrowRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#13254C]" />
                             <span>{stepItem}</span>
                           </li>
@@ -454,7 +454,7 @@ const Tool = () => {
                       </ul>
                     </div>
 
-                    <div className="mt-6 flex flex-wrap gap-3">
+                    <div className="mt-5 flex flex-wrap gap-3">
                       <Link to="/connect" className="brand-button-primary" data-testid="book-debrief-btn">
                         {copy.discuss}
                         <ArrowRight className="h-4 w-4" />
@@ -464,7 +464,7 @@ const Tool = () => {
                       </Link>
                       <button
                         onClick={handleReset}
-                        className="ml-auto text-sm text-[#20314F] transition-colors hover:text-[#13254C]"
+                        className="ml-auto text-[13px] text-[#20314F] transition-colors hover:text-[#13254C]"
                         style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
                       >
                         {t.tool.results.retake}
