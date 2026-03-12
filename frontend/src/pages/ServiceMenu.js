@@ -41,7 +41,7 @@ const ServiceMenu = () => {
         closingBody: 'Une revue courte suffit pour choisir entre la gouvernance deterministe, une revue pre-mortem et une revue post-mortem sans surestimer l etat de preparation actuel.',
         actions: {
           connect: 'Reserver une revue',
-          tool: 'Evaluer la preparation'
+          tool: 'Diagnostic de revisabilite'
         },
         drivers: [
           {
@@ -82,7 +82,7 @@ const ServiceMenu = () => {
         closingBody: 'A short review is enough to choose between deterministic governance, a pre-mortem review, and a post-mortem review without overstating current readiness.',
         actions: {
           connect: 'Book a review',
-          tool: 'Assess readiness'
+          tool: 'Revisability diagnostic'
         },
         drivers: [
           {

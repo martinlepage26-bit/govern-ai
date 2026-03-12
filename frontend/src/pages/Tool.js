@@ -36,8 +36,8 @@ const Tool = () => {
 
   const copy = language === 'fr'
     ? {
-        eyebrow: 'Outil',
-        title: 'Un instantane rapide pour voir ou la gouvernance tient, et ou elle reste encore fragile.',
+        eyebrow: 'Diagnostic de révisabilité',
+        title: 'Voir si votre système gouverne encore la matière première, ou seulement la mémoire de ses propres décisions.',
         body: 'Choisissez l environnement le plus proche de votre travail, repondez a huit questions, et obtenez une lecture rapide des zones ou les controles, la preuve et les droits de decision restent trop minces pour soutenir une revue sereinement.',
         noteLabel: 'Ce que fait l outil',
         noteTitle: 'Reperer la couche manquante avant que la revue ne la force.',
@@ -59,8 +59,8 @@ const Tool = () => {
             description: 'Voir si la documentation existe deja dans une forme lisible et defendable.'
           }
         ],
-        runLabel: 'Evaluation',
-        runTitle: 'Faire l instantane de preparation',
+        runLabel: 'Diagnostic',
+        runTitle: 'Faire le diagnostic de révisabilité',
         runBody: 'Le resultat n est pas un verdict final. C est un signal sur l endroit ou le travail doit commencer, et sur les zones ou le statut devrait rester provisoire.',
         sectorPrompt: 'Choisissez l environnement le plus proche de votre travail',
         questionPrompt: 'Repondez selon l etat actuel, pas selon le modele ideal',
@@ -69,8 +69,8 @@ const Tool = () => {
         services: 'Voir la revue pre-mortem'
       }
     : {
-        eyebrow: 'Tool',
-        title: 'A quick snapshot of governance strength and thin spots',
+        eyebrow: 'Revisability diagnostic',
+        title: 'See whether your system still governs first-order material, or only the memory of its own prior decisions.',
         body: 'Choose the closest environment, answer eight questions, and get a fast signal on where governance still needs structure before review pressure turns those gaps into blockers.',
         noteLabel: 'What the tool does',
         noteTitle: 'Locate the missing layer before review forces it.',
@@ -92,8 +92,8 @@ const Tool = () => {
             description: 'Check whether documentation already exists in a legible and defensible form.'
           }
         ],
-        runLabel: 'Assessment',
-        runTitle: 'Run the readiness snapshot',
+        runLabel: 'Diagnostic',
+        runTitle: 'Run the revisability diagnostic',
         runBody: 'The result is not a final judgment. It is a signal about where the work likely needs to begin and where the status should remain provisional.',
         sectorPrompt: 'Choose the environment closest to your work',
         questionPrompt: 'Answer for the current state, not the ideal one',

@@ -1,0 +1,63 @@
+<svg width="1360" height="768" viewBox="0 0 1360 768" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pharos-bg" x1="680" y1="0" x2="680" y2="768" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#102136" />
+      <stop offset="0.55" stop-color="#0B1730" />
+      <stop offset="1" stop-color="#07111D" />
+    </linearGradient>
+    <radialGradient id="pharos-top-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(680 64) rotate(90) scale(166 300)">
+      <stop stop-color="#D3BE8A" stop-opacity="0.24" />
+      <stop offset="1" stop-color="#D3BE8A" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="pharos-beam-right" x1="723" y1="165" x2="1114" y2="165" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E7FFF9" stop-opacity="0.92" />
+      <stop offset="0.4" stop-color="#B8FFF5" stop-opacity="0.62" />
+      <stop offset="1" stop-color="#7CF0F2" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="pharos-beam-up" x1="680" y1="10" x2="680" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C0FFF8" stop-opacity="0" />
+      <stop offset="0.4" stop-color="#DFFFFD" stop-opacity="0.34" />
+      <stop offset="1" stop-color="#88F2EE" stop-opacity="0.88" />
+    </linearGradient>
+    <linearGradient id="pharos-bronze" x1="680" y1="166" x2="680" y2="489" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E2C18F" />
+      <stop offset="0.55" stop-color="#C89B63" />
+      <stop offset="1" stop-color="#B6844D" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1360" height="768" fill="url(#pharos-bg)" />
+  <rect width="1360" height="768" fill="url(#pharos-top-glow)" />
+
+  <path d="M0 143C362 111 998 105 1360 144" stroke="#C6B58C" stroke-opacity="0.35" stroke-width="2" />
+  <path d="M0 255C370 233 990 227 1360 255" stroke="#C6B58C" stroke-opacity="0.24" stroke-width="1.6" />
+  <path d="M0 379C388 369 972 365 1360 379" stroke="#C6B58C" stroke-opacity="0.16" stroke-width="1.4" />
+  <path d="M0 628C335 592 1025 590 1360 628" stroke="#D0C29A" stroke-opacity="0.62" stroke-width="2.2" />
+  <path d="M188 0C165 247 165 521 188 768" stroke="#C6B58C" stroke-opacity="0.26" stroke-width="1.7" />
+  <path d="M470 0C455 247 455 521 470 768" stroke="#C6B58C" stroke-opacity="0.18" stroke-width="1.45" />
+  <path d="M680 0C680 247 680 521 680 768" stroke="#C6B58C" stroke-opacity="0.12" stroke-width="1.25" />
+  <path d="M890 0C905 247 905 521 890 768" stroke="#C6B58C" stroke-opacity="0.18" stroke-width="1.45" />
+  <path d="M1172 0C1195 247 1195 521 1172 768" stroke="#C6B58C" stroke-opacity="0.26" stroke-width="1.7" />
+
+  <path d="M239 768C335 697 489 654 680 642C871 654 1025 697 1121 768" stroke="#C8BA92" stroke-opacity="0.16" stroke-width="1.5" />
+  <path d="M118 768C257 675 448 620 680 607C912 620 1103 675 1242 768" stroke="#C8BA92" stroke-opacity="0.18" stroke-width="1.7" />
+  <path d="M0 768C171 654 394 582 680 565C966 582 1189 654 1360 768" stroke="#D8CAA3" stroke-opacity="0.4" stroke-width="2" />
+
+  <path d="M680 92L736 222H624L680 92Z" fill="url(#pharos-beam-up)" opacity="0.92" />
+  <path d="M714 145L1118 145L1010 220H714V145Z" fill="url(#pharos-beam-right)" opacity="0.86" />
+
+  <g filter="url(#none)">
+    <path d="M426 376C503 272 588 220 680 220C772 220 857 272 934 376C857 480 772 532 680 532C588 532 503 480 426 376Z" stroke="url(#pharos-bronze)" stroke-width="14" />
+    <path d="M518 376C569 312 623 280 680 280C737 280 791 312 842 376C791 440 737 472 680 472C623 472 569 440 518 376Z" stroke="url(#pharos-bronze)" stroke-opacity="0.72" stroke-width="8" />
+    <path d="M635 166L680 124L725 166" stroke="url(#pharos-bronze)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M621 166H739L724 236H636L621 166Z" stroke="url(#pharos-bronze)" stroke-width="10" stroke-linejoin="round" fill="#0D172B" fill-opacity="0.32" />
+    <path d="M618 236H742V286H618V236Z" stroke="url(#pharos-bronze)" stroke-width="10" stroke-linejoin="round" fill="#0D172B" fill-opacity="0.3" />
+    <path d="M658 236V286" stroke="url(#pharos-bronze)" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round" />
+    <path d="M702 236V286" stroke="url(#pharos-bronze)" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round" />
+    <path d="M633 286H727L739 330H621L633 286Z" stroke="url(#pharos-bronze)" stroke-width="10" stroke-linejoin="round" fill="#0D172B" fill-opacity="0.32" />
+    <path d="M680 328C619 328 570 377 570 438C570 466 581 491 600 511L581 620H779L760 511C779 491 790 466 790 438C790 377 741 328 680 328Z" stroke="url(#pharos-bronze)" stroke-width="14" stroke-linejoin="round" fill="#0D172B" fill-opacity="0.22" />
+    <path d="M680 374C715 374 744 403 744 438C744 458 735 475 719 488L711 495L724 572H636L649 495L641 488C625 475 616 458 616 438C616 403 645 374 680 374Z" fill="#0B1730" fill-opacity="0.36" stroke="url(#pharos-bronze)" stroke-opacity="0.38" stroke-width="3" />
+  </g>
+
+  <text x="680" y="684" text-anchor="middle" fill="url(#pharos-bronze)" font-family="Space Grotesk, Arial, sans-serif" font-size="74" font-weight="500" letter-spacing="18">PHAROS</text>
+</svg>

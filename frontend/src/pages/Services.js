@@ -25,7 +25,7 @@ const SERVICES_COPY = {
     ctaTitle: 'Need help choosing the right entry point?',
     ctaBody: 'A short review is enough to choose whether the work belongs in deterministic governance, a pre-mortem, or a post-mortem.',
     bookReview: 'Book a review',
-    assessReadiness: 'Assess readiness',
+    assessReadiness: 'Run revisability diagnostic',
     summary: [
       {
         label: 'Best for',
