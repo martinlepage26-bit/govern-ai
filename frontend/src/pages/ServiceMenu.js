@@ -235,7 +235,7 @@ const ServiceMenu = () => {
     : fallbackPackages.map((pkg, index) => ({ ...pkg, packageNumber: index + 1 }));
 
   return (
-    <div className="min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="service-menu-page">
+    <div className="service-menu-page min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="service-menu-page">
       <div className="mx-auto max-w-[1240px]">
         <section className="brand-panel-dark brand-top-rule relative mb-8 overflow-hidden rounded-[34px] px-6 py-8 text-white md:px-8 md:py-10">
           <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />

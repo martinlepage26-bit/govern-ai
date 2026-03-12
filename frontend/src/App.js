@@ -1,5 +1,5 @@
 import './App.css';
-import './claude-v01.css';
+import './site.css';
 import './game.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
@@ -21,6 +21,7 @@ import Library from './pages/Library';
 import Portfolio from './pages/Portfolio';
 import PortalAurorAI from './pages/PortalAurorAI';
 import PortalCompassAI from './pages/PortalCompassAI';
+import PortalLotus from './pages/PortalLotus';
 import Research from './pages/Research';
 import SealedCard from './pages/SealedCard';
 import ServiceMenu from './pages/ServiceMenu';
@@ -34,21 +35,26 @@ function AppRoutes() {
       <ScrollToTop />
       <TypographyPolish />
       <Navbar />
-      <main className="relative">
+      <main className="site-main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<Game />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/governance" element={<Services />} />
           <Route path="/services/menu" element={<ServiceMenu />} />
           <Route path="/tool" element={<Tool />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/research" element={<Research />} />
+          <Route path="/observatory" element={<Research />} />
           <Route path="/cases" element={<Cases />} />
           <Route path="/about" element={<About />} />
           <Route path="/about/conceptual-method" element={<ConceptualMethod />} />
+          <Route path="/methods" element={<ConceptualMethod />} />
           <Route path="/connect" element={<Connect />} />
+          <Route path="/contact" element={<Connect />} />
           <Route path="/portal/aurorai" element={<PortalAurorAI />} />
           <Route path="/portal/compassai" element={<PortalCompassAI />} />
+          <Route path="/portal/lotus" element={<PortalLotus />} />
           <Route path="/sealed-card" element={<SealedCard />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/library" element={<Library />} />

@@ -9,27 +9,31 @@ const Footer = () => {
     ? {
         brandTitle: 'PHAROS footer mark',
         founderLine: 'Une pratique de Martin Lepage, PhD',
-        tagline: 'Une gouvernance lisible quand vient le vrai examen.',
-        proofLine: 'Pour l approvisionnement, l audit, la revue fournisseur et la surveillance de comite.',
-        practice: 'Pratique',
-        services: 'Services',
-        research: 'Recherche',
-        about: 'À propos',
-        connect: 'Nous joindre',
-        book: 'Réserver un échange',
+        tagline: 'Un observatoire decentralise pour la gouvernance de l IA.',
+        proofLine: 'Observer, structurer et evaluer la gouvernance a travers les modeles, les institutions, les normes et les revendications.',
+        navigation: 'Navigation',
+        home: 'Accueil',
+        about: 'A propos',
+        observatory: 'Observatoire',
+        governance: 'Gouvernance',
+        methods: 'Methodes',
+        connect: 'Contact',
+        book: 'Demandes de recherche et de collaboration',
         location: 'Montréal, Québec, Canada'
       }
     : {
         brandTitle: 'PHAROS footer mark',
         founderLine: 'A practice by Martin Lepage, PhD',
-        tagline: 'Legible governance for real review.',
-        proofLine: 'For procurement, audit, vendor review, and executive oversight.',
-        practice: 'Practice',
-        services: 'Services',
-        research: 'Research',
+        tagline: 'A decentralized observatory for AI governance.',
+        proofLine: 'Observing, structuring, and evaluating governance across models, institutions, standards, and claims.',
+        navigation: 'Navigation',
+        home: 'Home',
         about: 'About',
-        connect: 'Connect',
-        book: 'Book a debrief',
+        observatory: 'Observatory',
+        governance: 'Governance',
+        methods: 'Methods',
+        connect: 'Contact',
+        book: 'Research and collaboration inquiries',
         location: 'Montreal, Quebec, Canada'
       };
 
@@ -38,9 +42,9 @@ const Footer = () => {
       <div className="container">
         <div className="footer-top">
           <div className="footer-brand">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+            <div className="footer-lockup">
               <LighthouseGlyph className="nav-logo" title={copy.brandTitle} />
-              <span style={{ fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', fontSize: '0.75rem', color: 'var(--glow-primary)' }}>
+              <span className="footer-wordmark">
                 PHAROS
               </span>
             </div>
@@ -50,15 +54,17 @@ const Footer = () => {
           </div>
 
           <div className="footer-col">
-            <h4>{copy.practice}</h4>
-            <Link to="/services">{copy.services}</Link>
-            <Link to="/research">{copy.research}</Link>
+            <h4>{copy.navigation}</h4>
+            <Link to="/">{copy.home}</Link>
             <Link to="/about">{copy.about}</Link>
+            <Link to="/observatory">{copy.observatory}</Link>
+            <Link to="/governance">{copy.governance}</Link>
+            <Link to="/methods">{copy.methods}</Link>
           </div>
 
           <div className="footer-col">
             <h4>{copy.connect}</h4>
-            <Link to="/connect">{copy.book}</Link>
+            <Link to="/contact">{copy.book}</Link>
             <a href="mailto:pharos@govern-ai.ca">pharos@govern-ai.ca</a>
             <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>

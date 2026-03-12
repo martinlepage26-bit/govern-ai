@@ -22,7 +22,7 @@ const Cases = () => {
   const { t, language } = useLanguage();
 
   const heroTitle = language === 'fr'
-    ? 'Etudes de cas pour des environnements IA soumis a un examen reel.'
+    ? 'Etudes de cas'
     : 'Case studies for AI under real review';
 
   const heroBody = language === 'fr'

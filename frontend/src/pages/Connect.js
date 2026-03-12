@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import SignalStrip from '../components/SignalStrip';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
@@ -23,21 +22,40 @@ const CONNECT_COPY = {
     eyebrow: 'Connect',
     heroTitle: 'Start with a 30-minute review',
     heroBody: 'Enough to understand the pressure, choose between deterministic governance, a pre-mortem, or a post-mortem, and scope the first deliverables.',
+    summaryRegionLabel: 'Review summary',
     summary: [
       {
         label: 'Best for',
         title: 'Early review calibration',
-        description: 'Use this page when scrutiny is coming or when a questionnaire, audit, or internal review has already exposed a gap.'
+        description: 'Use this page when scrutiny is coming or when a questionnaire, audit, or internal review has already exposed a gap.',
+        detailTitle: 'Use the first review when the route is still unclear.',
+        detailPoints: [
+          'A questionnaire, audit, or internal review has already exposed a gap.',
+          'You need to scope the work before governance effort sprawls or stalls.',
+          'You want a concrete first move instead of generic AI-governance language.'
+        ]
       },
       {
         label: 'Bring',
         title: 'System, pressure source, and evidence state',
-        description: 'A useful first conversation starts with what is in scope, what triggered the review, and what proof already exists.'
+        description: 'A useful first conversation starts with what is in scope, what triggered the review, and what proof already exists.',
+        detailTitle: 'Come with the operating facts, not a polished narrative.',
+        detailPoints: [
+          'Name the system, workflow, or use case that is in scope.',
+          'State what triggered the review: procurement, audit, vendor review, launch, or incident response.',
+          'Note what documentation, evidence, or failed review already exists.'
+        ]
       },
       {
         label: 'Leave with',
         title: 'A scoped next step',
-        description: 'The outcome is a clearer route into deterministic governance, a pre-mortem, or a post-mortem.'
+        description: 'The outcome is a clearer route into deterministic governance, a pre-mortem, or a post-mortem.',
+        detailTitle: 'Leave with the right path and the first deliverables in view.',
+        detailPoints: [
+          'A route into deterministic governance when the baseline needs structure.',
+          'A pre-mortem when launch or onboarding risk needs pressure before exposure.',
+          'A post-mortem when the work starts after an incident, failed review, or drift.'
+        ]
       }
     ],
     formTitle: 'Book a review',
@@ -115,23 +133,42 @@ const CONNECT_COPY = {
   },
   fr: {
     eyebrow: 'Contact',
-    heroTitle: 'Commencez par un échange de 30 minutes',
+    heroTitle: 'Échange de 30 minutes',
     heroBody: 'Assez pour comprendre la pression en cause, choisir entre une gouvernance déterministe, une revue pré-mortem ou une revue post-mortem, puis cadrer les premiers livrables.',
+    summaryRegionLabel: 'Résumé de la revue',
     summary: [
       {
         label: 'Pour qui',
-        title: 'Le cadrage initial de la revue',
-        description: 'Utilisez cette page quand un examen approche ou quand un questionnaire, un audit ou une revue interne a deja revele un ecart.'
+        title: 'Cadrage initial',
+        description: 'Utilisez cette page quand un examen approche ou quand un questionnaire, un audit ou une revue interne a deja revele un ecart.',
+        detailTitle: 'Servez-vous du premier échange quand le bon parcours reste flou.',
+        detailPoints: [
+          'Un questionnaire, un audit ou une revue interne a deja mis un écart en lumière.',
+          'Vous devez cadrer le travail avant que l effort de gouvernance ne se disperse.',
+          'Vous cherchez une première étape concrète plutôt qu un langage générique sur la gouvernance de l IA.'
+        ]
       },
       {
         label: 'Apportez',
-        title: 'Systeme, source de pression et etat de la preuve',
-        description: 'Un premier echange utile commence par ce qui est en portee, ce qui a declenche la revue et quelle preuve existe deja.'
+        title: 'Système et preuve',
+        description: 'Un premier echange utile commence par ce qui est en portee, ce qui a declenche la revue et quelle preuve existe deja.',
+        detailTitle: 'Venez avec les faits opératoires, pas avec un récit lissé.',
+        detailPoints: [
+          'Nommez le système, le workflow ou le cas d usage en portée.',
+          'Précisez ce qui a déclenché la revue : approvisionnement, audit, revue fournisseur, lancement ou réponse à incident.',
+          'Indiquez quelle documentation, quelle preuve ou quel examen raté existe déjà.'
+        ]
       },
       {
         label: 'Vous repartez avec',
-        title: 'Une prochaine etape cadree',
-        description: 'Le resultat est un parcours plus net vers une gouvernance deterministe, une revue pre-mortem ou une revue post-mortem.'
+        title: 'Prochaine étape',
+        description: 'Le resultat est un parcours plus net vers une gouvernance deterministe, une revue pre-mortem ou une revue post-mortem.',
+        detailTitle: 'Vous repartez avec le bon parcours et les premiers livrables en vue.',
+        detailPoints: [
+          'Un parcours de gouvernance déterministe lorsque la base a besoin de structure.',
+          'Une revue pré-mortem lorsqu un lancement ou une intégration doit être éprouvé avant exposition.',
+          'Une revue post-mortem lorsque le travail commence après un incident, un examen raté ou une dérive.'
+        ]
       }
     ],
     formTitle: 'Réserver un échange',
@@ -212,6 +249,7 @@ const CONNECT_COPY = {
 const Connect = () => {
   const { language } = useLanguage();
   const [form, setForm] = useState(initialForm);
+  const [activeSummaryIndex, setActiveSummaryIndex] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -219,6 +257,7 @@ const Connect = () => {
   const [slotsLoading, setSlotsLoading] = useState(true);
 
   const copy = useMemo(() => CONNECT_COPY[language], [language]);
+  const activeSummary = copy.summary[activeSummaryIndex] || copy.summary[0];
 
   useEffect(() => {
     let cancelled = false;
@@ -316,23 +355,71 @@ const Connect = () => {
           <div className="section-header">
             <p className="eyebrow">{copy.eyebrow}</p>
             <h1>{copy.heroTitle}</h1>
-            <p className="body-lg" style={{ marginTop: '16px' }}>
+            <p className="body-lg page-hero-copy">
               {copy.heroBody}
             </p>
-            <SignalStrip items={copy.summary} className="signal-grid-page" />
+            <div className="connect-summary-shell signal-grid-page">
+              <div className="signal-grid connect-summary-grid" role="tablist" aria-label={copy.summaryRegionLabel}>
+                {copy.summary.map((item, index) => {
+                  const isActive = index === activeSummaryIndex;
+                  const tabId = `connect-summary-tab-${index}`;
+                  const panelId = `connect-summary-panel-${index}`;
+
+                  return (
+                    <button
+                      key={`${item.label}-${item.title}`}
+                      type="button"
+                      id={tabId}
+                      role="tab"
+                      className={`signal-card connect-summary-card${isActive ? ' active' : ''}`}
+                      onClick={() => setActiveSummaryIndex(index)}
+                      onFocus={() => setActiveSummaryIndex(index)}
+                      aria-selected={isActive}
+                      aria-controls={panelId}
+                      tabIndex={isActive ? 0 : -1}
+                    >
+                      <p className="signal-label">{item.label}</p>
+                      <p className="signal-title">{item.title}</p>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div
+                className="editorial-panel-dark connect-summary-detail"
+                id={`connect-summary-panel-${activeSummaryIndex}`}
+                role="tabpanel"
+                aria-labelledby={`connect-summary-tab-${activeSummaryIndex}`}
+              >
+                <div className="connect-summary-detail-head">
+                  <p className="signal-label">{activeSummary.label}</p>
+                  <h3>{activeSummary.detailTitle || activeSummary.title}</h3>
+                  <p className="body-sm">{activeSummary.description}</p>
+                </div>
+                {activeSummary.detailPoints?.length ? (
+                  <div className="connect-summary-points">
+                    {activeSummary.detailPoints.map((point) => (
+                      <div key={point} className="connect-summary-point">
+                        {point}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section section-topless">
         <div className="container">
           <div className="connect-grid">
             <div className="reveal">
               <div className="editorial-panel">
-                <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>{copy.formTitle}</h2>
-                <p className="body-sm" style={{ marginBottom: '32px' }}>{copy.formBody}</p>
-                <div className="scope-note" style={{ marginBottom: '28px' }}>
-                  <p className="eyebrow" style={{ marginBottom: '12px' }}>{copy.prepLabel}</p>
+                <h2>{copy.formTitle}</h2>
+                <p className="body-sm page-inline-note">{copy.formBody}</p>
+                <div className="scope-note">
+                  <p className="eyebrow">{copy.prepLabel}</p>
                   <strong>{copy.prepTitle}</strong>
                   <ul className="panel-list">
                     {copy.prepItems.map((item) => (
@@ -379,9 +466,9 @@ const Connect = () => {
                       ))}
                     </select>
                     {slotsLoading ? (
-                      <p className="body-sm" style={{ marginTop: '8px' }}>{copy.loadingSlots}</p>
+                      <p className="body-sm page-inline-note">{copy.loadingSlots}</p>
                     ) : form.date && availableSlots.length === 0 ? (
-                      <p className="body-sm" style={{ marginTop: '8px' }}>{copy.noSlotsAvailable}</p>
+                      <p className="body-sm page-inline-note">{copy.noSlotsAvailable}</p>
                     ) : null}
                   </div>
 
@@ -408,8 +495,7 @@ const Connect = () => {
 
                   <button
                     type="submit"
-                    className="btn-dark"
-                    style={{ width: '100%', justifyContent: 'center' }}
+                    className="btn-dark button-block"
                     disabled={submitting || !form.date || !form.time}
                   >
                     {submitting ? copy.submitting : copy.submit}
@@ -418,73 +504,73 @@ const Connect = () => {
                 </form>
 
                 {submitError ? (
-                  <p className="body-sm" style={{ marginTop: '20px', color: '#b42318' }}>
+                  <p className="form-message-error">
                     {submitError}
                   </p>
                 ) : null}
 
                 {submitted ? (
-                  <p className="body-sm" style={{ marginTop: '20px' }}>{copy.submitted}</p>
+                  <p className="form-message-success">{copy.submitted}</p>
                 ) : null}
               </div>
             </div>
 
             <div>
-              <div className="reveal editorial-panel-dark" style={{ color: '#F5F5F0', marginBottom: '24px' }}>
-                <p className="eyebrow" style={{ marginBottom: '12px', color: 'var(--glow-primary)' }}>{copy.directContact}</p>
-                <p className="body-sm" style={{ color: 'rgba(245,245,240,0.78)', marginBottom: '16px' }}>
+              <div className="reveal editorial-panel-dark">
+                <p className="eyebrow">{copy.directContact}</p>
+                <p className="body-sm page-inline-note">
                   {copy.directBody}
                 </p>
-                <p style={{ fontSize: '1.125rem', fontWeight: 500, marginBottom: '4px' }}>
+                <p className="footer-founder">
                   <a href="mailto:pharos@govern-ai.ca">pharos@govern-ai.ca</a>
                 </p>
-                <p style={{ fontSize: '0.875rem', color: 'rgba(245,245,240,0.78)', marginBottom: '20px' }}>{copy.location}</p>
-                <a href="mailto:pharos@govern-ai.ca" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                <p className="body-sm">{copy.location}</p>
+                <a href="mailto:pharos@govern-ai.ca" className="btn-primary button-block">
                   {copy.sendEmail}
                 </a>
-                <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer" style={{ display: 'block', textAlign: 'center', marginTop: '12px', fontSize: '0.875rem', color: 'rgba(245,245,240,0.82)' }}>
+                <a href="https://www.linkedin.com/in/martin-lepage-ai/" target="_blank" rel="noreferrer" className="link-slab page-inline-note">
                   {copy.linkedin} →
                 </a>
               </div>
 
               <div className="reveal editorial-panel">
-                <p className="eyebrow" style={{ marginBottom: '16px' }}>{copy.internalModules}</p>
-                <p className="body-sm" style={{ marginBottom: '18px' }}>
+                <p className="eyebrow">{copy.internalModules}</p>
+                <p className="body-sm page-inline-note">
                   {copy.internalBody}
                 </p>
-                <div className="plain-stack" style={{ marginBottom: '24px' }}>
+                <div className="plain-stack">
                   {copy.modulesList.map((item) => (
                     <div
                       key={item.title}
                       className="plain-stack-item"
                     >
-                      <p style={{ fontWeight: 500, fontSize: '0.95rem', color: 'var(--color-text)', marginBottom: '6px' }}>
+                      <p className="footer-founder">
                         {item.title}
                       </p>
-                      <p style={{ fontSize: '0.8125rem', color: 'var(--color-muted)' }}>
+                      <p className="body-sm">
                         {item.description}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <p className="eyebrow" style={{ marginBottom: '16px' }}>{copy.resources}</p>
+                <p className="eyebrow">{copy.resources}</p>
                 <div className="plain-stack">
                   {copy.resourcesList.map((item) => (
                     <div key={item.title} className="plain-stack-item">
-                      <p style={{ fontWeight: 500, fontSize: '0.9375rem', color: 'var(--color-text)', marginBottom: '4px' }}>{item.title}</p>
-                      <p style={{ fontSize: '0.8125rem', color: 'var(--color-muted)' }}>{item.description}</p>
+                      <p className="footer-founder">{item.title}</p>
+                      <p className="body-sm">{item.description}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <Link to="/tool" className="reveal link-slab">
-                <p style={{ fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-muted-light)', marginBottom: '8px' }}>
+                <p className="eyebrow">
                   {copy.startPrompt}
                 </p>
-                <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--color-text)' }}>{copy.startTitle}</p>
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)', marginTop: '8px' }}>
+                <h3>{copy.startTitle}</h3>
+                <p className="body-sm page-inline-note">
                   {copy.startBody}
                 </p>
               </Link>

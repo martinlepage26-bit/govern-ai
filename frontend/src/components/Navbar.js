@@ -3,57 +3,92 @@ import { Link, useLocation } from 'react-router-dom';
 import LighthouseGlyph from './LighthouseGlyph';
 import { useLanguage } from '../context/LanguageContext';
 
+const NAV_COPY = {
+  en: {
+    navItems: [
+      { path: '/', label: 'HOME', matchPaths: ['/'] },
+      { path: '/about', label: 'ABOUT', matchPaths: ['/about'] },
+      { path: '/observatory', label: 'OBSERVATORY', matchPaths: ['/observatory', '/research'] },
+      { path: '/governance', label: 'GOVERNANCE', matchPaths: ['/governance', '/services'] },
+      { path: '/methods', label: 'METHODS', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
+    ],
+    sitemapLabel: 'Site map',
+    sitemapIntro: 'Public PHAROS surfaces and observatory working layers',
+    sitemapSections: [
+      {
+        title: 'Primary',
+        links: [
+          { path: '/', label: 'HOME', note: 'Entrance and overview' },
+          { path: '/about', label: 'ABOUT', note: 'System brief' },
+          { path: '/observatory', label: 'OBSERVATORY', note: 'Models, institutions, standards, and claims' },
+          { path: '/governance', label: 'GOVERNANCE', note: 'Comparison, review, and legibility' },
+          { path: '/methods', label: 'METHODS', note: 'Evidence, analysis, and oversight' },
+          { path: '/contact', label: 'CONTACT', note: 'Research and collaboration inquiries' }
+        ]
+      },
+      {
+        title: 'Secondary',
+        links: [
+          { path: '/tool', label: 'TOOL', note: 'Quick readiness signal', featured: true },
+          { path: '/faq', label: 'FAQ', note: 'Fast answers' },
+          { path: '/library', label: 'LIBRARY', note: 'Frameworks and sources' },
+          { path: '/cases', label: 'CASES', note: 'Case readings' }
+        ]
+      }
+    ],
+    mobileContact: 'CONTACT',
+    meetingCta: 'BOOK A MEETING'
+  },
+  fr: {
+    navItems: [
+      { path: '/', label: 'ACCUEIL', matchPaths: ['/'] },
+      { path: '/about', label: 'A PROPOS', matchPaths: ['/about'] },
+      { path: '/observatory', label: 'OBSERVATOIRE', matchPaths: ['/observatory', '/research'] },
+      { path: '/governance', label: 'GOUVERNANCE', matchPaths: ['/governance', '/services'] },
+      { path: '/methods', label: 'METHODES', matchPaths: ['/methods', '/about/conceptual-method'] },
+      { path: '/contact', label: 'CONTACT', matchPaths: ['/contact', '/connect'] }
+    ],
+    sitemapLabel: 'Plan du site',
+    sitemapIntro: 'Surfaces publiques de PHAROS et couches de travail de l observatoire',
+    sitemapSections: [
+      {
+        title: 'Principales',
+        links: [
+          { path: '/', label: 'ACCUEIL', note: 'Entree et vue d ensemble' },
+          { path: '/about', label: 'A PROPOS', note: 'Presentation du systeme' },
+          { path: '/observatory', label: 'OBSERVATOIRE', note: 'Modeles, institutions, normes et revendications' },
+          { path: '/governance', label: 'GOUVERNANCE', note: 'Comparaison, revue et lisibilite' },
+          { path: '/methods', label: 'METHODES', note: 'Preuve, analyse et supervision' },
+          { path: '/contact', label: 'CONTACT', note: 'Demandes de recherche et collaboration' }
+        ]
+      },
+      {
+        title: 'Secondaires',
+        links: [
+          { path: '/tool', label: 'OUTIL', note: 'Signal rapide de preparation', featured: true },
+          { path: '/faq', label: 'FAQ', note: 'Reponses rapides' },
+          { path: '/library', label: 'BIBLIOTHEQUE', note: 'Cadres et sources' },
+          { path: '/cases', label: 'CAS', note: 'Lectures de cas' }
+        ]
+      }
+    ],
+    mobileContact: 'CONTACT',
+    meetingCta: 'RESERVER UN ECHANGE'
+  }
+};
+
 const Navbar = () => {
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
   const location = useLocation();
   const [sitemapOpen, setSitemapOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const navItems = [
-    { path: '/', label: t.nav.home },
-    { path: '/services', label: t.nav.services },
-    { path: '/research', label: t.nav.research },
-    { path: '/about', label: t.nav.about }
-  ];
-  const reviewCta = language === 'fr' ? 'Reserver un echange' : 'Book a review';
-  const sitemapLabel = language === 'fr' ? 'Plan du site' : 'Site map';
-  const sitemapIntro = language === 'fr'
-    ? 'Parcours publics, outil et pages de travail'
-    : 'Public routes, tool, and working pages';
-
+  const copy = NAV_COPY[language];
   const languageButtonLabel = language === 'fr' ? 'EN' : 'FR';
   const languageButtonTitle = language === 'fr'
     ? 'Switch to English'
     : 'Passer en français';
-
-  const sitemapSections = [
-    {
-      title: language === 'fr' ? 'Principales' : 'Main',
-      links: [
-        { path: '/', label: t.nav.home, note: language === 'fr' ? 'Vue d’ensemble' : 'Overview' },
-        { path: '/services', label: t.nav.services, note: language === 'fr' ? 'Offres et parcours' : 'Offers and routes' },
-        { path: '/research', label: t.nav.research, note: language === 'fr' ? 'Notes et publications' : 'Briefings and publications' },
-        { path: '/about', label: t.nav.about, note: language === 'fr' ? 'Pratique et approche' : 'Practice and approach' }
-      ]
-    },
-    {
-      title: language === 'fr' ? 'Entrées' : 'Entry points',
-      links: [
-        { path: '/tool', label: language === 'fr' ? 'Instantané de préparation' : 'Readiness snapshot', note: language === 'fr' ? 'L’outil de départ' : 'The starting tool', featured: true },
-        { path: '/connect', label: t.nav.connect, note: language === 'fr' ? 'Réserver une revue' : 'Book a review' },
-        { path: '/services/menu', label: language === 'fr' ? 'Menu des services' : 'Service menu', note: language === 'fr' ? 'Choisir le bon parcours' : 'Choose the right route' },
-        { path: '/faq', label: t.nav.faq, note: language === 'fr' ? 'Réponses rapides' : 'Quick answers' }
-      ]
-    },
-    {
-      title: language === 'fr' ? 'Références' : 'Reference',
-      links: [
-        { path: '/library', label: t.nav.library, note: language === 'fr' ? 'Cadres et sources' : 'Frameworks and sources' },
-        { path: '/cases', label: t.nav.cases, note: language === 'fr' ? 'Exemples de pression et de réponse' : 'Examples of pressure and response' },
-        { path: '/about/conceptual-method', label: language === 'fr' ? 'Méthode conceptuelle' : 'Conceptual method', note: language === 'fr' ? 'Logique de la pratique' : 'Method logic' }
-      ]
-    }
-  ];
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 20);
@@ -108,7 +143,7 @@ const Navbar = () => {
                 <span />
                 <span />
               </span>
-              <span className="nav-sitemap-label">{sitemapLabel}</span>
+              <span className="nav-sitemap-label">{copy.sitemapLabel}</span>
             </button>
 
             <Link to="/" className="nav-brand" aria-label={language === 'fr' ? 'Accueil PHAROS' : 'PHAROS home'}>
@@ -119,23 +154,26 @@ const Navbar = () => {
 
           <div className="nav-right">
             <div className="nav-links">
-              {navItems.map((item) => {
-                const isActive = item.path === '/'
-                  ? location.pathname === '/'
-                  : location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
+              {copy.navItems.map((item) => {
+                const isActive = item.matchPaths.some((path) => (
+                  path === '/'
+                    ? location.pathname === '/'
+                    : location.pathname === path || location.pathname.startsWith(`${path}/`)
+                ));
+
                 return (
                   <Link key={item.path} to={item.path} className={`nav-link${isActive ? ' active' : ''}`}>
                     {item.label}
                   </Link>
                 );
               })}
-              <Link to="/connect" className="nav-cta">
-                {reviewCta}
-              </Link>
               <button className="nav-lang" type="button" onClick={toggleLanguage} title={languageButtonTitle}>
                 {languageButtonLabel}
               </button>
             </div>
+            <Link to="/contact" className="nav-meeting">
+              {copy.meetingCta}
+            </Link>
           </div>
         </div>
       </nav>
@@ -150,12 +188,12 @@ const Navbar = () => {
       <aside className={`sitemap-panel${sitemapOpen ? ' open' : ''}`} aria-hidden={!sitemapOpen}>
         <div className="sitemap-panel-inner">
           <div className="sitemap-header">
-            <p className="eyebrow">{sitemapLabel}</p>
-            <p className="sitemap-intro">{sitemapIntro}</p>
+            <p className="eyebrow">{copy.sitemapLabel}</p>
+            <p className="sitemap-intro">{copy.sitemapIntro}</p>
           </div>
 
           <div className="sitemap-grid">
-            {sitemapSections.map((section) => (
+            {copy.sitemapSections.map((section) => (
               <div key={section.title} className="sitemap-section">
                 <p className="sitemap-section-title">{section.title}</p>
                 <div className="sitemap-links">
@@ -176,8 +214,11 @@ const Navbar = () => {
           </div>
 
           <div className="sitemap-actions">
-            <Link to="/connect" className="nav-cta-mobile" onClick={() => setSitemapOpen(false)}>
-              {reviewCta}
+            <Link to="/contact" className="nav-cta-mobile" onClick={() => setSitemapOpen(false)}>
+              {copy.meetingCta}
+            </Link>
+            <Link to="/contact" className="nav-cta-mobile" onClick={() => setSitemapOpen(false)}>
+              {copy.mobileContact}
             </Link>
             <button
               type="button"

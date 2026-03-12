@@ -108,7 +108,7 @@ const RESEARCH_COPY = {
   },
   fr: {
     eyebrow: 'Recherche',
-    heroTitle: 'Notes d’analyse pour l’examen, la revue et la conception de contrôles',
+    heroTitle: 'Notes de revue',
     heroBody: 'Chaque note part d’un signal réel, nomme la pression de gouvernance qu’il crée, puis le traduit en logique de contrôle, en limites de revendication et en questions probantes utiles aux équipes.',
     method: 'Méthode',
     methodTitle: 'Partir de la pression, finir avec une réponse de contrôle révisable',

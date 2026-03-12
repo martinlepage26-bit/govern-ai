@@ -17,7 +17,7 @@ const FAQ = () => {
   const copy = language === 'fr'
     ? {
         eyebrow: 'FAQ',
-        title: 'Des reponses directes pour les equipes qui doivent rendre leur gouvernance lisible.',
+        title: 'Reponses directes',
         body: 'Ces questions reviennent quand une equipe prepare une revue, un questionnaire, une discussion de direction ou un premier mandat. Les reponses restent proches de ce qui peut etre demontre, de ce qui manque encore, et de ce qu il ne faut pas exagerer.',
         noteLabel: 'Usage',
         noteTitle: 'Commencer par les questions qui reviennent sous pression.',
@@ -215,7 +215,7 @@ const FAQ = () => {
       };
 
   return (
-    <div className="min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="faq-page">
+    <div className="faq-page min-h-screen bg-transparent px-6 py-10 md:px-10" data-testid="faq-page">
       <div className="mx-auto max-w-[1240px]">
         <section className="brand-panel-dark brand-top-rule relative mb-8 overflow-hidden rounded-[34px] px-6 py-8 text-white md:px-8 md:py-10">
           <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />

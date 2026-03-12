@@ -1,134 +1,86 @@
 /* Source stylesheet for Tailwind CLI. Generates src/tailwind.generated.css. */
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --brand-night: #081120;
-  --brand-navy: #102142;
-  --brand-ink: #f4efe7;
-  --brand-steel: #b8c1d2;
-  --brand-brass: #c9952f;
-  --brand-brass-soft: rgba(201, 149, 47, 0.18);
-  --brand-ivory: #0d172b;
-  --brand-paper: #13294d;
-  --brand-sand: #1c3a69;
-  --brand-line: rgba(201, 149, 47, 0.15);
-  --brand-line-strong: rgba(201, 149, 47, 0.26);
-  --white: #f7f3ec;
-  --black: #050c17;
-  --black-60: rgba(244, 239, 231, 0.64);
-  --black-40: rgba(184, 193, 210, 0.72);
-  --black-20: rgba(244, 239, 231, 0.18);
-  --black-10: rgba(244, 239, 231, 0.1);
-  --earth-indigo-rgb: 53, 88, 157;
-  --earth-violet-rgb: 119, 104, 195;
-  --earth-terracotta-rgb: 201, 149, 47;
-  --earth-ochre-rgb: 201, 149, 47;
-  --font-serif: 'Crimson Text', Georgia, serif;
+  --brand-bg: 11 31 46;
+  --brand-surface: 15 59 62;
+  --brand-surface-muted: 17 52 63;
+  --brand-heading: 240 237 230;
+  --brand-body: 240 237 230;
+  --brand-muted: 122 155 173;
+  --brand-primary: 61 214 200;
+  --brand-accent: 184 155 94;
+  --brand-border: 214 204 187;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
-  --font-heading: 'Crimson Text', Georgia, serif;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --shadow-sm: 0 10px 20px rgba(5, 3, 10, 0.2);
-  --shadow-md: 0 16px 30px rgba(5, 3, 10, 0.28);
-  --shadow-lg: 0 24px 46px rgba(5, 3, 10, 0.36);
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--brand-night);
+  background: rgb(var(--brand-bg));
 }
 
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--brand-ink);
-  background:
-    radial-gradient(circle at 12% 8%, rgba(var(--earth-ochre-rgb), 0.08) 0%, rgba(var(--earth-ochre-rgb), 0) 24%),
-    radial-gradient(circle at 82% 10%, rgba(var(--earth-indigo-rgb), 0.18) 0%, rgba(var(--earth-indigo-rgb), 0) 18%),
-    radial-gradient(circle at 54% 82%, rgba(var(--earth-violet-rgb), 0.06) 0%, rgba(var(--earth-violet-rgb), 0) 22%),
-    linear-gradient(180deg, #081120 0%, #0d1830 56%, #112246 100%);
+  background: rgb(var(--brand-bg));
+  color: rgb(var(--brand-body));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "liga" 1, "kern" 1;
-  max-width: 100vw;
-  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 0.98;
-  color: var(--brand-ink);
-}
-
-h2 {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  color: var(--brand-ink);
-}
-
-h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  line-height: 1.2;
-  color: #1a1a1a;
-  color: var(--brand-ink);
-}
-
-::selection {
-  background: rgba(var(--earth-ochre-rgb), 0.34);
-  color: var(--white);
 }
 
 a {
   color: inherit;
-  text-decoration: none;
-  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 @layer base {
   :root {
-    --background: 8 17 32;
-    --foreground: 244 239 231;
-    --card: 17 35 69;
-    --card-foreground: 244 239 231;
-    --popover: 17 35 69;
-    --popover-foreground: 244 239 231;
-    --primary: 201 149 47;
-    --primary-foreground: 10 18 32;
-    --secondary: 16 33 66;
-    --secondary-foreground: 244 239 231;
-    --muted: 13 27 54;
-    --muted-foreground: 184 193 210;
-    --accent: 119 104 195;
-    --accent-foreground: 244 239 231;
-    --destructive: 220 38 38;
+    --background: var(--brand-bg);
+    --foreground: var(--brand-body);
+    --card: var(--brand-surface);
+    --card-foreground: var(--brand-body);
+    --popover: var(--brand-surface);
+    --popover-foreground: var(--brand-body);
+    --primary: var(--brand-primary);
+    --primary-foreground: 255 253 248;
+    --secondary: var(--brand-surface-muted);
+    --secondary-foreground: var(--brand-body);
+    --muted: var(--brand-surface-muted);
+    --muted-foreground: var(--brand-muted);
+    --accent: var(--brand-accent);
+    --accent-foreground: var(--brand-heading);
+    --destructive: 185 72 57;
     --destructive-foreground: 255 255 255;
-    --border: 199 140 52;
-    --input: 33 25 45;
-    --ring: 199 140 52;
-    --radius: 0.75rem;
+    --border: var(--brand-border);
+    --input: var(--brand-border);
+    --ring: var(--brand-accent);
+    --radius: 1.125rem;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

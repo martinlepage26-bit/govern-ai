@@ -148,7 +148,7 @@ const SERVICES_COPY = {
   },
   fr: {
     eyebrow: 'Services',
-    heroTitle: 'Services pour une gouvernance déterministe sous pression',
+    heroTitle: 'Gouvernance sous pression',
     heroBody: 'Choisissez selon la pression réelle, pas selon le vocabulaire. Le bon service produit des parcours décisionnels déterministes, des seuils explicites et les éléments qu’un vrai examen demandera.',
     coreOffers: 'Offres principales',
     coreTitle: 'Trois services pour une gouvernance déterministe',
@@ -301,7 +301,7 @@ const Services = () => {
           <div className="section-header">
             <p className="eyebrow">{copy.eyebrow}</p>
             <h1>{copy.heroTitle}</h1>
-            <p className="body-lg" style={{ marginTop: '16px' }}>
+            <p className="body-lg page-hero-copy">
               {copy.heroBody}
             </p>
             <div className="jump-links">
@@ -314,7 +314,7 @@ const Services = () => {
         </div>
       </div>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section section-topless">
         <div className="container">
           <div className="section-header reveal">
             <p className="eyebrow">{copy.coreOffers}</p>
@@ -326,7 +326,7 @@ const Services = () => {
 
           <div className="grid-3 stagger">
             {copy.packages.map((item) => (
-              <div key={item.title} id={item.id} className="package reveal" style={{ scrollMarginTop: '120px' }}>
+              <div key={item.title} id={item.id} className="package reveal anchor-offset">
                 <div className="package-header">
                   <p className="eyebrow">{item.eyebrow}</p>
                   <h3>{item.title}</h3>
@@ -340,7 +340,7 @@ const Services = () => {
                     ))}
                   </ul>
                   <p className="package-label">{copy.outcomes}</p>
-                  <ul className="package-list" style={{ marginBottom: 0 }}>
+                  <ul className="package-list">
                     {item.outcomes.map((point) => (
                       <li key={point}>{point}</li>
                     ))}
@@ -358,7 +358,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+      <section className="section section-muted">
         <div className="container">
           <div className="section-header reveal">
             <p className="eyebrow">{copy.scoping}</p>
@@ -410,7 +410,7 @@ const Services = () => {
             <h2>{copy.faqTitle}</h2>
           </div>
 
-          <div style={{ maxWidth: '720px' }} className="reveal">
+          <div className="reveal section-narrow">
             {copy.faqs.map((item, index) => {
               const isOpen = index === openFaq;
               return (

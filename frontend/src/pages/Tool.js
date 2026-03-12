@@ -35,12 +35,12 @@ const Tool = () => {
   const preMortemHref = '/services#pre-mortem-review';
 
   const copy = language === 'fr'
-    ? {
+      ? {
         eyebrow: 'Outil',
-        title: 'Un instantane rapide pour voir ou la gouvernance tient, et ou elle reste encore fragile.',
+        title: 'Instantane de gouvernance',
         body: 'Choisissez l environnement le plus proche de votre travail, repondez a huit questions, et obtenez une lecture rapide des zones ou les controles, la preuve et les droits de decision restent trop minces pour soutenir une revue sereinement.',
         noteLabel: 'Ce que fait l outil',
-        noteTitle: 'Reperer la couche manquante avant que la revue ne la force.',
+        noteTitle: 'Reperer la couche manquante.',
         noteBody: 'Cet outil ne remplace pas un audit ni une certification. Il sert a calibrer si l inventaire, la priorisation, les controles, la preuve et la cadence sont deja en place, et a garder les affirmations dans les limites de ce qui est vraiment demonstrable.',
         noteCards: [
           {
@@ -60,7 +60,7 @@ const Tool = () => {
           }
         ],
         runLabel: 'Evaluation',
-        runTitle: 'Faire l instantane de preparation',
+        runTitle: 'Faire l instantane',
         runBody: 'Le resultat n est pas un verdict final. C est un signal sur l endroit ou le travail doit commencer, et sur les zones ou le statut devrait rester provisoire.',
         sectorPrompt: 'Choisissez l environnement le plus proche de votre travail',
         questionPrompt: 'Repondez selon l etat actuel, pas selon le modele ideal',
@@ -152,9 +152,9 @@ const Tool = () => {
   const isLastQuestion = currentQuestion === readinessQuestions.length - 1;
 
   return (
-    <div className="min-h-screen bg-transparent px-5 pb-8 pt-[92px] md:px-8 md:pb-10 md:pt-[108px]" data-testid="tool-page">
+    <div className="tool-page min-h-screen bg-transparent px-5 pb-8 pt-[92px] md:px-8 md:pb-10 md:pt-[108px]" data-testid="tool-page">
       <div className="mx-auto max-w-[1160px]">
-        <section className="brand-panel-dark brand-top-rule relative mb-6 overflow-hidden rounded-[30px] px-5 py-6 text-white md:px-7 md:py-7">
+        <section className="tool-hero-panel brand-panel-dark brand-top-rule relative mb-6 overflow-hidden rounded-[30px] px-5 py-6 text-white md:px-7 md:py-7">
           <div className="absolute right-[-22px] top-[-18px] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(184,155,94,0.18)_0%,rgba(184,155,94,0)_72%)]" />
           <div className="absolute bottom-[-56px] left-[-18px] h-40 w-40 rotate-45 rounded-[20px] border border-[#B89B5E]/12" />
           <div className="relative grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-start">
@@ -170,7 +170,7 @@ const Tool = () => {
               </p>
             </div>
 
-            <div className="rounded-[26px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-4 shadow-[0_18px_34px_rgba(8,20,40,0.16)]">
+            <div className="tool-note-card rounded-[26px] border border-[#B89B5E]/18 bg-[#FBF7EF] p-4 shadow-[0_18px_34px_rgba(8,20,40,0.16)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[16px] border border-[#B89B5E]/20 bg-[#F1E8D8]">
                   <img src={lighthouseMark} alt="PHAROS lighthouse mark" className="h-8 w-8" />
@@ -206,7 +206,7 @@ const Tool = () => {
 
           <div className="grid gap-3 md:grid-cols-3">
             {copy.noteCards.map((card) => (
-              <article key={card.title} className="rounded-[20px] border border-[#D6CCBB] bg-[#FBF7EF]/92 p-4 shadow-[0_10px_18px_rgba(8,20,40,0.04)]">
+              <article key={card.title} className="tool-metric-card rounded-[20px] border border-[#D6CCBB] bg-[#FBF7EF]/92 p-4 shadow-[0_10px_18px_rgba(8,20,40,0.04)]">
                 <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-[14px] border border-[#B89B5E]/16 bg-[#F2E8D8]">
                   <card.icon className="h-4.5 w-4.5 text-[#13254C]" />
                 </div>
@@ -221,7 +221,7 @@ const Tool = () => {
           </div>
         </section>
 
-        <section className="brand-panel rounded-[28px] px-5 py-5 md:px-6 md:py-6">
+        <section className="tool-run-panel brand-panel rounded-[28px] px-5 py-5 md:px-6 md:py-6">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-[10px] uppercase tracking-[0.16em] text-[#6F5626]" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}>
@@ -237,7 +237,7 @@ const Tool = () => {
             </div>
             <button
               onClick={handleReset}
-              className="rounded-full border border-[#D6CCBB] bg-white px-3.5 py-1.5 text-[13px] text-[#13254C] transition-colors hover:border-[#B89B5E]/34"
+              className="tool-reset-btn rounded-full border border-[#D6CCBB] bg-white px-3.5 py-1.5 text-[13px] text-[#13254C] transition-colors hover:border-[#B89B5E]/34"
               style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 600 }}
               data-testid="reset-btn"
             >
@@ -253,7 +253,7 @@ const Tool = () => {
                     key={key}
                     onClick={() => handleSectorSelect(sectorIds[i])}
                     data-testid={`sector-${sectorIds[i]}`}
-                    className={`rounded-[18px] border p-3.5 text-left transition-colors ${
+                    className={`tool-sector-card rounded-[18px] border p-3.5 text-left transition-colors ${
                       selectedSector === sectorIds[i]
                         ? 'border-[#13254C] bg-[#F2E8D8] shadow-[0_12px_24px_rgba(8,20,40,0.08)]'
                         : 'border-[#D6CCBB] bg-[#FFFDF8] hover:border-[#B89B5E]/34'
@@ -273,7 +273,7 @@ const Tool = () => {
 
           {step === 2 && (
             <div data-testid="step-2-readiness">
-              <div className="rounded-[20px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+              <div className="tool-question-card rounded-[20px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
                 <div className="mb-3 flex items-center justify-between gap-4">
                   <h3 className="text-[22px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                     {t.tool.step2.title} {currentQuestion + 1} {t.tool.step2.of} {readinessQuestions.length}
@@ -301,7 +301,7 @@ const Tool = () => {
                       <button
                         key={option.value}
                         onClick={() => handleAnswer(currentQuestionData.id, option.value, option.score)}
-                        className={`rounded-[16px] border px-3 py-3 text-[13px] transition-colors ${
+                        className={`tool-answer-card rounded-[16px] border px-3 py-3 text-[13px] transition-colors ${
                           isSelected
                             ? 'border-[#13254C] bg-[#F2E8D8] text-[#13254C]'
                             : 'border-[#D6CCBB] bg-[#FBF7EF] text-[#20314F] hover:border-[#B89B5E]/34'
@@ -378,7 +378,7 @@ const Tool = () => {
 
                 return (
                   <>
-                    <div className="rounded-[22px] border border-[#D6CCBB] bg-[#FBF7EF] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                    <div className="tool-results-card rounded-[22px] border border-[#D6CCBB] bg-[#FBF7EF] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
                       <div className="grid grid-cols-[100px_1fr] gap-4 items-center">
                         <div
                           className="grid h-[100px] w-[100px] place-items-center rounded-full"
@@ -402,7 +402,7 @@ const Tool = () => {
                       </div>
                     </div>
 
-                    <div className="mt-4 rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                    <div className="tool-results-card mt-4 rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
                       <h4 className="text-[22px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {t.tool.results.scoreBreakdown}
                       </h4>
@@ -435,7 +435,7 @@ const Tool = () => {
                       </div>
                     </div>
 
-                    <div className="mt-4 rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
+                    <div className="tool-results-card mt-4 rounded-[22px] border border-[#D6CCBB] bg-[#FFFDF8] p-4 shadow-[0_10px_24px_rgba(8,20,40,0.04)]">
                       <h4 className="text-[22px] text-[#10162A]" style={{ fontFamily: "'Crimson Text', Georgia, serif", fontWeight: 600 }}>
                         {t.tool.results.recommendedSteps}
                       </h4>
